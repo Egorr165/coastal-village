@@ -1,0 +1,161 @@
+.contact-form-section {
+  position: relative;
+  padding: 80px 0;
+
+  // 1. Точный градиент из Figma для основного фона (слева направо)
+  background: linear-gradient(90deg, #304E8A 15%, #5D9EC9 70%);
+  color: #ffffff;
+  overflow: hidden;
+
+  // 2. Слой для картинки с её собственным градиентом-маской
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30%; // Ширина фото (можешь чуть менять, если нужно)
+    height: 175%;
+
+    // Точный градиент-оверлей из Figma поверх фотографии
+    background-image:
+      linear-gradient(90deg, #5D9EC9 3%, rgba(84, 143, 189, 0) 250%),
+      url('../../images/ContactForm.png'); // Твой путь к фото
+
+    background-size: cover;
+    background-position: center 25%;
+    background-repeat: no-repeat;
+
+    z-index: 1;
+  }
+
+  &__container {
+    position: relative;
+    z-index: 2;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  &__title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 40px;
+  }
+}
+
+.contact-form {
+  &__layout {
+    display: flex;
+    flex-wrap: wrap; // Разрешаем перенос элементов на новые строки
+    gap: 20px 10px;
+    align-items: center;
+    width: 70%;
+  }
+
+  // Задаем ширину ровно в 50% минус половина отступа (gap), чтобы влезли ровно 2 элемента в ряд
+  &__input-wrapper,
+  &__btn,
+  &__agreement {
+    flex: 0 0 calc(50% - 15px);
+    width: calc(50% - 15px);
+  }
+
+  &__input-wrapper {
+    position: relative;
+
+    &--phone {
+      display: flex;
+      align-items: center;
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding-left: 20px;
+      overflow: hidden;
+
+      .contact-form__input {
+
+        padding-left: 12px;
+      }
+    }
+  }
+
+  &__flag {
+    width: 20px;
+    height: 14px;
+    object-fit: cover;
+    border-radius: 2px;
+  }
+
+  &__input {
+    width: 100%;
+    height: 46px;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 0 24px;
+    font-size: 14px;
+    color: var(--color-text-main);
+    outline: none;
+
+    &::placeholder {
+      color: var(--color-text-light);
+    }
+  }
+
+  &__btn {
+    height: 46px;
+    background-color: var(--color-primary);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+
+    &:hover {
+      background-color: var(--color-primary-hover);
+      transform: translateY(-2px);
+    }
+  }
+
+  &__agreement {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.4;
+    padding-right: 20px;
+
+    a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: underline;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #ffffff;
+      }
+    }
+  }
+
+  // Адаптив для мобильных устройств
+  @media (max-width: 768px) {
+    &__layout {
+      flex-direction: column; // Выстраиваем всё в одну колонку
+      gap: 16px;
+    }
+
+    // Возвращаем элементам ширину 100% для мобилок
+    &__input-wrapper,
+    &__btn,
+    &__agreement {
+      flex: 0 0 100%;
+      width: 100%;
+    }
+
+    &__agreement {
+      text-align: center;
+      padding-right: 0;
+      margin-top: 8px;
+    }
+  }
+}
