@@ -1,10 +1,4 @@
-:root {
-  --accent-color: var(--color-primary);
-  --text-dark: var(--color-dark);
-  --text-gray: var(--color-text-light);
-  --bg-light: var(--color-light);
-  --border-color: var(--color-light);
-}
+
 
 .site-header {
   position: sticky;
@@ -54,7 +48,7 @@
   border-radius: 10px;
   font-size: 11px;
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(255, 113, 126, 0.25);
+  box-shadow: 0 4px 12px rgba(39, 168, 254, 0.25);
   transition: transform 0.2s;
   white-space: nowrap;
   border: none;
@@ -86,7 +80,7 @@
 
     &:hover,
     &.active {
-      color: var(--accent-color);
+      color: var(--color-primary);
     }
   }
 }

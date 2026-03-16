@@ -6,10 +6,10 @@ import {
   getBookedDatesForMonth,
   getPriceByType,
   getHouseCountByType 
-} from '../../services/availabilityService.ts';
-import type { HouseType } from '../../types/house.ts';
+} from '../../services/availabilityService';
+import type { HouseType } from '../../types/house';
 import './SearchFilters.scss';
-import Button from '../Button/Button.tsx';
+import Button from '../Button/Button';
 
 const SearchFilters = () => {
   const navigate = useNavigate();

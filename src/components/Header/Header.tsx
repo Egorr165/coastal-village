@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Phone, User, Menu, X } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../features/auth/AuthContext.tsx';
+import { useAuth } from '../../features/auth/AuthContext';
 import Logo from '../../images/logo.svg';
 import './Header.scss';
 
