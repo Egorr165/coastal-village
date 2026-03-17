@@ -1,0 +1,54 @@
+.property-summary-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
+}
+
+.stat-item {
+  label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-light);
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  strong {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-dark);
+  }
+}
+
+.summary-divider {
+  height: 2px;
+  background-color: var(--color-light);
+  opacity: 0.4;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.capacity-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.capacity-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--color-text-light);
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.icon-accent {
+  color: var(--color-primary);
+}

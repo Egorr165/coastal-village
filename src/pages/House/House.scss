@@ -1,0 +1,73 @@
+.house-page {
+  background-color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: var(--color-dark);
+
+  .main-content {
+    padding-bottom: 80px;
+    display: flex;
+    flex-direction: column;
+
+    &.not-found {
+      padding: 100px;
+      text-align: center;
+
+      .back-btn {
+        margin-top: 20px;
+        padding: 10px 20px;
+        cursor: pointer;
+        background-color: var(--color-primary);
+        color: white;
+        border-radius: 8px;
+
+        &:hover {
+          background-color: var(--color-primary-hover);
+        }
+      }
+    }
+  }
+
+  .content-grid {
+    display: flex;
+    gap: 60px;
+    margin-top: 40px;
+    position: relative;
+  }
+
+  .left-column {
+    flex: 1.5;
+    min-width: 0;
+  }
+
+  .right-column {
+    flex: 1;
+    display: block;
+  }
+
+  @media (max-width: 1024px) {
+    .content-grid {
+      flex-direction: column;
+    }
+
+    .right-column {
+      display: none;
+    }
+  }
+
+  /* Детали дома (Левая колонка обертка) */
+  .property-details {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .bottom-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    margin-top: 60px;
+    margin-bottom: 80px;
+  }
+}

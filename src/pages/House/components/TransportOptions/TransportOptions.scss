@@ -1,0 +1,58 @@
+.transport-section h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--color-dark);
+}
+
+.transport-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #F8FAFC;
+  border-radius: 12px;
+  padding: 24px 16px;
+  margin-top: 16px;
+}
+
+.transport-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+  position: relative;
+
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 10%;
+    height: 80%;
+    width: 1px;
+    background-color: #E2E8F0;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    opacity: 0.8;
+  }
+
+  span {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-dark);
+    margin-top: 8px;
+  }
+}
+
+.transport-icon {
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}

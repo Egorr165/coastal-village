@@ -1,0 +1,19 @@
+.amenities-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 20px;
+  column-gap: 40px;
+}
+
+.amenity-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--color-text-light);
+}
+
+.amenity-icon {
+  color: var(--color-primary);
+  display: flex;
+}

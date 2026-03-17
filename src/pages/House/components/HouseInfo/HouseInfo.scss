@@ -1,0 +1,46 @@
+.info-split {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+
+  .info-block h3 {
+    font-size: 16px;
+    margin-bottom: 16px;
+    color: var(--color-dark);
+    font-weight: 700;
+  }
+}
+
+.tags-list {
+  display: flex;
+  gap: 12px;
+  background-color: rgba(240, 244, 255, 0.5);
+  padding: 10px 16px;
+  border-radius: 8px;
+}
+
+.tag {
+  font-size: 14px;
+  color: var(--color-text-light);
+
+  &--payment {
+    color: var(--color-dark);
+    font-weight: 500;
+  }
+}
+
+.check-times {
+  font-size: 15px;
+  color: var(--color-dark);
+  font-weight: 500;
+  background-color: rgba(240, 244, 255, 0.5);
+  padding: 10px 16px;
+  border-radius: 8px;
+  display: inline-block;
+
+  strong {
+    color: var(--color-dark);
+    font-weight: 500;
+    margin-right: 8px;
+  }
+}
