@@ -9,7 +9,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   // Проверяем размер экрана
@@ -115,6 +115,28 @@ const Header = () => {
           </button>
         )}
         
+        {/* Временная кнопка входа/регистрации (показываем всегда для тестов) */}
+        {!isMobile && (
+          <button 
+            onClick={() => navigate('/login')}
+            style={{ 
+              background: 'transparent',
+              border: '2px solid var(--color-primary)',
+              color: 'var(--color-primary)',
+              padding: '0.4rem 0.8rem',
+              borderRadius: '0.5rem',
+              cursor: 'pointer',
+              fontWeight: 600,
+              marginRight: '1rem',
+              fontSize: '0.875rem',
+              transition: 'all 0.2s',
+              whiteSpace: 'nowrap'
+            }}
+          >
+            Вход / Регистрация
+          </button>
+        )}
+
         {/* Иконка пользователя */}
         <div 
           className={`user-icon ${user?.photo ? 'user-icon--has-photo' : ''}`} 
@@ -122,9 +144,12 @@ const Header = () => {
             if (!user) {
               navigate('/login')
             } else {
-              navigate('/account')
+              // Временно делаем логаут если юзер кликает на свою аватарку (отладка)
+              logout();
+              navigate('/');
             }
           }}
+          title={user ? "Кликните чтобы выйти" : "Войти"}
         >
           {user?.photo ? (
             <img src={user.photo} alt={user.name} className="user-avatar-img" />
