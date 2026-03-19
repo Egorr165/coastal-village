@@ -13,8 +13,7 @@ interface PropertySummaryProps {
 const PropertySummary: React.FC<PropertySummaryProps> = ({
   area,
   capacity,
-  bedrooms,
-  type
+  bedrooms
 }) => {
   return (
     <div className="property-summary-block">
