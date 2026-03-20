@@ -12,15 +12,13 @@
     box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
   }
 
-  // Левая часть с картинкой
   &__gallery {
     position: relative;
     width: 45%;
-    min-height: 350px;
+    max-width: 430px;
+    max-height: 430px;
     flex-shrink: 0;
     padding: 20px;
-
-    
   }
 
   &__image {
@@ -177,8 +175,10 @@
 
     &__gallery {
       position: relative;
-      width: 45%;
-      min-height: 350px;
+      width: 100%;
+      max-width: none;
+      height: 420px;
+      min-height: unset;
       flex-shrink: 0;
     }
 

@@ -6,7 +6,7 @@ import House from './pages/House/House';
 import Register from './pages/Register/Register';
 import Login from './pages/Login/Login';
 import About from './pages/About/About';
-
+import Reviews from './pages/Reviews/Reviews';
 const App = () => (
     <BrowserRouter>
         <Routes>
@@ -16,6 +16,7 @@ const App = () => (
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/about" element={<About />} />
+            <Route path="/reviews" element={<Reviews />} />
         </Routes>
     </BrowserRouter>
 );

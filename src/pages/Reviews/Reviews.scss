@@ -1,0 +1,250 @@
+/* ================== Hero Section ================== */
+.hero-section {
+  position: relative;
+  height: 600px;
+  background-image: 
+    linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url('../../images/fon-reviews.svg');
+  background-size: cover;
+  background-position:top;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #fff;
+  margin-bottom: 80px;
+}
+
+.hero-content {
+  padding-top: 100px;
+}
+
+.hero-title {
+  font-size: 64px;
+  font-weight: 800;
+  line-height: 1.1;
+  max-width: 600px;
+}
+
+/* ================== Stats Bar ================== */
+.stats-bar {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1.5fr 1.6fr 1.5fr;
+  gap: 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 0 20px;
+}
+
+.stat-card {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #fff;
+  min-height: 140px;
+
+  &.black {
+    background-color: var(--color-dark);
+    position: relative;
+  }
+
+  &.pink {
+    background-color: var(--color-primary);
+  }
+
+  &.blue {
+    background-color: var(--color-brand-blue);
+  }
+}
+
+.stars {
+  color: #FBBF24; // Standardized gold
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+.rating-title {
+  font-size: 36px;
+  font-weight: 700;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.stat-text {
+  font-size: 16px;
+  opacity: 1;
+}
+
+.stat-big {
+  font-size: 32px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-sub {
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+.weather-icon,
+.user-icon-stat {
+  font-size: 20px;
+  opacity: 0.8;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ================== Reviews Section ================== */
+.reviews-section {
+  padding: 80px 0;
+  background-color: var(--color-background, #fff);
+}
+
+.review-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  background-color: var(--color-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 50%;
+  }
+
+  .avatar-icon {
+    color: var(--color-brand-blue);
+  }
+}
+
+.review-info {
+  flex: 1;
+}
+
+.review-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-dark);
+  margin-bottom: 10px;
+}
+
+.review-author {
+  font-size: 16px;
+  color: var(--color-primary);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-arrow {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--color-light);
+  color: var(--color-brand-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: var(--color-brand-blue);
+    color: white;
+  }
+}
+
+.review-body {
+  border-top: 2px solid #e1e1e2;
+  padding-top: 20px;
+}
+
+.review-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--color-text-main);
+  position: relative;
+}
+
+.date {
+  font-weight: 700;
+  color: var(--color-text-light);
+  margin-right: 15px;
+  font-size: 14px;
+}
+
+.review-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.cottage-section {
+  padding: 80px 0;
+  background-color: var(--color-light);
+
+  .section-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 50px;
+    color: var(--color-brand-blue);
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: 48px;
+  }
+
+  .stats-bar {
+    grid-template-columns: 1fr;
+    max-width: 90%;
+    bottom: -150px;
+  }
+
+  .hero-section {
+    margin-bottom: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 36px;
+  }
+
+  .review-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .controls {
+    margin-top: 10px;
+  }
+}
