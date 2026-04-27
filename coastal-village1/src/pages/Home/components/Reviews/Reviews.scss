@@ -1,0 +1,292 @@
+.reviews {
+  padding: 2rem 0 0;
+  background-color: var(--color-bg-light); // Off-white to break up pure white sections
+  position: relative;
+  overflow: hidden;
+
+
+  // Subtle decorative background
+  &::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(91, 134, 229, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    margin: 0 0.5rem 1rem 0.5rem; // Меньше отступ под заголовком
+
+    @media (min-width: 768px) {
+      margin: 0 2rem 2rem 2rem;
+      align-items: flex-end;
+    }
+  }
+
+  &__header-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(91, 134, 229, 0.1);
+    color: var(--color-primary);
+    border-radius: 99px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+    align-self: flex-start;
+  }
+
+  &__title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--color-brand-blue);
+    margin: 0;
+
+    @media (min-width: 768px) {
+      font-size: 2.25rem;
+    }
+  }
+
+  &__controls {
+    display: none;
+
+    @media (min-width: 768px) {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__carousel-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid #edf2f7;
+    color: var(--color-primary);
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(23, 72, 102, 0.1);
+
+    &--prev {
+      left: 0;
+      @media (min-width: 1024px) {
+        left: -6rem;
+      }
+    }
+
+    &--next {
+      right: 0;
+      @media (min-width: 1024px) {
+        right: -4rem;
+      }
+    }
+
+    &:hover:not(:disabled) {
+      background: var(--color-primary);
+      color: white;
+      border-color: var(--color-primary);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    @media (max-width: 640px) {
+      display: none; // Скрываем боковые стрелки на мобилках полностью
+    }
+  }
+
+  &__mobile-btn-container {
+    display: block;
+    margin-top: 0.75rem; // Уменьшен отступ, так как стрелок-кругляшей больше нет
+    padding: 0 0.5rem;
+
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+
+  &__slider-wrapper {
+    overflow: hidden;
+    width: 100%;
+    padding: 0.5rem 0; // Оставляем только верхний/нижний микро-отступ для теней
+    margin: 0;
+
+    @media (min-width: 768px) {
+      margin: 0 -1rem;
+      padding: 1rem;
+    }
+  }
+
+  &__slider-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    align-items: stretch; // Заставляет все слайды быть одной высоты (по самому высокому)
+  }
+
+  &__slide {
+    flex: 0 0 100%;
+    padding: 0 0.5rem; // tight for mobile
+    display: flex; // Чтобы вытягивать карточку внутри
+    flex-direction: column;
+
+    @media (min-width: 768px) {
+      flex: 0 0 50%;
+      padding: 0 1rem;
+    }
+  }
+
+  &__card {
+    background-color: white;
+    padding: 1.5rem; // Меньше отступов внутри карточки на мобилках
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(23, 72, 102, 0.04);
+    position: relative;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    z-index: 1;
+    height: 100%; // Карточка занимает всю высоту слайда
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: 768px) {
+      padding: 2.5rem;
+    }
+
+    &:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(23, 72, 102, 0.08);
+      
+      .reviews__quote-icon {
+        color: var(--color-primary);
+        opacity: 0.15;
+        transform: scale(2) rotate(-5deg);
+      }
+    }
+  }
+
+  &__quote-icon {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    color: var(--color-text-light);
+    opacity: 0.05; // Сделаем кавычки менее броскими на мобилках
+    z-index: -1;
+    transform: scale(1.5);
+    transition: all 0.4s ease;
+
+    @media (min-width: 768px) {
+      top: 2.5rem;
+      right: 2rem;
+      opacity: 0.1;
+      transform: scale(2);
+    }
+  }
+
+  &__card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem; // Было 1.25rem
+    margin-bottom: 1rem; // Было 1.5rem
+  }
+
+  &__avatar {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 30%;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+
+    &--placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f0f4f8;
+      color: #5B86E5;
+    }
+  }
+
+  &__date {
+    font-size: 0.75rem;
+    color: var(--color-text-light);
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+  }
+
+  &__name {
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: var(--color-dark);
+  }
+
+  &__text {
+    color: var(--color-text-main);
+    font-size: 0.875rem; // 14px для мобилок
+    line-height: 1.5;
+    position: relative;
+    z-index: 2;
+    margin: 0; // Убрали лишние отступы абзаца
+    
+    // Обрезаем слишком длинный текст
+    display: -webkit-box;
+    -webkit-line-clamp: 6; // Ограничение в 6 строк для мобилки
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    @media (min-width: 768px) {
+      font-size: 0.95rem; // ~15px для десктопа
+      line-height: 1.6;
+      -webkit-line-clamp: 8; // На десктопе можно показать больше
+    }
+  }
+
+  &__loading {
+    text-align: center;
+    padding: 50px;
+  }
+
+  &__empty {
+    text-align: center;
+    padding: 50px;
+    color: #666;
+  }
+
+  &__stars-container {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 10px;
+  }
+
+  &__btn-full {
+    width: 100%;
+  }
+}

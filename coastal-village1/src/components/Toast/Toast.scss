@@ -1,0 +1,107 @@
+.toast-container {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.toast-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  min-width: 300px;
+  max-width: 420px;
+  pointer-events: auto;
+  animation: toast-slide-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.05);
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+  }
+
+  &--success {
+    &::before { background-color: var(--color-primary); }
+    .toast-message__icon { color: var(--color-primary); }
+  }
+
+  &--error {
+    &::before { background-color: var(--color-danger, #ef4444); }
+    .toast-message__icon { color: var(--color-danger, #ef4444); }
+  }
+
+  &--info {
+    &::before { background-color: var(--color-primary, #3b82f6); }
+    .toast-message__icon { color: var(--color-primary, #3b82f6); }
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  &__content {
+    flex-grow: 1;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--color-dark, #1e293b);
+  }
+
+  &__close {
+    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+
+    &:hover {
+      color: #475569;
+    }
+  }
+}
+
+@keyframes toast-slide-in {
+  from {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .toast-container {
+    top: 16px;
+    right: 16px;
+    left: 16px; /* Spread across screen */
+    align-items: center;
+  }
+  
+  .toast-message {
+    width: 100%;
+    max-width: 100%;
+  }
+}

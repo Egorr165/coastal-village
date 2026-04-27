@@ -1,0 +1,36 @@
+# Сборки и кэш
+node_modules/
+dist/
+build/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Виртуальные окружения Python
+venv/
+env/
+.venv/
+
+# Настройки IDE
+.idea/
+.vscode/
+
+# Архивы и тяжелые файлы
+*.zip
+*.tar.gz
+*.pptx
+*.pdf
+
+# Секреты и локальные переменные
+.env
+.env.local
+
+# База данных SQLite (если локально используете)
+db.sqlite3
+
+# Папки для медиа и статики бэкенда
+media/
+static/
+
+# Let's Encrypt папки
+data/certbot/

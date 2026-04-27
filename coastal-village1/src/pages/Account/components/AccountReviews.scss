@@ -1,0 +1,38 @@
+.account-reviews {
+  &__loading, &__empty {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .account-review-item {
+    border-bottom: 1px solid #EAEAEA;
+    padding: 20px 0;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    &__stars {
+      display: flex;
+      gap: 4px;
+    }
+
+    &__date {
+      color: #8C8C8C;
+      font-size: 14px;
+    }
+
+    &__comment {
+      font-size: 16px;
+      line-height: 1.5;
+      color: #333333;
+    }
+  }
+}

@@ -1,0 +1,210 @@
+.contact-form-section {
+  position: relative;
+  padding: 5rem 0;
+
+  background: linear-gradient(90deg, #304E8A 15%, #65aad8 80%);
+  color: #ffffff;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30%;
+    height: 175%;
+
+    background-image:
+      linear-gradient(90deg, #5D9EC9 3%, rgba(84, 143, 189, 0) 250%),
+      url('../../images/ContactForm.webp');
+
+    background-size: cover;
+    background-position: center 25%;
+    background-repeat: no-repeat;
+
+    z-index: 1;
+
+    @media (max-width: 900px) {
+      width: 100%;
+      height: 100%;
+      opacity: 0.05; // Спокойный фоновый узор, а не обрубленное фото
+      background-image: url('../../images/ContactForm.webp');
+      background-position: center center;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 3rem 0;
+  }
+
+  &__container {
+    position: relative;
+    z-index: 2;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  &__title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2.5rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.75rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+  }
+}
+
+.contact-form {
+  &__layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px 10px;
+    align-items: center;
+    width: 70%;
+
+    @media (max-width: 900px) {
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      gap: 12px; // Делаем элементы ближе друг к другу
+    }
+  }
+
+  &__input-wrapper,
+  &__btn-wrapper,
+  &__agreement-wrapper {
+    flex: 0 0 calc(50% - 15px);
+    width: calc(50% - 15px);
+
+    @media (max-width: 768px) {
+      flex: 0 0 100%;
+      width: 100%;
+    }
+  }
+
+  &__input-wrapper {
+    position: relative;
+
+    &--phone {
+      display: flex;
+      align-items: center;
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding-left: 1.25rem;
+      overflow: hidden;
+
+      .contact-form__input {
+        padding-left: 0.5rem;
+      }
+    }
+  }
+
+  &__flag {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  &__input {
+    width: 100%;
+    height: 46px; // Немного убавили для десктопа
+    background-color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 0 1.25rem;
+    font-size: 1rem;
+    color: var(--color-text-main);
+    outline: none;
+
+    &::placeholder {
+      color: var(--color-text-light);
+    }
+
+    @media (max-width: 768px) {
+      height: 42px; // Делаем поля еще компактнее на мобилках
+      padding: 0 1rem;
+    }
+  }
+
+  &__submit {
+    height: 46px;
+    width: 100%;
+    font-size: 0.85rem;
+    border-radius: 10px;
+
+    @media (max-width: 768px) {
+      height: 42px;
+      font-size: 0.8rem;
+    }
+  }
+
+  &__agreement-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+
+    @media (max-width: 768px) {
+      padding-right: 0;
+      margin-top: 0.5rem;
+    }
+  }
+
+  &__checkbox {
+    margin-top: 2px;
+    cursor: pointer;
+    flex-shrink: 0;
+    width: 17px;
+    height: 17px;
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:checked {
+      background-color: var(--color-primary);
+      border-color: var(--color-primary);
+
+      &::after {
+        content: '';
+        width: 6px;
+        height: 11px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        margin-top: -2px;
+      }
+    }
+
+    &:not(:checked) {
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  &__agreement {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.5;
+    cursor: pointer;
+
+    a {
+      color: #ffffff;
+      text-decoration: underline;
+      transition: color 0.2s;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}

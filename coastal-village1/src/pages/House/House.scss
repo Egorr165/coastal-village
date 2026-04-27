@@ -1,0 +1,144 @@
+.house-page {
+  background-color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: var(--color-dark);
+
+  .main-content {
+    padding-bottom: 80px;
+    display: flex;
+    flex-direction: column;
+
+    &.not-found,
+    &.house-page__loading {
+      padding: 100px;
+      text-align: center;
+
+      .back-btn {
+        margin-top: 20px;
+        padding: 10px 20px;
+        cursor: pointer;
+        background-color: var(--color-primary);
+        color: white;
+        border-radius: 8px;
+
+        &:hover {
+          background-color: var(--color-primary-hover);
+        }
+      }
+    }
+  }
+
+  .house-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 50px;
+    margin-top: 40px;
+    position: relative;
+
+    &__left {
+      flex: 1.5;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 45px;
+    }
+
+    &__right {
+      flex: 1;
+      display: block;
+    }
+  }
+
+  .sticky-sidebar {
+    position: sticky;
+    top: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .sidebar-header-titles {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .sidebar-titles {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .house-main-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--color-dark);
+      margin: 0;
+      line-height: 1.2;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .house-number-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      background-color: var(--color-brand-blue);
+      color: white;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .share-btn {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+
+      &__icon {
+        display: block;
+      }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .house-layout {
+      flex-direction: column;
+    }
+
+    .house-layout__right {
+      width: 100%;
+    }
+
+    .sticky-sidebar {
+      position: static;
+    }
+  }
+
+  /* Детали дома (Левая колонка обертка) */
+  .property-details {
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+  }
+
+  .bottom-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    margin-top: 60px;
+    margin-bottom: 80px;
+  }
+}

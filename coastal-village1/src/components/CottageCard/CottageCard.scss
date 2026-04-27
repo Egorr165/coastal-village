@@ -1,0 +1,228 @@
+.cottage-card {
+  display: flex;
+  background-color: white;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid var(--color-light);
+  margin-bottom: 15px;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+  }
+
+  // Левая часть с картинкой
+  &__gallery {
+    position: relative;
+    width: 45%;
+    height: 380px;
+    flex-shrink: 0;
+    padding: 20px;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 20px;
+  }
+
+  &__nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    background-color: rgba(240, 244, 248, 0.9);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-dark);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+
+    &:hover {
+      background-color: white;
+      color: var(--color-brand-blue);
+    }
+
+    &.left {
+      left: 40px;
+    }
+
+    &.right {
+      right: 40px;
+    }
+  }
+
+  &__dots {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    z-index: 2;
+  }
+
+  &__dot {
+    width: 24px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 2px;
+    transition: background-color 0.3s;
+
+    &.active {
+      background-color: white;
+    }
+  }
+
+  &--reversed {
+    flex-direction: row-reverse;
+
+    // На телефонах мы сбрасываем реверс, чтобы картинка всегда была сверху!
+    @media (max-width: 900px) {
+      flex-direction: column;
+    }
+  }
+
+  // Правая часть с инфой
+  &__info {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  &__title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-dark);
+    margin-bottom: 32px;
+    line-height: 1.2;
+  }
+
+  &__features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 16px;
+      color: var(--color-text-light);
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    &__feature-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+  }
+
+  &__price {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--color-dark);
+
+    span {
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+
+  // Адаптив
+  @media (max-width: 900px) {
+    flex-direction: column;
+
+    &__gallery {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      flex-shrink: 0;
+      padding: 16px;
+    }
+
+    &__info {
+      padding: 24px;
+    }
+
+    &__footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    &__btn {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 576px) {
+    &__gallery {
+      height: 220px;
+      padding: 12px;
+    }
+
+    &__image {
+      border-radius: 12px;
+    }
+
+    &__nav-btn {
+      width: 32px;
+      height: 32px;
+      &.left { left: 24px; }
+      &.right { right: 24px; }
+    }
+
+    &__info {
+      padding: 16px 20px 24px;
+    }
+
+    &__title {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    &__features {
+      gap: 12px;
+      margin-bottom: 20px;
+
+      li {
+        font-size: 14px;
+        gap: 12px;
+      }
+    }
+
+    &__feature-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    &__price {
+      font-size: 20px;
+      span { font-size: 14px; }
+    }
+    
+
+  }
+}

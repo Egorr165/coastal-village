@@ -1,0 +1,304 @@
+// src/components/Footer/Footer.scss
+.footer {
+  position: relative;
+  background: #ffffff;
+  padding: 5rem 0 3rem 0;
+  color: var(--color-text-main);
+  border-top: 2px solid rgba(0, 0, 0, 0.03);
+
+  @media (max-width: 768px) {
+    padding: 3rem 0 2rem 0;
+  }
+
+  a {
+    color: var(--color-text-main);
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: var(--color-primary);
+    }
+  }
+
+  &__container {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  &__layout {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1.5fr 1fr;
+    gap: 40px;
+    margin-bottom: 50px;
+    align-items: flex-start;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px 20px;
+    }
+
+    @media (max-width: 640px) {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      margin-bottom: 24px;
+    }
+  }
+
+  &__logo-col {
+    display: flex;
+    flex-direction: column;
+
+    @media (max-width: 640px) {
+      order: 1;
+      align-items: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      width: 100%;
+    }
+  }
+
+  &__logo-link {
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__brand-num {
+    font-size: 46px;
+    font-weight: 900;
+    line-height: 0.9;
+    color: var(--color-primary);
+
+    @media (max-width: 640px) {
+      font-size: 40px;
+    }
+  }
+
+  &__brand-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__brand-name {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    transition: color 0.3s ease;
+
+    @media (max-width: 640px) {
+      font-size: 18px;
+    }
+  }
+
+  &__brand-desc {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 1px;
+  }
+
+  &__col-title {
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: var(--color-dark);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
+
+    @media (max-width: 640px) {
+      font-size: 1.125rem;
+      margin-bottom: 1.25rem;
+    }
+  }
+
+  &__nav-col {
+    @media (max-width: 640px) {
+      order: 4; // Навигация в самом низу перед копирайтом
+      width: 100%;
+      padding-top: 16px;
+    }
+  }
+
+  &__links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    @media (max-width: 640px) {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); // Превращаем ссылки в 2 колонки навигации!
+      gap: 14px 10px;
+    }
+
+    li a {
+      font-size: 14px;
+      font-weight: 400;
+
+      @media (max-width: 640px) {
+        font-size: 13px;
+      }
+    }
+  }
+
+  &__contacts-col {
+    @media (max-width: 640px) {
+      order: 3; // Контакты под соцсетями
+      width: 100%;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  &__admin-info {
+    display: flex;
+    flex-direction: column;
+    gap: 38px;
+
+    @media (max-width: 640px) {
+      gap: 20px;
+    }
+  }
+
+  &__info-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    @media (max-width: 640px) {
+      gap: 4px;
+    }
+  }
+
+  &__info-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--color-dark);
+
+    @media (max-width: 640px) {
+      font-size: 14px;
+    }
+  }
+
+  &__icon {
+    color: var(--color-primary);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__info-text {
+    font-size: 14px;
+    line-height: 1.6;
+    padding-left: 30px;
+    color: var(--color-text-main);
+
+    @media (max-width: 640px) {
+      padding-left: 30px; // Возвращаем отступ, так как у нас 1fr, места хватает
+      font-size: 14px;
+    }
+  }
+
+  &__socials-col {
+    @media (max-width: 640px) {
+      order: 2; // Сразу под логотипом
+      width: 100%;
+
+      // Прячем заголовок "Социальные сети" для визуальной чистоты
+      .footer__col-title {
+        display: none;
+      }
+    }
+  }
+
+  &__socials {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+
+    @media (max-width: 640px) {
+      flex-direction: row; // Выстраиваем иконки в ряд по горизонтали
+      justify-content: center;
+      gap: 28px;
+    }
+  }
+
+  &__social-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-main);
+
+    img {
+      border-radius: 4px;
+    }
+
+    @media (max-width: 640px) {
+      // Скрываем текст, оставляем только большие иконки для тач-интерфейса
+      font-size: 0;
+      gap: 0;
+
+      img {
+        width: 36px;
+        height: 36px;
+        border-radius: 4px;
+      }
+    }
+  }
+
+  &__bottom {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: var(--color-text-light);
+    font-weight: 400;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 12px;
+      align-items: center; // Центрируем копирайт и ссылки
+      text-align: center;
+      padding-top: 24px;
+      font-size: 12px;
+    }
+  }
+
+  &__bottom-links {
+    display: flex;
+    gap: 70px;
+
+    @media (max-width: 1024px) {
+      gap: 30px;
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+  }
+}

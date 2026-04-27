@@ -1,0 +1,125 @@
+.faq-section {
+  padding: 5rem 0;
+  background-color: #ffffff;
+
+  @media (max-width: 768px) {
+    padding: 3rem 0;
+  }
+}
+
+.faq-container {
+  max-width: var(--container-width, 1200px);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.faq {
+  &__title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--color-brand-blue);
+    margin-bottom: 2.5rem;
+    
+    @media (max-width: 576px) {
+      font-size: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgba(0, 0, 0, 0.08); // Мягкая верхняя граница для завершенного вида
+  }
+
+  &__item {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08); // Мягкая нижняя граница
+  }
+
+  &__question-btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 0;
+    text-align: left;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      .faq__question-text {
+        color: var(--color-primary);
+      }
+      
+    }
+
+    @media (max-width: 576px) {
+      padding: 1.25rem 0;
+    }
+  }
+
+  &__question-text {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-dark);
+    line-height: 1.4;
+    padding-right: 1.5rem; // Больше места для иконки
+    transition: color 0.3s ease;
+
+    &.active {
+      color: var(--color-primary);
+    }
+
+    @media (max-width: 576px) {
+      font-size: 1rem;
+    }
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    color: var(--color-brand-blue);
+    background-color: transparent;
+    transition: all 0.3s ease;
+
+    @media (max-width: 576px) {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+
+  &__answer {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.open {
+      max-height: 500px; 
+      opacity: 1;
+      padding-bottom: 1.5rem;
+
+      @media (max-width: 576px) {
+        padding-bottom: 1.25rem;
+      }
+    }
+  }
+
+  &__answer-text {
+    font-size: 1rem;
+    color: var(--color-text-main);
+    line-height: 1.6;
+    font-weight: 400;
+
+    @media (max-width: 576px) {
+      font-size: 0.875rem;
+    }
+  }
+}

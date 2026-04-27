@@ -1,0 +1,32 @@
+.description-text {
+  h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-dark);
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-text-light);
+    margin-bottom: 16px;
+  }
+
+  .description-list {
+    margin: 0 0 10px 0;
+    padding-left: 20px;
+    
+    li {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--color-text-light);
+      margin-bottom: 8px;
+      position: relative;
+      
+      &::marker {
+        color: var(--color-primary);
+      }
+    }
+  }
+}

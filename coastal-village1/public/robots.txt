@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin
+Disallow: /profile
+Disallow: /account
+
+Sitemap: https://caspiy-riviera.ru/sitemap.xml

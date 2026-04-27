@@ -1,0 +1,243 @@
+// Calendar modal
+.calendar-modal-container {
+  position: relative;
+  z-index: 9999999;
+}
+
+.calendar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.calendar-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 400px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  z-index: 1000001;
+  animation: modalAppear 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalAppear {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.calendar-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid var(--color-light);
+}
+
+.calendar-modal-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-dark);
+}
+
+.calendar-modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-light);
+  color: var(--color-text-light);
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--color-primary);
+    color: white;
+  }
+}
+
+.calendar-modal-content {
+  padding: 20px;
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.calendar-nav {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--color-light);
+  background: white;
+  color: var(--color-text-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+  }
+}
+
+.calendar-month {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-dark);
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 8px;
+}
+
+.weekday {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  padding: 8px 0;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom: 16px;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-dark);
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+
+  &:hover:not(.empty):not(.past):not(.booked) {
+    background: rgba(255, 113, 126, 0.1);
+    transform: scale(1.05);
+  }
+
+  &.empty {
+    cursor: default;
+  }
+
+  &.past {
+    color: var(--color-text-light);
+    cursor: not-allowed;
+
+    &:hover {
+      background: white;
+      transform: none;
+    }
+  }
+
+  &.booked {
+    background: #ebedf2;
+    color: var(--color-text-light);
+    cursor: not-allowed;
+  }
+
+  &.check-in,
+  &.check-out {
+    background: var(--color-primary);
+    color: white;
+    font-weight: 600;
+  }
+
+  &.in-range {
+    background: rgba(255, 113, 126, 0.1);
+  }
+}
+
+.booked-dot {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: var(--color-primary);
+  border-radius: 50%;
+}
+
+.calendar-legend {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--color-light);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--color-text-light);
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+
+  &.available {
+    background: var(--color-primary);
+  }
+
+  &.booked {
+    background: var(--color-text-light);
+  }
+
+  &.selected {
+    background: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(255, 113, 126, 0.3);
+  }
+}

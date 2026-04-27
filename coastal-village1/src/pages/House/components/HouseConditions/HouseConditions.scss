@@ -1,0 +1,30 @@
+.conditions-box h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--color-dark);
+}
+
+.conditions-list {
+  list-style: none;
+
+  li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 16px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-text-light);
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 6px;
+      height: 6px;
+      background-color: var(--color-primary);
+      border-radius: 50%;
+    }
+  }
+}

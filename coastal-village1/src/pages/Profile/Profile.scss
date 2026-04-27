@@ -1,0 +1,70 @@
+.profile-page {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--color-light) 0%, var(--color-background) 100%);
+
+  .profile-card {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 3rem;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-out;
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--color-dark);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .info-group {
+      margin-bottom: 1.5rem;
+
+      label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-text-light);
+        margin-bottom: 0.5rem;
+      }
+
+      .value {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--color-dark);
+        padding: 0.75rem 1rem;
+        background-color: var(--color-background);
+        border-radius: 0.5rem;
+        border: 1px solid var(--color-light);
+      }
+    }
+
+    .placeholder-msg {
+      margin-top: 2rem;
+      font-size: 0.875rem;
+      color: var(--color-text-light);
+      text-align: center;
+      font-style: italic;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

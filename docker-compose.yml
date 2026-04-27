@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: 7continent_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_BD:-7continent}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: 
+      context: ./sevencontinent
+      dockerfile: Dockerfile
+    container_name: 7continent_backend
+    restart: always
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+      - POSTGRES_BD=${POSTGRES_BD:-7continent}
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - SECRET_KEY=${SECRET_KEY:-django-insecure-key-change-me-in-prod}
+      - DEBUG=False
+    volumes:
+      - media_data:/app/media
+      - static_data:/app/static
+
+  frontend:
+    build:
+      context: ./coastal-village1
+      dockerfile: Dockerfile
+    container_name: 7continent_frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+      - "443:443"
+    # Эта команда позволяет Nginx автоматически перезагружать сертификаты после их обновления Certbot'ом
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    volumes:
+      - static_data:/app/static:ro
+      - media_data:/app/media:ro
+      # Подключаем папки с сертификатами
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+
+  certbot:
+    image: certbot/certbot
+    container_name: 7continent_certbot
+    restart: unless-stopped
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    # Каждые 12 часов проверяет, нужно ли обновить сертификат (он действует 90 дней, обновляется за 30 дней до конца)
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+volumes:
+  postgres_data:
+  media_data:
+  static_data:
