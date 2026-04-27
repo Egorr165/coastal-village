@@ -149,7 +149,13 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER      # От кого будут прихо�
 
 
 # CORS settings
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [
+    "https://7continent-dagestan.ru",
+    "https://www.7continent-dagestan.ru",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
 
 
 # Internationalization
