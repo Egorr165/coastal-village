@@ -155,6 +155,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://www.7continent-dagestan.ru",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "http://localhost:45678",
+    "http://127.0.0.1:45678",
 ]
 
 

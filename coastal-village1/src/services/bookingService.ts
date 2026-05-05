@@ -28,41 +28,28 @@ export interface CreateBookingData {
 }
 
 const bookingService = {
-  /**
-   * Получить предстоящие активные бронирования пользователя
-   */
   getUpcomingBookings: async (): Promise<BookingResponse[]> => {
     const response = await api.get<BookingResponse[]>('/api/bookings/upcoming/');
     return response.data;
   },
 
-  /**
-   * Получить все бронирования пользователя (история)
-   */
   getMyBookings: async (): Promise<BookingResponse[]> => {
     const response = await api.get<BookingResponse[]>('/api/bookings/my_bookings/');
     return response.data;
   },
 
-  /**
-   * Создать новое бронирование
-   */
   createBooking: async (data: CreateBookingData): Promise<BookingResponse> => {
     const response = await api.post<BookingResponse>('/api/bookings/', data);
     return response.data;
   },
 
-  /**
-   * Отменить существующее бронирование
-   */
+
   cancelBooking: async (id: number): Promise<BookingResponse> => {
     const response = await api.post(`/api/bookings/${id}/cancel/`);
     return response.data.booking;
   },
 
-  /**
-   * Получить следующий предсказываемый номер брони
-   */
+
   getNextBookingId: async (): Promise<number> => {
     const response = await api.get('/api/bookings/next-id/');
     return response.data.next_id;

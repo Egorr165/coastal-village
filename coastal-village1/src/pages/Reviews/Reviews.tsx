@@ -17,6 +17,7 @@ import type { House } from '../../types/house';
 import ContactForm from '../../components/ContactForm/ContactForm';
 import Button from '../../components/Button/Button';
 import ReviewModal from './components/ReviewModal/ReviewModal';
+import { Helmet } from 'react-helmet-async';
 
 
 const Reviews = () => {
@@ -125,8 +126,31 @@ const Reviews = () => {
     setIsModalOpen(false);
   };
 
+  const reviewsSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product", 
+    "name": "Отзывы о базе отдыха 7Continent",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9", 
+      "reviewCount": "25"  
+    }
+  };
+
   return (
     <div className="app">
+
+      <Helmet>
+        <title>Отзывы о базе отдыха в Дагестане 7 Континент</title>
+        <meta 
+          name="description" 
+          content="Читайте реальные отзывы наших гостей об аренде коттеджей и отпуске в 7 Континент. Узнайте, почему нас выбирают для лучшего отдыха на Каспийском море!" 
+        />
+        <script type="application/ld+json">
+          {JSON.stringify(reviewsSchema)}
+        </script>
+      </Helmet>
+
       <Header />
 
       <section className="hero-section">

@@ -17,8 +17,8 @@ import CatalogCard from './components/CatalogCard/CatalogCard';
 
 import CatalogFilters from './components/CatalogFilters/CatalogFilters';
 import CatalogMap from './components/CatalogMap/CatalogMap';
+import { Helmet } from 'react-helmet-async';
 
-// Фолбэк-изображения на случай, если в админке еще не загрузили фото
 const defaultPlaceholder = 'https://placehold.co/800x600?text=ФОТО+ИЗ+АДМИНКИ';
 
 const Catalog = () => {
@@ -28,7 +28,6 @@ const Catalog = () => {
   const [endDate, setEndDate] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<'big' | 'small' | null>(null);
 
-  // Загружаем параметры из URL при монтировании
   useEffect(() => {
     const urlCheckIn = searchParams.get('checkIn');
     const urlCheckOut = searchParams.get('checkOut');
@@ -57,7 +56,6 @@ const Catalog = () => {
     return matchesType && isAvailable;
   });
 
-  // Группировка домиков по типу (оставляем только первые попавшиеся доступные каждой категории)
   const groupedHouses: Record<string, House> = {};
   filteredHouses.forEach(house => {
     if (!groupedHouses[house.type]) {
@@ -78,8 +76,58 @@ const Catalog = () => {
 
   if (loading) return <div className="catalog__loading">Загрузка домиков...</div>;
 
+  const catalogSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "url": "https://7continent-dagestan.ru/house/15"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "url": "https://7continent-dagestan.ru/house/16"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "url": "https://7continent-dagestan.ru/house/18"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "url": "https://7continent-dagestan.ru/house/19"
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "url": "https://7continent-dagestan.ru/house/20"
+      },
+      {
+        "@type": "ListItem",
+        "position": 6,
+        "url": "https://7continent-dagestan.ru/house/21"
+      }
+    ]
+  };
+
   return (
     <div className="catalog">
+
+      <Helmet>
+        <title>Снять коттедж в Дагестане у моря — Цены и фото домиков | 7 Континент</title>
+        <meta 
+          name="description" 
+          content="Выберите идеальный домик для отдыха на Каспийском море. В нашем каталоге — коттеджи разной вместимости со всеми удобствами. Честные цены, отзывы и фото." 
+        />
+
+        <script type="application/ld+json">
+          {JSON.stringify(catalogSchema)}
+        </script>
+      </Helmet>
+
       <Header />
 
       <CatalogFilters
@@ -99,15 +147,7 @@ const Catalog = () => {
               {!hasAvailableHouses && (
                 <div className="catalog__no-results">
                   <p className="catalog__no-results-title">
-                    На выбранные даты все коттеджи заняты
-                  </p>
-                  <p className="catalog__no-results-text">
-                    Ближайшая дата для 6-местного дома:{' '}
-                    {nearestBigDate ?? 'нет доступных дат'}
-                  </p>
-                  <p className="catalog__no-results-text">
-                    Ближайшая дата для 4-местного дома:{' '}
-                    {nearestSmallDate ?? 'нет доступных дат'}
+                    К сожалению на выбранные даты все коттеджи этого типа заняты.
                   </p>
                 </div>
               )}

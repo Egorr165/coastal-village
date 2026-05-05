@@ -1,18 +1,23 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import React from 'react';
+import { hydrateRoot, createRoot } from 'react-dom/client';
 import App from './App';
-import './styles/main.scss';
-import { AuthProvider } from './features/auth/AuthContext';
+import './styles/main.scss'; 
+import { HelmetProvider } from 'react-helmet-async';
 
-const rootElement = document.getElementById('root');
-if (!rootElement) {
-  throw new Error('Root element not found');
-}
+const rootElement = document.getElementById('root') as HTMLElement;
 
-createRoot(rootElement).render(
-  <StrictMode>
-    <AuthProvider>
+const app = (
+  <React.StrictMode>
+    <HelmetProvider>
       <App />
-    </AuthProvider>
-  </StrictMode>
+    </HelmetProvider>
+  </React.StrictMode>
 );
+
+// Проверяем: если внутри <div id="root"> уже есть HTML (от react-snap),
+// то мы его "гидратируем" (оживляем). Если нет — рендерим как обычно.
+if (rootElement.hasChildNodes()) {
+  hydrateRoot(rootElement, app);
+} else {
+  createRoot(rootElement).render(app);
+}

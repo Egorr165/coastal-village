@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes, Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from './features/auth/AuthContext';
+import { useAuth, AuthProvider } from './features/auth/AuthContext'; 
+import ToastContainer from './components/Toast/ToastContainer'; 
+
 import About from './pages/About/About';
 import Booking from './pages/Booking/Booking';
 import Catalog from './pages/Catalog/Catalog';
@@ -29,7 +31,7 @@ const AppRoutes = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    // Автоматический разлогин админа при выходе за пределы админ-панели
+    // Автоматический разлогин админа при выходе за пределы админ-панели
     useEffect(() => {
         if (user?.is_staff && !location.pathname.startsWith('/admin-board') && location.pathname !== '/login') {
             logout();
@@ -85,12 +87,12 @@ const AppRoutes = () => {
     );
 };
 
-import ToastContainer from './components/Toast/ToastContainer';
-
 const App = () => (
   <BrowserRouter>
-    <ToastContainer />
-    <AppRoutes />
+    <AuthProvider>
+      <ToastContainer />
+      <AppRoutes />
+    </AuthProvider>
   </BrowserRouter>
 );
 

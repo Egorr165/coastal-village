@@ -76,4 +76,3 @@ echo
 echo "### Перезагрузка nginx ..."
 docker compose exec frontend nginx -s reload
 
-echo "### ГОТОВО! Теперь ваш сайт должен быть доступен по HTTPS."

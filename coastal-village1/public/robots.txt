@@ -3,4 +3,4 @@ Disallow: /admin
 Disallow: /profile
 Disallow: /account
 
-Sitemap: https://caspiy-riviera.ru/sitemap.xml
+Sitemap: https://7continent-dagestan.ru/sitemap.xml

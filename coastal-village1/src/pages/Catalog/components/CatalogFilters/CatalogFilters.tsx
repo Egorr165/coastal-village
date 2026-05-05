@@ -25,7 +25,6 @@ const CatalogFilters = ({
   const [isGuestsOpen, setIsGuestsOpen] = useState(false);
   const [activeDatePicker, setActiveDatePicker] = useState<'checkIn' | 'checkOut' | null>(null);
 
-  // Закрытие дропдауна гостей при клике вне
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;

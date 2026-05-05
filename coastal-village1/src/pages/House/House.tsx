@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { Share2 } from 'lucide-react';
+import { Helmet } from 'react-helmet-async'; // ДОБАВЛЕН ИМПОРТ HELMET
 import { useAuth } from '../../features/auth/AuthContext';
 import { fetchHouses, getFirstAvailableHouse } from '../../services/availabilityService';
 import bookingService from '../../services/bookingService';
@@ -25,7 +26,14 @@ import HouseConditions from './components/HouseConditions/HouseConditions';
 import HouseDescription from './components/HouseDescription/HouseDescription';
 import HouseMap from './components/HouseMap/HouseMap';
 
-// Фолбэк изображение, если у домика нет фото
+// Декларация для TypeScript, чтобы он понимал объект Яндекс.Метрики
+declare global {
+  interface Window {
+    ym?: (id: number, action: string, goal: string) => void;
+  }
+}
+
+// Фолбэк изображение, если у домика нет фото
 const fallbackImage = "https://picsum.photos/seed/house/800/600";
 
 const House = () => {
@@ -97,7 +105,6 @@ const House = () => {
   const handleConfirmOrder = async (finalData?: any) => {
     if (!house || !modalBookingDetails) return;
 
-    // Находим реальный свободный домик нужного типа на эти конкретные даты
     const availableHouse = getFirstAvailableHouse(
       allHouses, 
       house.type as 'big' | 'small', 
@@ -106,7 +113,7 @@ const House = () => {
     );
 
     if (!availableHouse) {
-      addToast('К сожалению, на выбранные даты все домики такого типа уже заняты.', 'error');
+      addToast('К сожалению, на выбранные даты все домики такого типа уже заняты.', 'error');
       return;
     }
 
@@ -122,9 +129,15 @@ const House = () => {
 
       await bookingService.createBooking(payload);
       
-      addToast('Заявка успешно принята! Ожидайте звонка менеджера в течение 15 минут для уточнения деталей.', 'success');
+      // --- ОТПРАВКА ЦЕЛИ В ЯНДЕКС МЕТРИКУ ---
+      if (typeof window !== 'undefined' && window.ym) {
+        window.ym(109018163, 'reachGoal', 'booking_success'); 
+      }
+      // --------------------------------------
+
+      addToast('Заявка успешно принята! Ожидайте звонка менеджера в течение 15 минут для уточнения деталей.', 'success');
       setIsModalOpen(false);
-      navigate('/account'); // Перенаправляем в личный кабинет
+      navigate('/account'); // Перенаправляем в личный кабинет
     } catch (error: any) {
       console.error(error);
       const errorMsg = error.response?.data?.error || error.response?.data?.detail || 'Проверьте авторизацию';
@@ -137,8 +150,6 @@ const House = () => {
     phone: user.phone || '',
     email: user.email || ''
   } : null;
-
-
 
   if (loading) {
     return (
@@ -157,8 +168,8 @@ const House = () => {
       <div className="app house-page">
         <Header />
         <main className="main-content not-found">
-          <h2>Дом не найден</h2>
-          <p>Запрошенный дом не существует или был удален</p>
+          <h2>Дом не найден</h2>
+          <p>Запрошенный дом не существует или был удален</p>
           <button onClick={() => window.history.back()} className="back-btn">
             Вернуться назад
           </button>
@@ -171,13 +182,37 @@ const House = () => {
   const hasSpecificHouse = urlCheckIn && urlCheckOut;
   const baseTitle = house.type === 'big' ? '6-ти местный' : '4-х местный';
 
-  // Используем ТОЛЬКО изображения из базы данных, либо фолбэк
+  // Используем ТОЛЬКО изображения из базы данных, либо фолбэк
   const mainGalleryImages = house.images && house.images.length > 0 
     ? house.images 
     : [fallbackImage];
 
+  // --- НОВЫЙ БЛОК: ФОРМИРОВАНИЕ SEO МИКРОРАЗМЕТКИ ---
+  const houseName = hasSpecificHouse ? house.title : `${baseTitle} коттедж`;
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "LodgingBusiness",
+    "name": houseName,
+    "description": house.description || `Аренда ${baseTitle.toLowerCase()}а коттеджа на берегу Каспийского моря в Дагестане.`,
+    "image": mainGalleryImages[0],
+    "priceRange": house.pricePerNight ? `от ${house.pricePerNight} RUB` : "По запросу",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Республика Дагестан",
+      "addressCountry": "RU"
+    }
+  };
+
   return (
     <div className="app house-page">
+      <Helmet>
+        <title>{houseName} — Аренда коттеджей в Дагестане | 7 Континент</title>
+        <meta name="description" content={`Забронируйте ${houseName.toLowerCase()}. Отличный отдых на берегу Каспийского моря со всеми удобствами.`} />
+        <script type="application/ld+json">
+          {JSON.stringify(schemaData)}
+        </script>
+      </Helmet>
+
       <Header />
 
       <main className="main-content">

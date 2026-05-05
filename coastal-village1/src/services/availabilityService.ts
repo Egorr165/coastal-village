@@ -1,15 +1,11 @@
-// src/services/availabilityService.ts
 import api from './api';
 import type { House, HouseType } from '../types/house';
 
 const MS_IN_DAY = 24 * 60 * 60 * 1000;
-const SEARCH_DAYS_LIMIT = 730;
+const SEARCH_DAYS_LIMIT = 365;
 
 const toUtcDate = (dateString: string): Date => new Date(`${dateString}T00:00:00.000Z`);
 
-const formatDate = (date: Date): string => date.toISOString().slice(0, 10);
-
-const addDays = (date: Date, days: number): Date => new Date(date.getTime() + days * MS_IN_DAY);
 
 export const getNightsCount = (startDate: string, endDate: string): number => {
   const start = toUtcDate(startDate).getTime();
@@ -20,17 +16,10 @@ export const getNightsCount = (startDate: string, endDate: string): number => {
 };
 
 export const isRangeOverlap = (aStart: string, aEnd: string, bStart: string, bEnd: string): boolean => {
-  // ISO-даты 'YYYY-MM-DD' отлично сравниваются строками (намного быстрее)
   return aStart < bEnd && bStart < aEnd;
 };
 
-// =============================================
-// API Вызовы
-// =============================================
 
-/**
- * Загрузить список домиков с бэкенда
- */
 export const fetchHouses = async (): Promise<House[]> => {
   const response = await api.get('/api/cottages/');
   return response.data.map((c: any) => ({
@@ -48,9 +37,6 @@ export const fetchHouses = async (): Promise<House[]> => {
   }));
 };
 
-// =============================================
-// Локальные вычисления (работают со списком houses)
-// =============================================
 
 export const isHouseAvailable = (house: House, startDate: string, endDate: string): boolean => {
   if (!startDate || !endDate) return true;
@@ -120,7 +106,6 @@ export const findNearestAvailableDate = (houses: House[], houseType: HouseType):
     end.setDate(start.getDate() + 1);
     const endDate = end.toISOString().split('T')[0];
 
-    // Очень быстрая проверка
     const hasAvailableHouse = typeHouses.some((house) => isHouseAvailable(house, startDate, endDate));
 
     if (hasAvailableHouse) {
@@ -149,7 +134,6 @@ export const getBookedDatesForMonth = (
       const start = new Date(range.startDate);
       const end = new Date(range.endDate);
       
-      // Бронируем только "ночи" (d < end), так как в день выезда (end) может заехать другой гость
       for (let d = new Date(start); d < end; d.setDate(d.getDate() + 1)) {
         const dateStr = d.toISOString().split('T')[0];
         if (d.getMonth() + 1 === month && d.getFullYear() === year) {
@@ -161,7 +145,6 @@ export const getBookedDatesForMonth = (
   
   const bookedDates: string[] = [];
   for (const [dateStr, count] of Object.entries(dateCounts)) {
-    // Дата считается недоступной для бронирования ТОЛЬКО если ВСЕ домики этого типа заняты
     if (count >= totalHouses) {
       bookedDates.push(dateStr);
     }
@@ -187,19 +170,10 @@ export const checkTypeAvailability = (
 
   let message = '';
   if (available) {
-    message = `✅ Доступно ${availableCount} из ${totalCount} ${houseType === 'big' ? 'больших' : 'малых'} домов`;
+    message = `Доступно ${availableCount} из ${totalCount} ${houseType === 'big' ? 'больших' : 'малых'} домов`;
   } else {
-    message = `❌ На эти даты все дома заняты`;
+    message = `К сожалению на эти даты все дома этого типа заняты`;
     
-    const nextDate = findNearestAvailableDate(houses, houseType);
-    if (nextDate) {
-      const formatted = new Date(nextDate).toLocaleDateString('ru-RU', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-      });
-      message += `\nБлижайшая свободная дата: ${formatted}`;
-    }
   }
 
   return {

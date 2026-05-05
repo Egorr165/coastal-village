@@ -12,6 +12,7 @@ import TGIcon from '../../images/contact_page/icon-telegram.svg';
 import TGWhiteIcon from '../../images/contact_page/icon-telegram-white.svg';
 import VKIcon from '../../images/contact_page/icon-vk.svg';
 import MaxIcon from '../../images/contact_page/icon-max.svg';
+import { Helmet } from 'react-helmet-async';
 
 const Contact = () => {
   const [name, setName] = useState('');
@@ -110,8 +111,35 @@ const Contact = () => {
     }
   };
 
+  const contactSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "7Continent Dagestan",
+    "url": "https://7continent-dagestan.ru/",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+7XXXXXXXXXX",
+      "contactType": "customer service",
+      "areaServed": "RU",
+      "availableLanguage": "Russian"
+    }
+  };
+
   return (
     <div className="App contact-page">
+
+      <Helmet>
+        <title>Контакты базы отдыха 7 Континент | Как добраться и забронировать</title>
+        <meta 
+          name="description" 
+          content="Свяжитесь с нами для аренды коттеджей в Дагестане. Телефон, точный адрес и удобная схема проезда до базы отдыха 7 Континент." 
+        />
+
+        <script type="application/ld+json">
+          {JSON.stringify(contactSchema)}
+        </script>
+      </Helmet>
+
       <Header />
 
       <main>

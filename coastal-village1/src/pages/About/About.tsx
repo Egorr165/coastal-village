@@ -22,12 +22,22 @@ import G7 from '../../images/galery/galery-7.webp';
 import G8 from '../../images/galery/galery-8.webp';
 import G9 from '../../images/galery/galery-9.webp';
 import G10 from '../../images/galery/galery-10.webp';
+import { Helmet } from 'react-helmet-async';
 
 const About = () => {
   const navigate = useNavigate();
 
   return (
     <div className="app-wrapper">
+
+      <Helmet>
+        <title>О базе отдыха 7 Континент — Инфраструктура и сервис на Каспийском море</title>
+        <meta 
+          name="description" 
+          content="Узнайте больше о нашей базе отдыха 7 Континент в Дагестане. Мы предлагаем высокий уровень сервиса, закрытую территорию и всё для семейного отдыха у моря." 
+        />
+      </Helmet>
+      
       <Header />
 
       <main>
@@ -38,8 +48,8 @@ const About = () => {
             <div className="about-hero__content">
               <h1 className="about-hero__title">Наша история</h1>
               <p className="about-hero__quote">
-                «Мы верим, что настоящий отдых — это когда море<br />
-                становится частью тебя, а время замедляет свой бег.»
+                «Ваше личное пространство на берегу Каспия.<br />
+                Наслаждайтесь моментом, об остальном позаботимся мы.»
               </p>
             </div>
             <Button
@@ -79,7 +89,7 @@ const About = () => {
               <div className="history__text">
                 <p>
                   Помним тот самый отпуск, когда поняли: это не просто море, а место, где сердце нашло дом.
-                  За два года своими руками превратили мечту в реальность — построили первое гнездышко у воды.
+                  За два года своими руками превратили мечту в реальность — построили первый коттедж у воды.
                 </p>
                 <br />
                 <p>
@@ -162,7 +172,7 @@ const About = () => {
           <div className="container">
             <div className="section-title-wrapper">
               <div className="title-line"></div>
-              <h2 className="section-title">Немного закулисья</h2>
+              <h2 className="section-title">Галерея комплекса</h2>
             </div>
 
             <div className="gallery__grid">

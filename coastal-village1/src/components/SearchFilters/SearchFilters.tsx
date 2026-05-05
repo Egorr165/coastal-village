@@ -31,14 +31,12 @@ const SearchFilters = () => {
   const [houses, setHouses] = useState<House[]>([]);
   const [isLoadingHouses, setIsLoadingHouses] = useState(true);
 
-  // Загрузка домиков
   useEffect(() => {
     fetchHouses()
       .then(data => { setHouses(data); setIsLoadingHouses(false); })
       .catch(err => { console.error(err); setIsLoadingHouses(false); });
   }, []);
 
-  // Проверка доступности при изменении параметров
   useEffect(() => {
     const checkAvailability = async () => {
       if (!checkIn || !checkOut || !houseType) {
@@ -51,7 +49,7 @@ const SearchFilters = () => {
           available: false,
           availableCount: 0,
           totalCount: houseType === 'big' ? 5 : 1,
-          message: '❌ Дата выезда должна быть позже даты заезда'
+          message: 'Дата выезда должна быть позже даты заезда'
         });
         return;
       }
@@ -67,7 +65,7 @@ const SearchFilters = () => {
           available: false,
           availableCount: 0,
           totalCount: houseType === 'big' ? 5 : 1,
-          message: '❌ Произошла ошибка при проверке'
+          message: 'Произошла ошибка при проверке'
         });
       } finally {
         setIsChecking(false);
@@ -79,7 +77,6 @@ const SearchFilters = () => {
   }, [checkIn, checkOut, houseType]);
 
   const handleSearch = () => {
-    // Если есть выбранные параметры
     if (houseType || checkIn || checkOut) {
       const searchParams = new URLSearchParams();
       
@@ -90,7 +87,6 @@ const SearchFilters = () => {
       
       navigate(`/catalog?${searchParams.toString()}`);
     } else {
-      // Если параметры не выбраны - просто переходим в каталог
       navigate('/catalog');
     }
   };
@@ -158,7 +154,6 @@ const SearchFilters = () => {
         </div>
       </div>
 
-      {/* Календарь по центру */}
       <CalendarModal 
         activeDatePicker={activeDatePicker}
         setActiveDatePicker={setActiveDatePicker}
@@ -172,7 +167,6 @@ const SearchFilters = () => {
         houses={houses}
       />
 
-      {/* Количество человек */}
       <div className="filter-item">
         <label className="filter-label">Количество человек</label>
         <div 
@@ -211,7 +205,6 @@ const SearchFilters = () => {
         </div>
       </div>
 
-      {/* Выбор типа дома */}
       <div className="cottage-type-selector">
         <label className="filter-label">Выберите дом</label>
         <div className="type-buttons">
@@ -224,7 +217,7 @@ const SearchFilters = () => {
             disabled={!isSmallHouseAvailable}
           >
             <span className="type-btn-title">Малый дом</span>
-            <span className="type-btn-value">{smallHousePrice.toLocaleString()} ₽</span>
+            <span className="type-btn-value">{smallHousePrice.toLocaleString('ru-RU')} ₽</span>
             <span className="type-btn-details">до 4 человек • {smallHouseCount} дом</span>
           </button>
           
@@ -237,7 +230,7 @@ const SearchFilters = () => {
             disabled={!isBigHouseAvailable}
           >
             <span className="type-btn-title">Большой дом</span>
-            <span className="type-btn-value">{bigHousePrice.toLocaleString()} ₽</span>
+            <span className="type-btn-value">{bigHousePrice.toLocaleString('ru-RU')} ₽</span>
             <span className="type-btn-details">до 6 человек • {bigHouseCount} домов</span>
           </button>
         </div>

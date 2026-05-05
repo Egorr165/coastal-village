@@ -34,7 +34,7 @@
 
     @media (max-width: 1024px) {
       flex-direction: column;
-      padding: 0 1rem;
+      padding: 0 1.5rem;
 
       &__main {
         max-width: 100%;
@@ -102,7 +102,7 @@
       text-align: left;
 
       @media (max-width: 768px) {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
         margin-bottom: 2.5rem;
       }
     }
@@ -214,7 +214,6 @@
     &__title {
       font-size: 1.125rem;
       font-weight: 700;
-      margin-bottom: 0.5rem;
       color: var(--color-dark);
     }
 
@@ -492,6 +491,325 @@
         &:hover {
           color: white;
         }
+      }
+    }
+  }
+
+  @media (max-width: 576px) {
+    .booking-page {
+      padding: 20px 10px;
+      gap: 30px;
+    }
+
+    .booking-hero {
+      padding: 30px 0;
+      gap: 20px;
+
+      &__title {
+        font-size: 1.7rem;
+        line-height: 1.2;
+        margin-bottom: 1rem;
+      }
+
+      &__description {
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+
+      &__feature {
+        font-size: 0.85rem;
+        gap: 0.75rem;
+      }
+
+      &__feature-icon-wrapper {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+
+        svg {
+          width: 18px !important;
+          height: 18px !important;
+        }
+      }
+
+    }
+
+
+    .booking-section {
+      margin-bottom: 2.5rem;
+
+      &__desc {
+        font-size: 0.85rem;
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    .booking-features {
+      gap: 1.25rem;
+
+      &__card {
+        gap: 1rem;
+      }
+
+      &__icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+
+        svg {
+          width: 22px !important;
+          height: 22px !important;
+        }
+      }
+
+      &__title {
+        font-size: 1rem;
+        margin-bottom: 4px;
+      }
+
+      &__text {
+        font-size: 0.85rem;
+        line-height: 1.4;
+      }
+    }
+
+
+    .booking-how {
+      margin-bottom: 2rem;
+
+      &__list {
+        gap: 0.75rem;
+      }
+
+      &__item {
+        gap: 0.75rem;
+      }
+
+      &__text {
+        font-size: 0.85rem;
+      }
+
+      &__num {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+      }
+    }
+
+
+    .booking-status {
+      margin-bottom: 30px;
+      gap: 15px;
+
+      &__step {
+        gap: 10px;
+      }
+
+      &__circle {
+
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+      }
+
+      &__line {
+        height: 30px;
+        left: 16px;
+      }
+
+      &__text {
+        gap: 2px;
+
+        &__title {
+
+          font-size: 1rem;
+          margin-bottom: 0;
+        }
+
+        &__description {
+          font-size: 0.8rem;
+        }
+      }
+    }
+
+    .booking-title {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+    }
+
+    .info-block {
+      padding: 15px;
+      gap: 15px;
+
+      &__title {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+      }
+
+      &__item {
+        font-size: 0.9rem;
+        gap: 10px;
+
+        svg {
+          width: 16px !important;
+          height: 16px !important;
+        }
+      }
+    }
+
+    .booking-details {
+      padding: 15px;
+      gap: 15px;
+
+      &__item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+      }
+
+      &__label {
+        font-size: 0.85rem;
+      }
+
+      &__value {
+        font-size: 1rem;
+      }
+    }
+
+
+    .form-group,
+    .double-input {
+      gap: 15px;
+    }
+
+    .filter-label {
+      font-size: 0.85rem;
+      margin-bottom: 5px;
+    }
+
+    .filter-input-wrapper {
+      height: 48px;
+      padding: 10px 15px;
+
+      .filter-icon {
+        width: 16px !important;
+        height: 16px !important;
+      }
+
+      .filter-input {
+        font-size: 0.9rem;
+
+        &::placeholder {
+          font-size: 0.9rem;
+        }
+      }
+    }
+
+    .cottage-item {
+      gap: 15px;
+
+      &__image-wrapper {
+
+        width: 80px;
+        height: 60px;
+      }
+
+      &__title {
+        font-size: 1rem;
+        margin-bottom: 3px;
+      }
+
+      &__description {
+        font-size: 0.85rem;
+        margin-bottom: 10px;
+      }
+
+      &__details {
+        gap: 5px;
+      }
+
+      &__detail {
+        font-size: 0.8rem;
+        gap: 5px;
+
+        svg {
+          width: 14px !important;
+          height: 14px !important;
+        }
+      }
+    }
+
+    .payment-method {
+      padding: 15px;
+      gap: 10px;
+
+      &__title {
+        font-size: 1rem;
+      }
+
+      &__description {
+        font-size: 0.85rem;
+      }
+    }
+
+    .booking-total {
+      padding: 20px;
+      gap: 15px;
+
+      &__item {
+        font-size: 0.9rem;
+      }
+
+      &__total-item {
+        font-size: 1.1rem;
+        margin-top: 10px;
+      }
+
+      &__confirm-btn {
+        font-size: 1rem;
+        height: 50px;
+        padding: 12px 20px;
+      }
+    }
+
+    .booking-faq {
+      padding: 1rem 0 2rem;
+      margin-bottom: 2rem;
+
+      &__title {
+        font-size: 1.2rem;
+        margin-bottom: 0;
+        font-weight: 800;
+      }
+    }
+
+    .booking-faq-container{
+      padding: 0 1.5rem;
+    }
+
+    .booking-faq-list {
+      &__question {
+        padding: 1rem 0;
+        font-size: 0.85rem;
+      }
+
+      &__icon {
+        width: 20px;
+        height: 20px;
+
+        svg {
+          width: 18px !important;
+          height: 18px !important;
+        }
+      }
+
+      &__answer {
+        font-size: 0.85rem;
+      }
+
+      &__item.is-open .booking-faq-list__answer {
+        padding-bottom: 1rem;
       }
     }
   }

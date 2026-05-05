@@ -72,7 +72,6 @@ const Booking = () => {
   const handleConfirmOrder = async (finalData?: any) => {
     if (!bookingDetails) return;
     
-    // Ensure we have a valid numeric cottage ID
     const cottageId = parseInt(bookingDetails.houseId);
     
     if (isNaN(cottageId)) {
@@ -96,7 +95,6 @@ const Booking = () => {
         await bookingService.createBooking(payload);
         addToast('Заявка успешно принята! Ожидайте звонка менеджера в течение 15 минут для уточнения деталей вашего отдыха.', 'success');
         setIsModalOpen(false);
-        // Очищаем форму бронирования
         setBookingDetails(null);
         navigate('/account');
     } catch (error) {
@@ -146,7 +144,7 @@ const Booking = () => {
         <div className="booking-content__main">
           <section className="booking-section">
             <h2 className="booking-title">
-              Ваше идеальное путешествие на <br /> Каспий начинается здесь.
+              Ваше идеальное путешествие начинается здесь.
             </h2>
             <p className="booking-section__desc">
               Мы сделали процесс бронирования максимально простым и прозрачным.
