@@ -20,23 +20,21 @@ mimetypes.add_type("image/webp", ".webp")
 
 load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
+
 SECRET_KEY = os.getenv('SECRET_KEY')
-# SECURITY WARNING: keep the secret key used in production secret!
+if not SECRET_KEY:
+    raise ValueError("No SECRET_KEY set. Check your .env file.")
 
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG', 'True').lower() in ('true', '1', 'yes')
 
-ALLOWED_HOSTS = ['*']
+_ALLOWED_HOSTS_STR = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1')
+ALLOWED_HOSTS = [host.strip() for host in _ALLOWED_HOSTS_STR.split(',')]
 
 
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -89,8 +87,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'sevencontinent.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+
 
 DATABASES = {
     'default': {
@@ -105,8 +102,6 @@ DATABASES = {
 }
 
 
-# Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -132,36 +127,30 @@ REST_FRAMEWORK = {
     ],
 }
 
-# JWT settings
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=120),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
-# Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.yandex.ru'  # Для Mail.ru: smtp.mail.ru | Для Яндекс: smtp.yandex.ru | Для Google: smtp.gmail.com
-EMAIL_PORT = 465             # 465 для SSL (Mail.ru, Yandex, Google)
-EMAIL_USE_SSL = True         # Использовать SSL вместо TLS
-EMAIL_HOST_USER = 'arhipnastenko2@yandex.ru'    # ВАШ Email, с которого будут уходить письма
-EMAIL_HOST_PASSWORD = 'kzjyyqfgxnuuxnrb' # Специальный пароль приложения (не пароль от почты!)
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER      # От кого будут приходить письма
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.yandex.ru')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', '465'))
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', 'True').lower() in ('true', '1')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+if not EMAIL_HOST_USER or not EMAIL_HOST_PASSWORD:
+    print("WARNING: Email credentials missing in .env. Email functionality will fail.")
 
 
-# CORS settings
 CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOWED_ORIGINS = [
-    "https://7continent-dagestan.ru",
-    "https://www.7continent-dagestan.ru",
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "http://localhost:45678",
-    "http://127.0.0.1:45678",
-]
+
+_CORS_ORIGINS_STR = os.getenv('CORS_ALLOWED_ORIGINS', 
+    'https://7continent-dagestan.ru,https://www.7continent-dagestan.ru,http://localhost:5173,http://127.0.0.1:5173')
+CORS_ALLOWED_ORIGINS = [origin.strip() for origin in _CORS_ORIGINS_STR.split(',')]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -172,11 +161,8 @@ USE_I18N = True
 USE_TZ = True
 
 
-
-# Добавляем поддержку credentials
 CORS_ALLOW_CREDENTIALS = True
 
-# Разрешаем все заголовки
 CORS_ALLOW_HEADERS = [
     'accept',
     'accept-encoding',
@@ -189,8 +175,7 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
 ]
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
+
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -198,8 +183,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

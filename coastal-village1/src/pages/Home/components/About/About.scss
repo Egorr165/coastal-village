@@ -6,7 +6,7 @@
   z-index: 1;
 
   @media (max-width: 768px) {
-    padding: 2rem 0;
+    padding: 1.5rem 0;
   }
 
   &::before {
@@ -16,11 +16,11 @@
     margin-top: 50px;
     width: 50%;
     height: 45%;
-    background-image: url('../../../../images/fon_about_us.svg');
+    background-image: url('../../../../images/fon_about_us.webp');
     background-repeat: no-repeat;
     background-position: left center;
     background-size: contain;
-    opacity: 1; // Увеличил прозрачность для видимости
+    opacity: 1; 
     pointer-events: none;
     z-index: -1;
   }
@@ -32,6 +32,11 @@
     flex-direction: column;
     gap: 3rem;
     margin-bottom: 1rem;
+
+    @media (max-width: 768px) {
+    gap: 3rem;
+    margin: 0;
+  }
   }
 
   &__title {
@@ -40,12 +45,19 @@
     color: var(--color-brand-blue);
     margin-bottom: 1.5rem;
     letter-spacing: 0.02em;
+
+    @media (max-width: 768px) {
+    margin-bottom: 0.5rem;
+  }
   }
 
   &__paragraph {
     color: var(--color-text-light);
     margin-bottom: 1.5rem;
     line-height: 1.7;
+    @media (max-width: 640px) {
+      font-size: 14px;
+    }
   }
 
   &__text-bold {
@@ -57,6 +69,11 @@
     display: grid;
     gap: 1.5rem;
     margin: 2rem 0;
+
+    @media (max-width: 640px) {
+      margin: 1rem 0;
+      gap: 1rem;
+    }
     
     @media (min-width: 640px) {
       grid-template-columns: repeat(2, 1fr);
@@ -81,6 +98,9 @@
     font-size: 0.875rem;
     color: var(--color-text-light);
     line-height: 1.5;
+    @media(max-width: 768px) {
+      font-size: 0.8rem;;
+    }
   }
 
   &__image-col {
@@ -92,6 +112,9 @@
     overflow: hidden;
     height: 390px;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    @media(max-width: 768px) {
+      height: 250px;
+    }
 
     &:hover .about__image {
       transform: scale(1.05);
@@ -134,14 +157,18 @@
   &__features {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 0.75rem; // Существенно уменьшаем зазор на мобильных (плюс есть свои padding у элементов)
+    gap: 0.75rem; 
     padding: 1rem 0;
     border-radius: 1.5rem;
 
     @media (min-width: 768px) {
       grid-template-columns: repeat(2, 1fr);
-      gap: 2rem; // Возвращаем простор на планшетах
+      gap: 2rem;
       padding: 2rem 0;
+    }
+
+    @media(max-width: 768px) {
+      gap: 0;
     }
 
     @media (min-width: 1024px) {
@@ -155,6 +182,11 @@
     align-items: flex-start;
     padding: 0.5rem;
     border-radius: 0.75rem;
+
+    @media(max-width: 768px) {
+      padding: 0.5rem 0;
+      border-radius: 0.6rem;
+    }
   }
 
   &__feature-icon {
@@ -164,11 +196,21 @@
     color: var(--color-primary);
     display: flex;
     box-shadow: 0 4px 12px rgba(23, 72, 102, 0.12);
+
+    @media(max-width: 768px) {
+      padding: 0.5rem;
+      border-radius: 0.6rem;
+    }
   }
 
   &__feature-svg {
     width: 24px;
     height: 24px;
+
+    @media(max-width: 768px) {
+      width: 22px;
+      height: 22px;
+    }
   }
 
   &__feature-text {

@@ -71,6 +71,9 @@
           letter-spacing: 0.05em;
           color: var(--color-dark);
           margin-bottom: 0.5rem;
+          @media (max-width: 768px){
+            font-size: 12px;
+          }
         }
 
         .input-wrapper {
@@ -141,6 +144,11 @@
 
         &--mb {
           margin-bottom: 10px;
+          .register-policy{
+            @media (max-width: 768px){
+              font-size: 12px;
+            }
+          }
         }
 
         &--mt-none {
@@ -191,6 +199,9 @@
           color: var(--color-text-light);
           cursor: pointer;
           line-height: 1.4;
+          @media (max-width: 768px){
+            font-size: 12px;
+          }
 
           a {
             color: var(--color-primary);
@@ -198,6 +209,9 @@
             
             &:hover {
               color: var(--color-primary-hover);
+            }
+            @media (max-width: 768px){
+              font-size: 12px;
             }
           }
         }
@@ -271,5 +285,180 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+.register-policy{
+    font-size: 13px;
+    margin-left: 10px;
+    align-items: top;
+    a {
+      text-decoration: underline;
+    }
+  }
+
+
+@media (max-width: 768px) {
+
+  .register-policy{
+    font-size: 12px;
+    margin-left: 10px;
+    align-items: top;
+    a {
+      text-decoration: underline;
+    }
+  }
+  .register-page {
+    padding: 1rem;
+    align-items: flex-start;
+    padding-top: 3rem; 
+
+    .register-card {
+      padding: 2rem 1.5rem; 
+      border-radius: 1.25rem;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+
+      h1 {
+        font-size: 1.75rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .subtitle {
+        font-size: 0.8rem;
+        margin-bottom: 2rem;
+      }
+
+      .error-message {
+        font-size: 0.8rem;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .register-form {
+        .form-group {
+          margin-bottom: 1rem;
+
+          label {
+            font-size: 0.7rem;
+            margin-bottom: 0.4rem;
+          }
+
+          input {
+            padding: 0.7rem 1rem;
+            font-size: 0.95rem;
+            border-radius: 0.4rem;
+            
+            &.input-error {
+              padding-right: 1rem; 
+            }
+          }
+
+          .input-wrapper {
+            .password-toggle {
+              right: 0.8rem;
+              padding: 5px;
+            }
+          }
+          
+          .field-error-text {
+            font-size: 11px;
+          }
+        }
+
+        .checkbox-group {
+          gap: 10px;
+          margin-top: 0.5rem;
+          margin-bottom: 1.25rem;
+
+          input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 1px;
+          }
+
+          label {
+            font-size: 0.7rem;
+            line-height: 1.3;
+          }
+        }
+
+        .btn-register {
+          padding: 0.9rem;
+          font-size: 0.95rem;
+          border-radius: 0.6rem;
+          margin-top: 0.5rem;
+        }
+        
+        .login-form__code-input {
+          font-size: 20px;
+          letter-spacing: 4px;
+        }
+      }
+
+      .login-link {
+        margin-top: 1.5rem;
+        font-size: 0.8rem;
+      }
+      
+      .btn-outline {
+        padding: 10px;
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .register-page {
+    .register-card {
+      .register-form {
+        .checkbox-group {
+          transform: scale(0.7);          
+          transform-origin: left top;      
+          margin-bottom: -15px !important;
+          gap: 2px !important;
+
+          input[type="checkbox"] {
+            width: 14px !important;
+            height: 14px !important;
+            margin-top: 4px !important;
+          }
+
+          label {
+            font-size: 1rem !important;    
+            line-height: 1.3 !important;
+            color: var(--color-text-light);
+            word-break: break-word;
+            display: block;
+            max-width: 90%;
+
+            a {
+              font-size: 1rem !important;  
+              text-decoration: underline;
+              color: var(--color-primary);
+            }
+          }
+
+          &:last-child {
+            margin-bottom: -20px !important;
+          }
+        }
+
+        .btn-register {
+          padding: 0.8rem 1rem !important;
+          font-size: 0.9rem !important;
+          border-radius: 0.5rem !important;
+        }
+
+        .login-link {
+          margin-top: 1rem !important;
+          font-size: 0.8rem !important;
+
+          a {
+            font-size: 0.8rem !important;
+          }
+        }
+      }
+    }
   }
 }

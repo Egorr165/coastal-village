@@ -62,7 +62,6 @@ const BookingCalendar = ({
   const [nightsCount, setNightsCount] = useState(0);
   const [bookedDates, setBookedDates] = useState<BookedDate[]>([]);
 
-  // Дополнительные услуги
   const [isExtraBedSelected, setIsExtraBedSelected] = useState(false);
 
   useEffect(() => {
@@ -113,7 +112,6 @@ const BookingCalendar = ({
           month: '2-digit'
         })}`;
 
-        // Блокируем только ночи (d < end), чтобы можно было выехать в день чужого заезда
         for (let d = new Date(start); d < end; d.setDate(d.getDate() + 1)) {
           const dateStr = d.toISOString().split('T')[0];
 
@@ -135,7 +133,6 @@ const BookingCalendar = ({
 
   const weekDays = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
 
-  // Переключение месяцев
   const prevMonth = () => {
     if (currentMonth === 0) {
       setCurrentMonth(11);
@@ -154,7 +151,6 @@ const BookingCalendar = ({
     }
   };
 
-  // Форматирование даты
   const formatDateForDisplay = (dateStr: string) => {
     const date = new Date(dateStr);
     return date.toLocaleDateString('ru-RU', {
@@ -164,19 +160,16 @@ const BookingCalendar = ({
     }).replace(/\//g, '.');
   };
 
-  // Генерация дней месяца
   const renderCalendarDays = () => {
     const days = [];
     const firstDay = new Date(currentYear, currentMonth, 1);
     const lastDay = new Date(currentYear, currentMonth + 1, 0);
 
-    // День недели первого дня (0 = воскресенье, переводим в ПН=0)
     let firstDayIndex = firstDay.getDay() - 1;
     if (firstDayIndex < 0) firstDayIndex = 6;
 
     const prevMonthLastDay = new Date(currentYear, currentMonth, 0).getDate();
 
-    // Пустые ячейки (предыдущий месяц)
     for (let i = firstDayIndex - 1; i >= 0; i--) {
       days.push(
         <div key={`prev-${i}`} className="booking-widget__day booking-widget__day--inactive">
@@ -185,7 +178,6 @@ const BookingCalendar = ({
       );
     }
 
-    // Дни месяца
     for (let d = 1; d <= lastDay.getDate(); d++) {
       const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
       const isBooked = bookedDates.some(b => b.date === dateStr);
@@ -218,7 +210,6 @@ const BookingCalendar = ({
       );
     }
 
-    // Дни следующего месяца чтобы заполнить сетку (до 42 ячеек обычно или просто до кратного 7)
     let nextMonthDay = 1;
     while (days.length % 7 !== 0) {
       days.push(
@@ -232,24 +223,19 @@ const BookingCalendar = ({
     return days;
   };
 
-  // Обработка клика по дате
   const handleDateClick = (dateStr: string) => {
     if (!checkInDate || (checkInDate && checkOutDate)) {
-      // Начинаем новый выбор
       setCheckInDate(dateStr);
       setCheckOutDate(null);
     } else if (checkInDate && !checkOutDate) {
       if (dateStr > checkInDate) {
-        // Выбираем дату выезда
         setCheckOutDate(dateStr);
       } else {
-        // Меняем дату заезда
         setCheckInDate(dateStr);
       }
     }
   };
 
-  // Обработка бронирования
   const handleBooking = () => {
     if (checkInDate && checkOutDate) {
       if (onBeforeBooking && !onBeforeBooking()) {
@@ -270,7 +256,6 @@ const BookingCalendar = ({
           finalHouseId = availableHouse.id;
           finalCottageName = availableHouse.title;
         } else {
-          // Fallback if no specific house found (shouldn't happen if calendar blocks correctly, but just in case)
           if (houseType === 'big') {
             finalHouseId = 'house-big-1';
             finalCottageName = `${baseCottageName} №1`;
@@ -331,7 +316,6 @@ ${finalCottageName}
     }
   };
 
-  // Расчет стоимости
   useEffect(() => {
     if (checkInDate && checkOutDate) {
       const start = new Date(checkInDate);

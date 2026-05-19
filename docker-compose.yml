@@ -16,6 +16,8 @@ services:
     build: 
       context: ./sevencontinent
       dockerfile: Dockerfile
+      args:
+        - SECRET_KEY=${SECRET_KEY:-django-insecure-key-change-me-in-prod}
     container_name: 7continent_backend
     restart: always
     depends_on:
@@ -43,12 +45,10 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    # Эта команда позволяет Nginx автоматически перезагружать сертификаты после их обновления Certbot'ом
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     volumes:
       - static_data:/app/static:ro
       - media_data:/app/media:ro
-      # Подключаем папки с сертификатами
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
 
@@ -59,7 +59,6 @@ services:
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
-    # Каждые 12 часов проверяет, нужно ли обновить сертификат (он действует 90 дней, обновляется за 30 дней до конца)
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
 volumes:

@@ -9,6 +9,7 @@
   align-items: center;
   justify-content: center;
   color: white;
+  margin-top: 70px;
 
   &__content {
     position: relative;
@@ -48,7 +49,7 @@
 
   &__gallery {
     display: flex;
-    gap: 15px;
+    gap: 20px;
 
     @media (max-width: 1024px) {
       justify-content: center;
@@ -56,8 +57,8 @@
   }
 
   &__gallery-img {
-    width: 150px;
-    height: 150px;
+    width: 170px;
+    height: 170px;
     object-fit: cover;
     border-radius: 20px;
   }
@@ -405,6 +406,9 @@
 
     &:last-child {
       margin-bottom: 100px;
+      @media (max-width: 768px) {
+        margin-bottom: 0;
+      }
     }
   }
 
@@ -418,6 +422,9 @@
   &__section--schedule &__title {
     text-align: center;
     margin-bottom: 30px;
+    @media (max-width: 768px) {
+      margin-bottom: 5px;
+    }
   }
 
   &__section--faq &__title {
@@ -442,6 +449,11 @@
   margin-top: 40px;
   padding: 0 20px;
   gap: 20px;
+
+  @media (max-width: 768px) {
+    gap: 0;
+    margin-top: 0;
+  }
 
   &__line {
     position: absolute;
@@ -523,20 +535,31 @@
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: stretch;
-    gap: 40px;
-    padding: 20px 0;
+    gap: 6px;
+    padding: 10px 0;
+    
 
     &__item {
       flex-direction: row;
       text-align: left;
+      margin-left: 10px;
     }
 
     &__icon-box {
-      box-shadow: none;
+      width: 24px;
+      height: 24px;
     }
 
     &__content {
       flex: 1;
+      padding: 10px 20px;
+      gap: 0px;
+      border-radius: 15px;
+    }
+
+    &__time {
+      font-size: 14px;
+      font-weight: 700;
     }
   }
 }
@@ -701,4 +724,285 @@
     line-height: 1.5;
     font-weight: 400;
   }
+}
+
+.form-title-mobile {
+  display: none;
+}
+
+.hero-contact-form__title {
+  display: block;
+}
+
+.contact-hero__subtitle-phone{
+  display: none;
+}
+.contact-hero__subtitle{
+  display: block;
+}
+
+
+@media (max-width: 768px){
+  .page-hero{
+    &__title{
+      font-size: 32px;
+      margin-bottom: 0;
+    }
+  }
+}
+
+
+
+@media (max-width: 768px) {
+  .contact-hero {
+    height: auto;
+    min-height: auto;
+    padding: 60px 0;
+    margin-top: 0;
+    
+    &__content {
+      flex-direction: column; 
+      gap: 20px;
+    }
+
+    &__subtitle{
+      font-size: 20px;
+    }
+
+    &__text {
+      text-align: center;
+      width: 100%;
+    }
+
+    &__description {
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 14px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    &__gallery {
+      justify-content: center;
+      flex-wrap: wrap;
+      display: none;
+    }
+
+    &__gallery-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+    }
+  }
+
+  .hero-contact-form {
+    width: 100%;
+    padding: 25px;
+    border-radius: 16px;
+
+    &__title {
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    &__input-group {
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    &__input {
+      padding: 8px 12px;
+      font-size: 13px;
+      border-radius: 8px;
+    }
+
+    &__checkbox-group {
+      margin-bottom: 20px;
+    }
+
+    &__checkbox-label {
+      font-size: 11px;
+      text-align: left;
+    }
+    &__flag{
+      display: none;
+    }
+  }
+
+  .contact-methods {
+    padding: 40px 0;
+
+    &__title {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    &__grid {
+      gap: 10px;
+    }
+
+    &__card {
+      padding: 20px;
+      border-radius: 20px;
+    }
+
+    &__icon-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    &__card-title {
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+
+    &__card-text {
+      font-size: 13px;
+      margin-bottom: 15px;
+    }
+
+    &__messenger-dropdown--phone {
+      padding: 20px;
+    }
+
+    &__phone-number {
+      font-size: 20px;
+    }
+    
+    .messenger-btn {
+      padding: 10px;
+      font-size: 14px;
+    }
+  }
+
+  .contact-map {
+    padding: 30px 0;
+
+    &__title {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    &__container {
+      height: 300px; 
+      border-radius: 16px;
+    }
+  }
+
+  .contact-details {
+    &__section {
+      margin: 30px 0;
+
+      &--socials {
+        padding: 20px 0;
+      }
+    }
+
+    &__title {
+      font-size: 20px;
+      margin-bottom: 0;
+      font-weight: 800;
+    }
+    
+    &__section--faq &__title {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+  }
+
+  .contact-social-grid {
+    grid-template-columns: 1fr; 
+    gap: 5px;
+    margin-top: 10px;
+  }
+
+  .contact-social-card {
+    padding: 15px;
+    border-radius: 16px;
+
+    &__icon-wrapper {
+      width: 36px;
+      height: 36px;
+      margin-right: 15px;
+      border-radius: 12px;
+    }
+
+    &__name {
+      font-size: 14px;
+    }
+
+    &__link {
+      font-size: 12px;
+    }
+
+    &__info{
+      gap: 0;
+
+    }
+  }
+
+  .faq {
+    &__question-btn {
+      padding: 20px 0;
+    }
+
+    &__question-text {
+      font-size: 15px;
+      padding-right: 10px;
+    }
+
+    &__icon {
+      font-size: 18px;
+      margin-left: 10px;
+    }
+
+    &__answer-text {
+      font-size: 14px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-contact-form__title {
+    display: none; 
+  }
+
+  .form-title-mobile {
+    display: block;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+  .contact-hero__subtitle-phone{
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .contact-hero__subtitle{
+    display: none;
+  }
+
+  .contact-details__social-text{
+    display: none;
+  }
+  .contact-social-card__max-icon {
+    width: 36px;       
+    height: 36px;
+    border-radius: 12px;
+  }
+
+  .page-hero__title{
+    font-size: 32px;
+  }
+
 }

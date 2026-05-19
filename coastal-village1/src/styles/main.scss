@@ -18,14 +18,22 @@
   padding: 0;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   font-family: var(--font-main);
   color: var(--color-text-main);
   background-color: #fff;
   line-height: 1.5;
-  // letter-spacing: 0.02em;
-  overflow-x: hidden;
+  overflow-x: hidden; 
   min-height: 100vh;
+  
+
+  @media (max-width: 768px) {
+    padding-top: 50px;
+  }
 }
 
 a {
@@ -50,9 +58,6 @@ select {
   width: 100%;
 }
 
-.fade-in {
-  animation: fadeIn 1s ease-out forwards;
-}
 
 @keyframes fadeIn {
   from {
@@ -86,11 +91,6 @@ select {
   scrollbar-width: none;
 }
 
-.loader {
-  animation: spin 1s linear infinite;
-}
-
-// UI Utilities
 .text-accent {
   color: var(--color-primary);
 }
@@ -184,11 +184,10 @@ select {
 
 @media (max-width: 768px) {
   .section-title {
-    font-size: 24px;
+    font-size: 20px;
   }
 }
 
-// Common Page Hero
 .page-hero {
   position: relative;
   height: 90vh;
@@ -221,6 +220,10 @@ select {
     font-weight: 800;
     margin-bottom: 1rem;
     text-transform: uppercase;
+    @media (max-width: 768px) {
+      font-size: 32px;
+      margin-bottom: 0;
+    }
   }
 
   &__subtitle {

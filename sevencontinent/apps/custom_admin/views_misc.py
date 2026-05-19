@@ -54,28 +54,22 @@ class AdminDashboardStatsView(APIView):
         today = date.today()
         current_month = today.replace(day=1)
         
-        # Общая выручка (подтвержденные и завершенные)
         revenue_qs = Booking.objects.filter(status__in=['confirmed', 'completed'])
         revenue_total = revenue_qs.aggregate(Sum('total_price'))['total_price__sum'] or 0
         revenue_month = revenue_qs.filter(created_at__gte=current_month).aggregate(Sum('total_price'))['total_price__sum'] or 0
         
-        # Общее количество броней
         total_bookings = Booking.objects.count()
         month_bookings = Booking.objects.filter(created_at__gte=current_month).count()
         
-        # Пользователи
         total_users = User.objects.count()
         month_users = User.objects.filter(date_joined__gte=current_month).count()
         
-        # Домики
         from apps.cottages.models import Cottage
         active_cottages = Cottage.objects.filter(is_active=True).count()
         
-        # Последние 5 бронирований
         recent_bookings = Booking.objects.order_by('-created_at')[:5]
         serialized_recent = AdminBookingSerializer(recent_bookings, many=True).data
         
-        # Данные для графика (последние 14 дней)
         fourteen_days_ago = today - timedelta(days=13)
         daily_stats = Booking.objects.filter(
             status__in=['confirmed', 'completed'],
@@ -138,7 +132,6 @@ class AdminUserViewSet(viewsets.ModelViewSet):
         user = self.get_object()
         user.is_active = False
         user.save()
-        # Также можем сбрасывать пароль или инвалидировать сессии, но пока просто блокируем
         return Response({'status': 'User blocked successfully (Soft Delete)', 'id': user.id})
 
     @action(detail=False, methods=['post'], url_path='mark-viewed')

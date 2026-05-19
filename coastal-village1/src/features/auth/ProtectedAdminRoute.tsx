@@ -9,7 +9,6 @@ interface ProtectedAdminRouteProps {
 const ProtectedAdminRoute: React.FC<ProtectedAdminRouteProps> = ({ children }) => {
   const { user } = useAuth();
 
-  // Если нет юзера или он не является администратором(is_staff) - перекидываем на главную
   if (!user || !user.is_staff) {
     return <Navigate to="/" replace />;
   }

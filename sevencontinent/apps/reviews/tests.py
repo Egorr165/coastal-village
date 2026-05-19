@@ -24,7 +24,6 @@ class ReviewModelTest(TestCase):
             price_per_night=Decimal('5000.00')
         )
         
-        # Создаем завершенное бронирование
         self.booking = Booking.objects.create(
             user=self.user,
             cottage=self.cottage,
@@ -87,7 +86,6 @@ class ReviewAPITest(APITestCase):
             price_per_night=5000
         )
         
-        # Создаем завершенное бронирование
         self.booking = Booking.objects.create(
             user=self.user,
             cottage=self.cottage,
@@ -105,7 +103,6 @@ class ReviewAPITest(APITestCase):
             'comment': 'Отличный домик!'
         }
         
-        # Создаем токен для пользователя
         refresh = RefreshToken.for_user(self.user)
         self.token = str(refresh.access_token)
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.token}')
@@ -119,7 +116,6 @@ class ReviewAPITest(APITestCase):
     
     def test_cannot_review_before_completion(self):
         """Тест невозможности оставить отзыв до завершения бронирования"""
-        # Создаем активное бронирование
         active_booking = Booking.objects.create(
             user=self.user,
             cottage=self.cottage,
@@ -168,7 +164,6 @@ class ReviewAPITest(APITestCase):
     
     def test_get_reviews_list(self):
         """Тест получения списка отзывов"""
-        # Создаем одобренный отзыв
         Review.objects.create(
             user=self.user,
             cottage=self.cottage,
@@ -178,7 +173,6 @@ class ReviewAPITest(APITestCase):
             is_approved=True
         )
         
-        # Создаем неодобренный отзыв
         Review.objects.create(
             user=self.user,
             cottage=self.cottage,
@@ -190,12 +184,10 @@ class ReviewAPITest(APITestCase):
         
         response = self.client.get('/api/reviews/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # Должен быть только одобренный отзыв
         self.assertEqual(len(response.data), 1)
     
     def test_approve_review_admin(self):
         """Тест одобрения отзыва админом"""
-        # Создаем отзыв
         review = Review.objects.create(
             user=self.user,
             cottage=self.cottage,
@@ -205,12 +197,10 @@ class ReviewAPITest(APITestCase):
             is_approved=False
         )
         
-        # Логинимся как админ
         admin_refresh = RefreshToken.for_user(self.admin)
         admin_token = str(admin_refresh.access_token)
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {admin_token}')
         
-        # Одобряем
         response = self.client.post(f'/api/reviews/{review.id}/approve/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         
@@ -233,7 +223,6 @@ class ReviewAPITest(APITestCase):
     
     def test_pending_endpoint_admin(self):
         """Тест получения отзывов на модерации (только для админов)"""
-        # Создаем неодобренный отзыв
         Review.objects.create(
             user=self.user,
             cottage=self.cottage,
@@ -243,11 +232,9 @@ class ReviewAPITest(APITestCase):
             is_approved=False
         )
         
-        # Обычный пользователь не видит
         response = self.client.get('/api/reviews/pending/')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         
-        # Админ видит
         admin_refresh = RefreshToken.for_user(self.admin)
         admin_token = str(admin_refresh.access_token)
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {admin_token}')

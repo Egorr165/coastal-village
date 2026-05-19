@@ -1,7 +1,6 @@
 import api from '../../../services/api';
 
 export const adminService = {
-  // Stats
   getStats: async () => {
     const response = await api.get('/api/admin/stats/');
     return response.data;
@@ -11,7 +10,6 @@ export const adminService = {
     return response.data;
   },
 
-  // Bookings
   getBookings: async () => {
     const response = await api.get('/api/admin/bookings/');
     return response.data;
@@ -41,7 +39,6 @@ export const adminService = {
     return response.data;
   },
 
-  // Отзывы
   getReviews: async () => {
     const response = await api.get('/api/admin/reviews/');
     return response.data;
@@ -63,7 +60,6 @@ export const adminService = {
     return response.data;
   },
 
-  // Домики
   getCottages: async () => {
     const response = await api.get('/api/admin/cottages/');
     return response.data;
@@ -116,7 +112,6 @@ export const adminService = {
     return response.data;
   },
 
-  // Пользователи и Заявки
   getUsers: async () => {
     const response = await api.get('/api/admin/users/');
     return response.data;

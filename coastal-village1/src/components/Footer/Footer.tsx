@@ -1,7 +1,5 @@
-// src/components/Footer/Footer.tsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram } from 'lucide-react';
 import { TabletSmartphone, Mail, MapPin } from 'lucide-react';
 import VKFooterIcon from '../../images/contact_page/icon-vk-footer.svg';
 import WAFooterIcon from '../../images/contact_page/icon-whatsapp-footer.svg';
@@ -15,7 +13,6 @@ const Footer: React.FC = () => {
     <footer className="footer">
       <div className="footer__container">
         <div className="footer__layout">
-          
           <div className="footer__logo-col">
             <Link to="/" className="footer__logo-link">
               <div className="footer__brand">
@@ -28,7 +25,6 @@ const Footer: React.FC = () => {
             </Link>
           </div>
 
-          {/* Колонка 2: Навигация */}
           <div className="footer__nav-col">
             <h3 className="footer__col-title">Карта сайта</h3>
             <ul className="footer__links">
@@ -42,7 +38,6 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Колонка 3: Контакты */}
           <div className="footer__contacts-col">
             <h3 className="footer__col-title">Администрация</h3>
             <div className="footer__admin-info">
@@ -82,23 +77,22 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Колонка 4: Соцсети */}
           <div className="footer__socials-col">
             <h3 className="footer__col-title">Социальные сети</h3>
             <div className="footer__socials">
-              <a href="#" className="footer__social-item">
+              <a href="https://vk.com/7continent05" className="footer__social-item">
                 <img src={VKFooterIcon} alt="VK" width={28} height={28} />
                 Вконтакте
               </a>
-              <a href="#" className="footer__social-item">
+              <a href="https://wa.me/79381607231" className="footer__social-item">
                 <img src={WAFooterIcon} alt="WhatsApp" width={28} height={28} />
                 WhatsApp
               </a>
-              <a href="#" className="footer__social-item">
+              <a href="https://t.me/seven_continent_dagestan" className="footer__social-item">
                 <img src={TGFooterIcon} alt="Telegram" width={28} height={28} />
                 Telegram
               </a>
-              <a href="#" className="footer__social-item">
+              <a href="https://max.ru/join/OCRvS4m2PPAerb3uiUq74zgOfrDqjvz61OErhGPXTOs" className="footer__social-item">
                 <img src={MaxIcon} alt="MAX" width={28} height={28} />
                 MAX
               </a>
@@ -107,11 +101,10 @@ const Footer: React.FC = () => {
 
         </div>
 
-        {/* Нижняя панель */}
         <div className="footer__bottom">
           <div className="footer__bottom-links">
-            <a href="#">Политика конфиденциальности</a>
-            <a href="#">Согласие на обработку персональных данных</a>
+            <a href="/privacy">Политика конфиденциальности</a>
+            <a href="/consent">Согласие на обработку персональных данных</a>
           </div>
           <div className="footer__bottom-copy">
             © 2026  "7 Континент"

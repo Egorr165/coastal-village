@@ -1,5 +1,5 @@
 .login-page {
-  min-height: calc(100vh - 80px); // subtract header height approx
+  min-height: calc(100vh - 80px); 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,7 +13,7 @@
     width: 100%;
     max-width: 450px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-    animation: fadeIn 0.5s ease-out;
+  
 
     h1 {
       font-size: 2rem;
@@ -214,5 +214,81 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+
+@media (max-width: 768px) {
+  .login-page {
+    padding: 1rem; 
+    align-items: flex-start; 
+    padding-top: 4rem;
+
+    .login-card {
+      padding: 2rem 1.5rem; 
+      border-radius: 1.25rem;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+
+      h1 {
+        font-size: 1.6rem; 
+        margin-bottom: 0.25rem;
+      }
+
+      .subtitle {
+        font-size: 0.8rem;
+        margin-bottom: 30px;
+      }
+
+      .error-message, .success-message {
+        font-size: 0.8rem;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .login-form {
+        .form-group {
+          margin-bottom: 1.25rem;
+
+          label {
+            font-size: 0.7rem; 
+            margin-bottom: 0.4rem;
+          }
+
+          input {
+            padding: 0.7rem 1rem;
+            font-size: 0.95rem;
+            border-radius: 0.4rem;
+          }
+
+          .input-wrapper {
+            .password-toggle {
+              right: 0.8rem;
+              padding: 5px; 
+            }
+          }
+        }
+
+        &__forgot-pwd-link {
+          font-size: 13px;
+        }
+
+        .btn-login {
+          padding: 0.6rem;
+          font-size: 0.85rem;
+          border-radius: 0.6rem;
+          margin-top: 0.5rem;
+        }
+      }
+
+      .register-link {
+        margin-top: 1.5rem;
+        font-size: 0.8rem;
+      }
+      
+      .btn-outline {
+        padding: 10px;
+        font-size: 0.9rem;
+      }
+    }
   }
 }

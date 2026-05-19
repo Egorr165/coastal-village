@@ -26,7 +26,6 @@ const Reviews = () => {
             .then(res => {
                 if (isMounted) {
                     const reviewsData = res.data.results || res.data;
-                    // Берем до 10 последних отзывов для карусели
                     const latestReviews = reviewsData.slice(0, 10).map((r: any) => ({
                         id: r.id,
                         rating: r.rating,
@@ -44,7 +43,6 @@ const Reviews = () => {
                 if (isMounted) setLoading(false);
             });
             
-        return () => { isMounted = false; };
         return () => { isMounted = false; };
     }, []);
 
@@ -165,7 +163,6 @@ const Reviews = () => {
                 </div>
                 )}
 
-                {/* Выводим кнопку внизу только для мобилок */}
                 {!loading && reviews.length > 0 && (
                     <div className="reviews__mobile-btn-container">
                         <Button variant="secondary" onClick={() => navigate('/reviews')} className="reviews__btn-full">

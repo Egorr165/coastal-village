@@ -32,7 +32,7 @@ class ReviewCreateSerializer(serializers.ModelSerializer):
         """Создание отзыва с автозаполнением пользователя"""
         request = self.context.get('request')
         validated_data['user'] = request.user
-        validated_data['is_approved'] = False  # По умолчанию не одобрен
+        validated_data['is_approved'] = False  
         
         return super().create(validated_data)
 

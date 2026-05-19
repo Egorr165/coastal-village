@@ -1,0 +1,131 @@
+.cookie-banner {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;
+  max-width: 600px;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  padding: 16px 20px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border: 1px solid #e2e8f0;
+  animation: slideUp 0.3s ease-out forwards;
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translate(-50%, 20px);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+  }
+
+  &__text {
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--color-text-main);
+    margin: 0;
+    
+    a {
+      color: var(--color-primary);
+      text-decoration: underline;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  &__btn {
+    background-color: var(--color-brand-blue);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: #5b86e5; 
+    }
+  }
+
+  &__close {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+
+    &:hover {
+      color: var(--color-dark);
+    }
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: stretch;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 16px 16px 0 0;
+    transform: none;
+    padding: 20px;
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    &__content {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    &__btn {
+      width: 100%;
+      padding: 8px;
+    }
+
+    &__text{
+        font-size: 12px;
+    }
+    
+    &__close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+    }
+  }
+}

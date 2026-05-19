@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../../features/auth/AuthContext';
-import './Register.scss';
+import { isValidReturnUrl } from '../../features/auth/authService';
+import './Register.scss'
 
 const Register: React.FC = () => {
   const [step, setStep] = useState<1 | 2>(1);
@@ -20,14 +21,14 @@ const Register: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+  
   const { register, verifyEmail } = useAuth();
   const navigate = useNavigate();
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let inputVal = e.target.value;
-    let digitsOnly = inputVal.replace(/\D/g, ''); 
-
+    let digitsOnly = inputVal.replace(/\D/g, '');
+    
     if (!digitsOnly) {
       setPhone('');
       setPhoneError('Телефон обязателен');
@@ -38,7 +39,6 @@ const Register: React.FC = () => {
       if (digitsOnly[0] === '9') {
         digitsOnly = '7' + digitsOnly; 
       }
-
       digitsOnly = digitsOnly.substring(0, 11);
 
       let formattedPhone = '+7';
@@ -66,12 +66,12 @@ const Register: React.FC = () => {
     e.preventDefault();
     setError(null);
 
-    // Validation
+    
     if (password !== confirmPassword) {
-      setError('Пароли не совпадают');
+      setError('Пароли не совпадают');
       return;
     }
-    
+
     if (phoneError || !phone) {
       setPhoneTouched(true);
       setError('Пожалуйста, введите корректный номер телефона');
@@ -82,7 +82,6 @@ const Register: React.FC = () => {
 
     try {
       await register(name, email, phone, password);
-      // Switch to verification step
       setStep(2);
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -102,18 +101,20 @@ const Register: React.FC = () => {
 
     try {
       await verifyEmail(email, code);
-      const returnUrl = sessionStorage.getItem('returnUrl');
-      if (returnUrl) {
-          sessionStorage.removeItem('returnUrl');
-          navigate(returnUrl);
+      
+      let returnUrl = sessionStorage.getItem('returnUrl');
+      sessionStorage.removeItem('returnUrl');
+
+      if (isValidReturnUrl(returnUrl)) {
+        navigate(returnUrl!);
       } else {
-          navigate('/catalog');
+        navigate('/catalog');
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
       } else {
-        setError('Неверный код или ошибка сервера');
+        setError('Неверный код или ошибка сервера');
       }
     } finally {
       setIsLoading(false);
@@ -121,8 +122,8 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="register-page">
-      <div className="register-card">
+    <div className="login-page">
+      <div className="login-card">
         {step === 1 ? (
           <>
             <h1>Регистрация</h1>
@@ -134,11 +135,11 @@ const Register: React.FC = () => {
             <p className="subtitle">Мы отправили 6-значный код на {email}</p>
           </>
         )}
-
+        
         {error && <div className="error-message">{error}</div>}
 
         {step === 1 ? (
-          <form className="register-form" onSubmit={handleSubmit}>
+          <form className="login-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="name">Имя</label>
               <input
@@ -235,8 +236,8 @@ const Register: React.FC = () => {
                 onChange={(e) => setPolicyAccepted(e.target.checked)}
                 required
               />
-              <label htmlFor="register-policy">
-                Я ознакомился с <a href="#">политикой конфиденциальности</a> и даю согласие на <a href="#">обработку персональных данных</a>
+              <label htmlFor="register-policy" className="register-policy">
+                Я ознакомился с <a href="/privacy">политикой конфиденциальности</a> и даю согласие на <a href="/consent">обработку персональных данных</a>
               </label>
             </div>
 
@@ -247,21 +248,21 @@ const Register: React.FC = () => {
                 checked={marketingAccepted}
                 onChange={(e) => setMarketingAccepted(e.target.checked)}
               />
-              <label htmlFor="register-marketing">
-                Я соглашаюсь на получение рекламных рассылок и персональных предложений
+              <label htmlFor="register-marketing" className="register-policy">
+                Я соглашаюсь на получение рекламных рассылок и персональных предложений
               </label>
             </div>
 
             <button 
               type="submit" 
-              className="btn-register"
+              className="btn-login"
               disabled={isLoading || !policyAccepted}
             >
               {isLoading ? 'Загрузка...' : 'Зарегистрироваться'}
             </button>
           </form>
         ) : (
-          <form className="register-form" onSubmit={handleVerify}>
+          <form className="login-form" onSubmit={handleVerify}>
             <div className="form-group">
               <label htmlFor="code">Код подтверждения</label>
               <input
@@ -275,10 +276,10 @@ const Register: React.FC = () => {
                 className="login-form__code-input"
               />
             </div>
-            
+          
             <button 
               type="submit" 
-              className="btn-register"
+              className="btn-login"
               disabled={isLoading || code.length < 6}
             >
               {isLoading ? 'Проверка...' : 'Подтвердить код'}
@@ -294,9 +295,8 @@ const Register: React.FC = () => {
         )}
 
         {step === 1 && (
-          <div className="login-link">
-            Уже есть аккаунт? 
-            <Link to="/login">Войти</Link>
+          <div className="register-link">
+            Уже есть аккаунт? <Link to="/login">Войти</Link>
           </div>
         )}
       </div>

@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth, AuthProvider } from './features/auth/AuthContext'; 
 import ToastContainer from './components/Toast/ToastContainer'; 
+import { setNavigate } from './services/api'; 
 
 import About from './pages/About/About';
 import Booking from './pages/Booking/Booking';
@@ -10,6 +11,9 @@ import Contact from './pages/Contact/Contact';
 import Home from './pages/Home/Home';
 import House from './pages/House/House';
 import Reviews from './pages/Reviews/Reviews';
+import CookieBanner from './components/Cookie/CookieBanner';
+import PrivacyPolicy from './pages/PrivacyPolicy/PrivacyPolicy';
+import Consent from './pages/Consent/Consent';
 
 import Login from './pages/Login/Login';
 import ForgotPassword from './pages/Login/ForgotPassword';
@@ -31,7 +35,10 @@ const AppRoutes = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    // Автоматический разлогин админа при выходе за пределы админ-панели
+    useEffect(() => {
+        setNavigate(navigate);
+    }, [navigate]);
+
     useEffect(() => {
         if (user?.is_staff && !location.pathname.startsWith('/admin-board') && location.pathname !== '/login') {
             logout();
@@ -48,6 +55,9 @@ const AppRoutes = () => {
       <Route path="/contact" element={<Contact />} />
       <Route path="/house/:id" element={<House />} />
       <Route path="/reviews" element={<Reviews />} />
+
+      <Route path="/privacy" element={<PrivacyPolicy />} />
+      <Route path="/consent" element={<Consent />} />
 
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -91,6 +101,7 @@ const App = () => (
   <BrowserRouter>
     <AuthProvider>
       <ToastContainer />
+      <CookieBanner />
       <AppRoutes />
     </AuthProvider>
   </BrowserRouter>

@@ -55,7 +55,7 @@ const Booking = () => {
   };
 
   const handleBeforeBooking = (): boolean => {
-    return true; // Разрешаем открыть модалку, не требуя заполнить форму
+    return true; 
   };
 
   const handleBookClick = async (details: BookingDetails) => {

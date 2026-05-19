@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { Share2 } from 'lucide-react';
-import { Helmet } from 'react-helmet-async'; // ДОБАВЛЕН ИМПОРТ HELMET
+import { Helmet } from 'react-helmet-async';
 import { useAuth } from '../../features/auth/AuthContext';
 import { fetchHouses, getFirstAvailableHouse } from '../../services/availabilityService';
 import bookingService from '../../services/bookingService';
@@ -10,13 +10,12 @@ import './House.scss';
 
 import { useToastStore } from '../../store/useToastStore';
 
-// Layout and Common Components
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import ContactForm from '../../components/ContactForm/ContactForm';
 import Reviews from '../Home/components/Reviews/Reviews';
 import BookingCalendar from '../../components/BookingCalendar/BookingCalendar';
-// House Page Specific Components
+
 import BookingConfirmationModal, { BookingDetails } from '../../components/BookingConfirmationModal/BookingConfirmationModal';
 import HouseGallery from './components/HouseGallery/HouseGallery';
 import FullscreenGalleryModal from './components/FullscreenGalleryModal/FullscreenGalleryModal';
@@ -26,14 +25,12 @@ import HouseConditions from './components/HouseConditions/HouseConditions';
 import HouseDescription from './components/HouseDescription/HouseDescription';
 import HouseMap from './components/HouseMap/HouseMap';
 
-// Декларация для TypeScript, чтобы он понимал объект Яндекс.Метрики
 declare global {
   interface Window {
     ym?: (id: number, action: string, goal: string) => void;
   }
 }
 
-// Фолбэк изображение, если у домика нет фото
 const fallbackImage = "https://picsum.photos/seed/house/800/600";
 
 const House = () => {
@@ -129,15 +126,13 @@ const House = () => {
 
       await bookingService.createBooking(payload);
       
-      // --- ОТПРАВКА ЦЕЛИ В ЯНДЕКС МЕТРИКУ ---
       if (typeof window !== 'undefined' && window.ym) {
         window.ym(109018163, 'reachGoal', 'booking_success'); 
       }
-      // --------------------------------------
 
       addToast('Заявка успешно принята! Ожидайте звонка менеджера в течение 15 минут для уточнения деталей.', 'success');
       setIsModalOpen(false);
-      navigate('/account'); // Перенаправляем в личный кабинет
+      navigate('/account');
     } catch (error: any) {
       console.error(error);
       const errorMsg = error.response?.data?.error || error.response?.data?.detail || 'Проверьте авторизацию';
@@ -182,19 +177,12 @@ const House = () => {
   const hasSpecificHouse = urlCheckIn && urlCheckOut;
   const baseTitle = house.type === 'big' ? '6-ти местный' : '4-х местный';
 
-  // Используем ТОЛЬКО изображения из базы данных, либо фолбэк
-  const mainGalleryImages = house.images && house.images.length > 0 
-    ? house.images 
-    : [fallbackImage];
-
-  // --- НОВЫЙ БЛОК: ФОРМИРОВАНИЕ SEO МИКРОРАЗМЕТКИ ---
-  const houseName = hasSpecificHouse ? house.title : `${baseTitle} коттедж`;
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "LodgingBusiness",
-    "name": houseName,
+    "name": hasSpecificHouse ? house.title : `${baseTitle} коттедж`,
     "description": house.description || `Аренда ${baseTitle.toLowerCase()}а коттеджа на берегу Каспийского моря в Дагестане.`,
-    "image": mainGalleryImages[0],
+    "image": house.images && house.images.length > 0 ? house.images[0] : fallbackImage,
     "priceRange": house.pricePerNight ? `от ${house.pricePerNight} RUB` : "По запросу",
     "address": {
       "@type": "PostalAddress",
@@ -203,11 +191,15 @@ const House = () => {
     }
   };
 
+  const mainGalleryImages = house.images && house.images.length > 0 
+    ? house.images 
+    : [fallbackImage];
+
   return (
     <div className="app house-page">
       <Helmet>
-        <title>{houseName} — Аренда коттеджей в Дагестане | 7 Континент</title>
-        <meta name="description" content={`Забронируйте ${houseName.toLowerCase()}. Отличный отдых на берегу Каспийского моря со всеми удобствами.`} />
+        <title>{hasSpecificHouse ? house.title : `${baseTitle} коттедж`} — Аренда коттеджей в Дагестане | 7 Континент</title>
+        <meta name="description" content={`Забронируйте ${hasSpecificHouse ? house.title.toLowerCase() : `${baseTitle.toLowerCase()} коттедж`}. Отличный отдых на берегу Каспийского моря со всеми удобствами.`} />
         <script type="application/ld+json">
           {JSON.stringify(schemaData)}
         </script>
@@ -217,7 +209,20 @@ const House = () => {
 
       <main className="main-content">
         <div className="house-layout container">
+          
           <div className="house-layout__left">
+            
+            <div className="sidebar-header-titles mobile-only-header">
+              <div className="sidebar-titles">
+                <h1 className="house-main-title">
+                  {baseTitle} {hasSpecificHouse ? <span className="house-number-badge">{house.title}</span> : 'коттедж'}
+                </h1>
+              </div>
+              <button className="share-btn" title="Поделиться">
+                <Share2 size={24} strokeWidth={1.5} color="var(--color-primary)" className="share-btn__icon" />
+              </button>
+            </div>
+
             <HouseGallery
               houseTitle={`${baseTitle} коттедж`}
               mainGalleryImages={mainGalleryImages}
@@ -239,7 +244,8 @@ const House = () => {
 
           <div className="house-layout__right">
             <div className="sticky-sidebar">
-              <div className="sidebar-header-titles">
+              
+              <div className="sidebar-header-titles desktop-only-header">
                 <div className="sidebar-titles">
                   <h1 className="house-main-title">
                     {baseTitle} {hasSpecificHouse ? <span className="house-number-badge">{house.title}</span> : 'коттедж'}
@@ -249,6 +255,7 @@ const House = () => {
                   <Share2 size={24} strokeWidth={1.5} color="var(--color-primary)" className="share-btn__icon" />
                 </button>
               </div>
+
               <AmenitiesList />
               
               <HouseDescription description={house.description} />

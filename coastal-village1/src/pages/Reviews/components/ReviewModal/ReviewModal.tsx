@@ -38,13 +38,11 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose, onSubmitRevi
     
     setIsSubmitting(true);
     try {
-      // Здесь вызывается новый апи создания отзыва
       await api.post('/api/reviews/', { rating, comment: reviewText });
       
       addToast('Ваш отзыв добавится в течение 10 минут', 'success');
       
       if (onSubmitReview) {
-        // Мы можем передать его наверх, чтобы он сразу обновил UI, если нужно, или просто закрыть окно
         onSubmitReview(rating, reviewText);
       }
       

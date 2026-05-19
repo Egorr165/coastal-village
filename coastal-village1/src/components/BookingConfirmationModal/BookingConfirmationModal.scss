@@ -15,15 +15,16 @@
 .booking-modal-wrapper {
   margin: auto;
   width: 100%;
-  max-width: 540px;
+  max-width: 540px; 
   display: flex;
   flex-direction: column;
+  
 
   &__header {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
     padding-left: 0.5rem;
   }
 
@@ -36,6 +37,9 @@
     font-weight: 800;
     color: #ffffff;
     margin: 0;
+    @media(max-width: 576px){
+      font-size: 1.1rem;
+    }
   }
 }
 
@@ -102,6 +106,11 @@
       color: var(--color-dark);
       background-color: #F8FAFC;
       transition: all 0.2s ease;
+
+      @media(max-width: 768px) {
+        padding: 0.5rem 0.5rem;
+        font-size: 0.9rem;
+      }
 
       &:focus {
         outline: none;
@@ -188,8 +197,8 @@
   }
 
   &__dates-card {
-    background-color: var(--color-light); // slate-50
-    border: 1px solid #eef5fe; // slate-200
+    background-color: var(--color-light);
+    border: 1px solid #eef5fe;
     border-radius: 16px;
     padding: 1.5rem;
     display: flex;
@@ -316,11 +325,11 @@
       font-size: 0.95rem;
       font-weight: 700;
       border-radius: 10px;
+      
     }
   }
 
   &__btn-cancel {
-
     color: var(--color-primary);
     border: 1px solid var(--color-primary);
     transition: all 0.2s;
@@ -337,7 +346,6 @@
     border: none;
     transition: all 0.2s;
     &:hover {
-
       transform: translateY(-2px);
     }
   }
@@ -432,41 +440,97 @@
   &__btn-save--flex2 {
     flex: 2;
   }
-}
 
-@media (max-width: 576px) {
-  .booking-modal-wrapper__header {
-    margin-bottom: 1rem;
-  }
-  .booking-modal-wrapper__title {
-    font-size: 1.25rem;
-  }
-  
-  .booking-modal {
-    padding: 1.5rem;
-    border-radius: 20px;
-    
-    &__grid {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      margin-bottom: 1.5rem;
+  @media (max-width: 576px) {
+    border-radius: 16px;
+
+    &__top {
+      margin-bottom: 1rem;
+    }
+
+    &__subtitle {
+      font-size: 1.25rem; 
     }
 
     &__dates-card {
-      padding: 1rem;
-      margin-bottom: 1.5rem;
+      padding: 0.8rem; 
+      margin-bottom: 1rem;
+      flex-direction: row;
+      gap: 1rem;
+      
+      .booking-modal__date-separator {
+        flex-direction: row; 
+      }
+    }
+
+    &__arrow-icon{
+      display: none;
+    }
+    &__label{
+      margin-bottom: 4px;
+      font-size: 0.8rem;
     }
 
     &__date-value {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
+    }
+
+    &__grid {
+      grid-template-columns: 1fr; 
+      gap: 1.2rem;
+      margin-bottom: 0.8rem;
+    }
+
+    &__divider{
+      margin-bottom: 0.8rem;
+    }
+
+    &__guest-inputs {
+      gap: 0.4rem; 
+      padding-top: 0;
+    }
+
+    &__input {
+      padding: 0.6rem 0.8rem; 
+      font-size: 0.9rem;
+    }
+
+    &__total-row {
+      margin-bottom: 1rem;
+      align-items: center;
+    }
+
+    &__total-label{
+      margin-bottom: 0;
+      font-size: 1rem;
+    }
+
+    &__text-group{
+      gap: 0.1rem
+    }
+
+    &__total-price {
+      font-size: 1.1rem; 
     }
 
     &__actions {
       flex-direction: column;
+      gap: 0.3rem;
+      button{
+        font-size: 0.85rem;
+        padding: 9px;
+        font-weight: 600;
+        border-radius: 8px;
+      }
     }
-    
-    &__total-price {
-      font-size: 1.5rem;
+
+    &__btn-cancel, &__btn-save {
+      padding: 12px;
+      font-size: 0.9rem;
     }
+
+    &__text-strong{
+      font-size: 0.9rem;
+    } 
   }
 }

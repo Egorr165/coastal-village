@@ -84,13 +84,10 @@ class Cottage(models.Model):
 
     def __str__(self):
         """Всегда возвращаем строку"""
-        # Если есть имя, возвращаем его как строку
         if self.title:
             return str(self.title)
-        # Если есть ID (объект сохранен), возвращаем ID
         if self.pk:
             return f"Домик #{self.pk}"
-        # Если объект новый и без имени
         return "Новый домик"
 
 
@@ -142,7 +139,6 @@ class CottageImage(models.Model):
                         img = img.convert('RGBA')
 
                     print("Saving output to BytesIO...")
-                    # Пропорциональное уменьшение до макс 1920x1920
                     img.thumbnail((1920, 1920), Image.Resampling.LANCZOS)
                     
                     output = BytesIO()
@@ -161,7 +157,6 @@ class CottageImage(models.Model):
                 except Exception as e:
                     print(f"Error converting image to WEBP: {e}")
 
-        # ensure standard save happens
         print("Super saving...")
         super().save(*args, **kwargs)
         print("Super saved.")

@@ -127,7 +127,7 @@ const ContactForm: React.FC = () => {
                 required
               />
               <label htmlFor="contact-policy" className="contact-form__agreement">
-                Я ознакомился с <a href="#">политикой конфиденциальности</a> и даю согласие на <a href="#">обработку персональных данных</a>
+                Я ознакомился с <a href="/privacy">политикой конфиденциальности</a> и даю согласие на <a href="/consent">обработку персональных данных</a>
               </label>
             </div>
 

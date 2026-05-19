@@ -26,7 +26,6 @@ const AdminCottages: React.FC = () => {
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [activeTab, setActiveTab] = useState('all');
 
-  // Состояние модалки
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [formData, setFormData] = useState({
@@ -39,7 +38,6 @@ const AdminCottages: React.FC = () => {
     is_active: true
   });
   
-  // Состояние галереи
   const [galleryImages, setGalleryImages] = useState<CottageImage[]>([]);
   const [loadingGallery, setLoadingGallery] = useState(false);
   const [draggedId, setDraggedId] = useState<number | null>(null);
@@ -136,7 +134,7 @@ const AdminCottages: React.FC = () => {
     try {
       const payload = {
         title: formData.title,
-        house_type: formData.type, // Сопоставление с бэкендом
+        house_type: formData.type, 
         price_per_night: formData.pricePerNight,
         capacity: formData.capacity,
         bedrooms: formData.bedrooms,

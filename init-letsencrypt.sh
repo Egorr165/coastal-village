@@ -1,6 +1,4 @@
-#!/bin/bash
 
-# Убедитесь, что скрипт запускается с правами sudo или root
 if ! docker compose version > /dev/null 2>&1; then
   echo 'Ошибка: плагин docker compose не установлен.' >&2
   exit 1
@@ -9,8 +7,8 @@ fi
 domains=(7continent-dagestan.ru www.7continent-dagestan.ru)
 rsa_key_size=4096
 data_path="./data/certbot"
-email="admin@7continent-dagestan.ru" # Можно оставить так, или вписать вашу реальную почту
-staging=0 # Если хотите только протестировать, поставьте 1, чтобы не тратить лимиты Let's Encrypt
+email="admin@7continent-dagestan.ru"
+staging=0 
 
 if [ -d "$data_path" ]; then
   read -p "Уже есть сертификаты для $domains. Заменить их? (y/N) " decision
@@ -54,13 +52,11 @@ for domain in "${domains[@]}"; do
   domain_args="$domain_args -d $domain"
 done
 
-# Выбираем email
 case "$email" in
   "") email_arg="--register-unsafely-without-email" ;;
   *) email_arg="--email $email" ;;
 esac
 
-# Включаем staging (тестовый режим) при необходимости
 if [ $staging != "0" ]; then staging_arg="--staging"; fi
 
 docker compose run --rm --entrypoint "\

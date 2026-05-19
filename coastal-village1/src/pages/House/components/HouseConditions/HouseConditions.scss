@@ -28,3 +28,27 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .conditions-box {
+    h3 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .conditions-list {
+      li {
+        padding-left: 15px;
+        margin-bottom: 12px;
+        font-size: 14px;
+        line-height: 1.5;
+
+        &::before {
+          top: 6px;
+          width: 5px;
+          height: 5px;
+        }
+      }
+    }
+  }
+}

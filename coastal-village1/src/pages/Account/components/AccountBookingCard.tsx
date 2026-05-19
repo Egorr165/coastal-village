@@ -133,7 +133,6 @@ const AccountBookingCard: React.FC<AccountBookingCardProps> = ({ bookingData, re
   };
 
   const handleCancelBookingAction = () => {
-    // 14 days validation logic
     const checkInDate = new Date(currentBooking.checkIn);
     const today = new Date();
     today.setHours(0,0,0,0);

@@ -34,41 +34,33 @@ class BookingViewSet(viewsets.ModelViewSet):
         user = self.request.user
         queryset = Booking.objects.select_related('user', 'cottage')
         
-        # Пользователи видят только свои бронирования, админы - все
         if not user.is_staff:
             queryset = queryset.filter(user=user)
         
-        # Фильтрация по статусу
         status_filter = self.request.query_params.get('status')
         if status_filter:
             queryset = queryset.filter(status=status_filter)
         
-        # Фильтрация по дате заезда (от)
         check_in_from = self.request.query_params.get('check_in_from')
         if check_in_from:
             queryset = queryset.filter(check_in_date__gte=check_in_from)
         
-        # Фильтрация по дате заезда (до)
         check_in_to = self.request.query_params.get('check_in_to')
         if check_in_to:
             queryset = queryset.filter(check_in_date__lte=check_in_to)
         
-        # Фильтрация по дате выезда (от)
         check_out_from = self.request.query_params.get('check_out_from')
         if check_out_from:
             queryset = queryset.filter(check_out_date__gte=check_out_from)
         
-        # Фильтрация по дате выезда (до)
         check_out_to = self.request.query_params.get('check_out_to')
         if check_out_to:
             queryset = queryset.filter(check_out_date__lte=check_out_to)
         
-        # Фильтрация по ID домика
         cottage_id = self.request.query_params.get('cottage_id')
         if cottage_id:
             queryset = queryset.filter(cottage_id=cottage_id)
         
-        # Фильтрация по ID пользователя (только для админов)
         user_id = self.request.query_params.get('user_id')
         if user_id and user.is_staff:
             queryset = queryset.filter(user_id=user_id)
@@ -101,7 +93,6 @@ class BookingViewSet(viewsets.ModelViewSet):
         """
         booking = self.get_object()
         
-        # Проверка прав
         if not request.user.is_staff and booking.user != request.user:
             return Response(
                 {'error': 'Нет прав для отмены этого бронирования'},
@@ -163,7 +154,6 @@ class BookingViewSet(viewsets.ModelViewSet):
         """
         bookings = Booking.objects.filter(user=request.user).select_related('cottage').order_by('-created_at')
         
-        # Применяем те же фильтры
         status_filter = request.query_params.get('status')
         if status_filter:
             bookings = bookings.filter(status=status_filter)
@@ -182,7 +172,6 @@ class BookingViewSet(viewsets.ModelViewSet):
             check_in_date__gte=date.today()
         ).select_related('user', 'cottage').order_by('check_in_date')
         
-        # Пагинация
         page = self.paginate_queryset(bookings)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
@@ -214,7 +203,6 @@ class BookingViewSet(viewsets.ModelViewSet):
             status__in=['confirmed', 'completed']
         ).aggregate(total=Sum('total_price'))['total'] or 0
         
-        # Популярные домики
         popular_cottages = Booking.objects.values('cottage__name').annotate(
             count=Count('id'),
             revenue=Sum('total_price')

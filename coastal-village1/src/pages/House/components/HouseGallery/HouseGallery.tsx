@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Share2, Maximize, ChevronLeft, ChevronRight, BedDouble, Home, UserCheck } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import './HouseGallery.scss';
-import mainHouseVideo from '../../../../images/main_house.mp4';
 
 interface HouseGalleryProps {
   houseTitle: string;
@@ -17,21 +16,12 @@ interface HouseGalleryProps {
 }
 
 const HouseGallery: React.FC<HouseGalleryProps> = ({
-  houseTitle,
   mainGalleryImages,
-  yardImages,
-  beachImages,
-  currentHouseImages,
   onOpenFullscreen,
   capacity,
-  bedrooms,
-  area,
-  houseType
+  area
 }) => {
   const [mainIndex, setMainIndex] = useState(0);
-  const [yardIndex, setYardIndex] = useState(0);
-  const [beachIndex, setBeachIndex] = useState(0);
-  const [houseIndex, setHouseIndex] = useState(0);
 
   const nextImage = (e: React.MouseEvent, setter: React.Dispatch<React.SetStateAction<number>>, length: number) => {
     e.stopPropagation();
@@ -54,7 +44,6 @@ const HouseGallery: React.FC<HouseGalleryProps> = ({
   return (
     <section className="gallery-section">
       <div className="house-gallery-container flex-column">
-        {/* Главное фото */}
         <div className="gallery-main-image" onClick={() => onOpenFullscreen(mainIndex)}>
           <img src={mainGalleryImages[mainIndex] || "https://picsum.photos/seed/int1/800/600"} alt="Main View" />
           
@@ -84,7 +73,6 @@ const HouseGallery: React.FC<HouseGalleryProps> = ({
           )}
         </div>
 
-        {/* Миниатюры */}
         <div className="gallery-thumbnails">
           {mainGalleryImages.map((imgSrc, idx) => (
             <div 

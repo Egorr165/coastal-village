@@ -9,7 +9,6 @@ class Review(models.Model):
     """
     Модель отзыва на домик
     """
-    # Связи
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -45,14 +44,12 @@ class Review(models.Model):
         help_text='Ваш отзыв о проживании'
     )
     
-    # Модерация
     is_approved = models.BooleanField(
         default=False,
         verbose_name='Одобрен',
         help_text='Отзыв прошел модерацию и опубликован'
     )
     
-    # Даты и статус просмотра
     is_viewed = models.BooleanField(
         default=False,
         verbose_name='Просмотрено администратором',
@@ -89,11 +86,9 @@ class Review(models.Model):
             if self.booking.status != 'completed':
                 raise ValidationError('Отзыв можно оставить только после завершения бронирования')
             
-            # Проверка что отзыв оставляется на тот же домик, что и в бронировании
             if self.cottage and self.cottage != self.booking.cottage:
                 raise ValidationError('Отзыв можно оставить только на домик из бронирования')
             
-            # Проверка что отзыв оставляет тот же пользователь, что и бронирование
             if self.user != self.booking.user:
                 raise ValidationError('Отзыв может оставить только пользователь, который совершил бронирование')
     

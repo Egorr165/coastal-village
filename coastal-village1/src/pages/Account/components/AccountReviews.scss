@@ -7,6 +7,7 @@
   .account-review-item {
     border-bottom: 1px solid #EAEAEA;
     padding: 20px 0;
+    padding-bottom: 0;
     
     &:last-child {
       border-bottom: none;
@@ -33,6 +34,11 @@
       font-size: 16px;
       line-height: 1.5;
       color: #333333;
+
+      @media(max-width: 768px) {
+        font-size: 14px;
+      }
+
     }
   }
 }

@@ -1,4 +1,3 @@
-// src/components/CottageCard/CottageCard.tsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Users, Maximize, Home, Flame, Utensils } from 'lucide-react';
@@ -46,7 +45,6 @@ const CottageCard: React.FC<CottageCardProps> = ({
   return (
     <article className={`cottage-card ${isReversed ? 'cottage-card--reversed' : ''}`}>
 
-      {/* Левая (или правая) часть: Слайдер с фото */}
       <div className="cottage-card__gallery">
         <img
           src={images[currentImgIndex]}
@@ -75,7 +73,6 @@ const CottageCard: React.FC<CottageCardProps> = ({
         )}
       </div>
 
-      {/* Правая (или левая) часть: Информация */}
       <div className="cottage-card__info">
         <h3 className="cottage-card__title">{title}</h3>
 

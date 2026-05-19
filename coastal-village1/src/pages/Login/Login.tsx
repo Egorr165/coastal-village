@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../../features/auth/AuthContext';
+import { isValidReturnUrl } from '../../features/auth/authService';
 import './Login.scss';
 
 const Login: React.FC = () => {
@@ -21,20 +22,22 @@ const Login: React.FC = () => {
 
     try {
       await login(identifier, password);
-      const userStr = sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser');
-      if (userStr) {
+      
+      let returnUrl = sessionStorage.getItem('returnUrl');
+      sessionStorage.removeItem('returnUrl'); 
+
+      if (isValidReturnUrl(returnUrl)) {
+        navigate(returnUrl!);
+      } else {
+        const userStr = sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser');
+        if (userStr) {
           const user = JSON.parse(userStr);
           if (user.is_staff) {
-              navigate('/admin-board');
-              return;
+            navigate('/admin-board');
+            return;
           }
-      }
-      const returnUrl = sessionStorage.getItem('returnUrl');
-      if (returnUrl) {
-          sessionStorage.removeItem('returnUrl');
-          navigate(returnUrl);
-      } else {
-          navigate('/catalog');
+        }
+        navigate('/catalog');
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -51,13 +54,13 @@ const Login: React.FC = () => {
     <div className="login-page">
       <div className="login-card">
         <h1>Вход</h1>
-        <p className="subtitle">Добро пожаловать обратно в Coastal Village</p>
-
+        <p className="subtitle">Добро пожаловать обратно в 7 Континент</p>
+        
         {error && <div className="error-message">{error}</div>}
 
         <form className="login-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="identifier">Email или Телефон</label>
+            <label htmlFor="identifier">Email или Телефон</label>
             <input
               type="text"
               id="identifier"
@@ -105,8 +108,7 @@ const Login: React.FC = () => {
         </form>
 
         <div className="register-link">
-          Нет аккаунта? 
-          <Link to="/register">Зарегистрироваться</Link>
+          Нет аккаунта? <Link to="/register">Зарегистрироваться</Link>
         </div>
       </div>
     </div>

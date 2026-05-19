@@ -14,7 +14,6 @@ const Header = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // Проверяем размер экрана
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 1024);
@@ -29,20 +28,17 @@ const Header = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Блокируем скролл при открытом меню
   useEffect(() => {
     if (isMenuOpen && isMobile) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = ''; 
     }
-
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = ''; 
     };
   }, [isMenuOpen, isMobile]);
 
-  // Закрыть меню при клике вне
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
@@ -64,7 +60,6 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
-  // Функция для определения активного класса
   const getNavLinkClass = ({ isActive }: { isActive: boolean }) =>
     isActive ? 'active' : '';
 
@@ -78,9 +73,11 @@ const Header = () => {
           </NavLink>
         </div>
 
-        
+        <div className="mobile-brand-name">
+          <span className="brand-num">7</span>
+          <span className="brand-text">Континент</span>
+        </div>
 
-        {/* Десктоп навигация */}
         {!isMobile && (
           <nav className="header-nav">
             <NavLink to="/" className={getNavLinkClass} end>Главная</NavLink>
@@ -96,7 +93,6 @@ const Header = () => {
         )}
 
 
-        {/* Кнопка бронирования (только на десктопе) */}
           {!isMobile && (
             <button
               className="btn-book-header"
@@ -108,7 +104,6 @@ const Header = () => {
 
 
         <div className="header-right">
-          {/* Телефон (только на десктопе) */}
           {!isMobile && (
             <div className="phone-block">
               <TabletSmartphone size={24} strokeWidth={2} color="var(--color-primary)" />
@@ -116,7 +111,6 @@ const Header = () => {
             </div>
           )}
 
-          {/* Кнопка бургер-меню */}
           {isMobile && (
             <button
               className={`burger-button ${isMenuOpen ? 'open' : ''}`}
@@ -127,7 +121,6 @@ const Header = () => {
             </button>
           )}
 
-          {/* Иконка пользователя */}
           <div
             className={`user-icon ${user?.photo ? 'user-icon--has-photo' : ''}`}
             onClick={() => {
@@ -149,8 +142,7 @@ const Header = () => {
 
       </header>
 
-      {/* Мобильное меню (Вынесено из <header> из-за backdrop-filter, который ломает position: fixed) */}
-      {isMobile && (
+     {isMobile && (
         <>
           <div className={`mobile-menu-overlay ${isMenuOpen ? 'active' : ''}`} onClick={closeMenu} />
           <div className={`mobile-menu ${isMenuOpen ? 'active' : ''}`}>

@@ -15,21 +15,16 @@ const AccountPersonalData: React.FC = () => {
 
   const [isSaved, setIsSaved] = useState(false);
 
-  // Formatting phone: +7 (XXX) XXX-XX-XX
   const formatPhone = (value: string) => {
-    // Only numbers
     const numbers = value.replace(/\D/g, '');
 
-    // Limit to 11 digits (7 + 10)
     const limited = numbers.slice(0, 11);
 
-    // If empty or just 7/8
     if (limited.length <= 1) return limited.length === 1 ? '+7 (' : '';
 
     let formatted = '+7 (';
 
     if (limited.length > 1) {
-      // Skip the first digit if it's 7 or 8 and use the next 3 for (XXX)
       const start = (limited[0] === '7' || limited[0] === '8') ? 1 : 0;
       const areaCode = limited.slice(start, start + 3);
       formatted += areaCode;
@@ -72,7 +67,6 @@ const AccountPersonalData: React.FC = () => {
         data.append('avatar', avatarFile);
         await updateUser(data);
       } else {
-        // Если аватарка не менялась, отправляем обычный JSON
         const data: any = {
           name: formData.name,
           email: formData.email,

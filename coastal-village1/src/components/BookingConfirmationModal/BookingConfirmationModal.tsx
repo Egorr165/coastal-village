@@ -66,9 +66,8 @@ const BookingConfirmationModal: React.FC<BookingConfirmationModalProps> = ({
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let inputVal = e.target.value;
-    let digitsOnly = inputVal.replace(/\D/g, ''); // Удаляем всё, кроме цифр
+    let digitsOnly = inputVal.replace(/\D/g, ''); 
 
-    // Обработка очистки поля
     if (!digitsOnly) {
       setGuestData(prev => ({ ...prev, phone: '' }));
       setPhoneError('Телефон обязателен');
@@ -77,10 +76,9 @@ const BookingConfirmationModal: React.FC<BookingConfirmationModalProps> = ({
 
     if (['7', '8', '9'].includes(digitsOnly[0])) {
       if (digitsOnly[0] === '9') {
-        digitsOnly = '7' + digitsOnly; // Автоматически подставляем 7, если ввод начат с 9
+        digitsOnly = '7' + digitsOnly; 
       }
 
-      // Ограничиваем длину до 11 цифр (стандарт РФ)
       digitsOnly = digitsOnly.substring(0, 11);
 
       let formattedPhone = '+7';
@@ -91,14 +89,12 @@ const BookingConfirmationModal: React.FC<BookingConfirmationModalProps> = ({
 
       setGuestData(prev => ({ ...prev, phone: formattedPhone }));
       
-      // Строгая валидация
       if (digitsOnly.length !== 11) {
         setPhoneError('Номер должен содержать 11 цифр');
       } else {
         setPhoneError('');
       }
     } else {
-      // Для международных номеров просто подставляем + и ограничиваем 15 цифрами
       digitsOnly = digitsOnly.substring(0, 15);
       const formattedPhone = '+' + digitsOnly;
       setGuestData(prev => ({ ...prev, phone: formattedPhone }));
@@ -143,7 +139,6 @@ const BookingConfirmationModal: React.FC<BookingConfirmationModalProps> = ({
     houseTypeStr = splitArr[0];
     houseNumStr = splitArr[1];
   }
-  // Если не нашел " №", но есть "КОТТЕДЖ №"
   else if (houseTypeStr.includes('КОТТЕДЖ №')) {
     const splitArr = houseTypeStr.split('КОТТЕДЖ №');
     if (splitArr[0].trim() === '') {

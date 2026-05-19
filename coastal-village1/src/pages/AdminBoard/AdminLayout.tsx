@@ -36,7 +36,6 @@ const AdminLayout: React.FC = () => {
   const [toasts, setToasts] = useState<{id: number, message: React.ReactNode}[]>([]);
   const prevStats = useRef<AdminStats | null>(null);
 
-  // Глобальный пуллинг
   useEffect(() => {
      let isMounted = true;
      const fetchStats = async () => {
@@ -77,9 +76,7 @@ const AdminLayout: React.FC = () => {
         } catch(e) {}
      };
 
-     // Первый запрос
      fetchStats();
-     // Повторяем каждые 10 секунд
      const interval = setInterval(fetchStats, 10000); 
      return () => { isMounted = false; clearInterval(interval); }
   }, []);

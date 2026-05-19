@@ -7,6 +7,10 @@ import Footer from '../../components/Footer/Footer';
 import Button from '../../components/Button/Button';
 import LazyMap from '../../components/LazyMap/LazyMap';
 
+import photo1 from '../../images/contact/contact-image-1.webp';
+import photo2 from '../../images/contact/contact-image-2.webp';
+import photo3 from '../../images/contact/contact-image-3.webp';
+
 import { TabletSmartphone, Mail, Calendar, DoorOpen, LogOut, Plus, Minus } from 'lucide-react';
 import TGIcon from '../../images/contact_page/icon-telegram.svg';
 import TGWhiteIcon from '../../images/contact_page/icon-telegram-white.svg';
@@ -150,6 +154,7 @@ const Contact = () => {
               <div className="contact-hero__text">
                 <h1 className="page-hero__title">Контакты</h1>
                 <h2 className="contact-hero__subtitle">Мы всегда на связи</h2>
+                <h2 className="contact-hero__subtitle-phone">Отправьте заявку и мы перезвоним в течении 15 минут!</h2>
                 <p className="contact-hero__description">
                   Задайте вопрос прямо сейчас — ответим в течение 15 минут
                 </p>
@@ -157,14 +162,17 @@ const Contact = () => {
                   <img
                     alt="Terrace"
                     className="contact-hero__gallery-img"
+                    src={photo1}
                   />
                   <img
                     alt="Coffee"
                     className="contact-hero__gallery-img"
+                    src={photo2}
                   />
                   <img
                     alt="Room"
                     className="contact-hero__gallery-img"
+                    src={photo3}
                   />
                 </div>
               </div>
@@ -172,6 +180,9 @@ const Contact = () => {
               <div className="hero-contact-form">
                 <p className="hero-contact-form__title">
                   Заполните форму, мы свяжемся с вами и проконсультируем по всем возникшим вопросам
+                </p>
+                <p className="form-title-mobile">
+                  Оставьте заявку
                 </p>
                 <form onSubmit={handleSubmit}>
                   <div className="hero-contact-form__input-group">
@@ -207,7 +218,7 @@ const Contact = () => {
                       required
                     />
                     <label htmlFor="policy" className="hero-contact-form__checkbox-label">
-                      Я ознакомился с <a href="#">политикой конфиденциальности</a> и даю согласие на <a href="#">обработку персональных данных</a>
+                      Я ознакомился с <a href="/privacy">политикой конфиденциальности</a> и даю согласие на <a href="/consent">обработку персональных данных</a>
                     </label>
                   </div>
                   <Button type="submit" variant="secondary" size="lg" fullWidth disabled={loading || !policyAccepted}>
@@ -234,10 +245,10 @@ const Contact = () => {
                   </p>
                 </div>
                 <div className="contact-methods__buttons">
-                  <a href="https://t.me/" target="_blank" rel="noopener noreferrer" className="ui-button ui-button--outline ui-button--md contact-methods__button-link">
+                  <a href="https://t.me/+79381607231" target="_blank" rel="noopener noreferrer" className="ui-button ui-button--outline ui-button--md contact-methods__button-link">
                     TELEGRAM
                   </a>
-                  <a href="https://wa.me/79381607231" target="_blank" rel="noopener noreferrer" className="ui-button ui-button--outline ui-button--md contact-methods__button-link">
+                  <a href="https://max.ru/join/OCRvS4m2PPAerb3uiUq74zgOfrDqjvz61OErhGPXTOshttps://max.ru/u/f9LHodD0cQL8dXggg101L9GnH" target="_blank" rel="noopener noreferrer" className="ui-button ui-button--outline ui-button--md contact-methods__button-link">
                     MAX
                   </a>
                 </div>
@@ -349,33 +360,33 @@ const Contact = () => {
               </p>
 
               <div className="contact-social-grid">
-                <a href="https://t.me/caspiy_riviera" target="_blank" rel="noopener noreferrer" className="contact-social-card contact-social-card--tg">
+                <a href="https://t.me/seven_continent_dagestan" target="_blank" rel="noopener noreferrer" className="contact-social-card contact-social-card--tg">
                   <div className="contact-social-card__icon-wrapper">
                     <img src={TGWhiteIcon} alt="Telegram" width={28} height={28} />
                   </div>
                   <div className="contact-social-card__info">
                     <span className="contact-social-card__name">Telegram</span>
-                    <span className="contact-social-card__link">t.me/caspiy_riviera</span>
+                    <span className="contact-social-card__link">t.me/seven_continent_dagestan</span>
                   </div>
                 </a>
 
-                <a href="https://vk.com/caspiy_riviera" target="_blank" rel="noopener noreferrer" className="contact-social-card contact-social-card--vk">
+                <a href="https://vk.com/7continent05" target="_blank" rel="noopener noreferrer" className="contact-social-card contact-social-card--vk">
                   <div className="contact-social-card__icon-wrapper">
                     <img src={VKIcon} alt="ВКонтакте" width={28} height={28} />
                   </div>
                   <div className="contact-social-card__info">
                     <span className="contact-social-card__name">ВКонтакте</span>
-                    <span className="contact-social-card__link">vk.com/caspiy_riviera</span>
+                    <span className="contact-social-card__link">vk.com/7continent05</span>
                   </div>
                 </a>
 
-                <a href="#" className="contact-social-card contact-social-card--max">
+                <a href="https://max.ru/join/OCRvS4m2PPAerb3uiUq74zgOfrDqjvz61OErhGPXTOs" className="contact-social-card contact-social-card--max">
                   <div className="contact-social-card__icon-wrapper">
                     <img src={MaxIcon} alt="MAX" width={60} height={60} className="contact-social-card__max-icon" />
                   </div>
                   <div className="contact-social-card__info">
                     <span className="contact-social-card__name">MAX</span>
-                    <span className="contact-social-card__link">@caspiy_riviera</span>
+                    <span className="contact-social-card__link">7Континент</span>
                   </div>
                 </a>
               </div>

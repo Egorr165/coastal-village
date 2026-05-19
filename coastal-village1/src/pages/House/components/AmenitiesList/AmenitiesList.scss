@@ -21,12 +21,13 @@
 @media (max-width: 768px) {
   .amenities-grid {
     grid-template-columns: 1fr 1fr;
-    column-gap: 20px;
+    column-gap: 10px;
+    row-gap: 12px;
+  }
+
+  .amenity-item {
+    font-size: 13px;
   }
 }
 
-@media (max-width: 480px) {
-  .amenities-grid {
-    grid-template-columns: 1fr;
-  }
-}
+

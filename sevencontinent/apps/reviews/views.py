@@ -36,11 +36,9 @@ class ReviewViewSet(viewsets.ModelViewSet):
         """
         user = self.request.user
         
-        # Админы видят все отзывы
         if user.is_staff:
             return Review.objects.select_related('user', 'cottage', 'booking').all()
         
-        # Обычные пользователи видят только одобренные отзывы
         return Review.objects.filter(is_approved=True).select_related('user', 'cottage', 'booking')
     
     def get_serializer_class(self):
@@ -109,7 +107,6 @@ class ReviewViewSet(viewsets.ModelViewSet):
         
         reviews = Review.objects.filter(is_approved=False).select_related('user', 'cottage')
         
-        # Пагинация
         page = self.paginate_queryset(reviews)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
@@ -133,7 +130,6 @@ class ReviewViewSet(viewsets.ModelViewSet):
         reviews = Review.objects.filter(cottage_id=cottage_id, is_approved=True)
         serializer = self.get_serializer(reviews, many=True)
         
-        # Добавляем средний рейтинг
         from django.db.models import Avg
         avg_rating = reviews.aggregate(avg=Avg('rating'))['avg'] or 0
         

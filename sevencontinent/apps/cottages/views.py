@@ -30,7 +30,6 @@ class CottageViewSet(viewsets.ModelViewSet):
         """
         queryset = Cottage.objects.filter(is_active=True)
         
-        # Фильтр по цене
         min_price = self.request.query_params.get('min_price')
         max_price = self.request.query_params.get('max_price')
         if min_price:
@@ -38,7 +37,6 @@ class CottageViewSet(viewsets.ModelViewSet):
         if max_price:
             queryset = queryset.filter(price_per_night__lte=max_price)
         
-        # Фильтр по вместимости
         min_capacity = self.request.query_params.get('min_capacity')
         if min_capacity:
             queryset = queryset.filter(capacity__gte=min_capacity)
@@ -79,4 +77,4 @@ class CottageViewSet(viewsets.ModelViewSet):
         )
         return Response(serializer.data)
 
-
+

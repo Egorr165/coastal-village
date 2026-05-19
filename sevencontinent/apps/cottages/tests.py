@@ -10,7 +10,6 @@ class AmenityModelTest(TestCase):
     
     def setUp(self):
         """Подготовка данных перед каждым тестом"""
-        # pylint: disable=no-member
         self.amenity = Amenity.objects.create(
             name='Wi-Fi',
             icon='fas fa-wifi'
@@ -29,7 +28,6 @@ class AmenityModelTest(TestCase):
     def test_amenity_unique_name(self):
         """Тест уникальности названия"""
         with self.assertRaises(Exception):
-            # pylint: disable=no-member
             Amenity.objects.create(name='Wi-Fi')
 
 
@@ -38,7 +36,6 @@ class CottageModelTest(TestCase):
     
     def setUp(self):
         """Подготовка данных"""
-        # pylint: disable=no-member
         self.cottage = Cottage.objects.create(
             name='Тестовый домик',
             description='Красивый домик в горах',
@@ -65,7 +62,6 @@ class CottageModelTest(TestCase):
     
     def test_cottage_without_name(self):
         """Тест домика без имени"""
-        # pylint: disable=no-member
         cottage2 = Cottage.objects.create(
             price_per_night=3000
         )
@@ -75,7 +71,6 @@ class CottageModelTest(TestCase):
     def test_price_validation(self):
         """Тест валидации цены"""
         with self.assertRaises(Exception):
-            # pylint: disable=no-member
             Cottage.objects.create(
                 name='Дешевый домик',
                 price_per_night=Decimal('-1000.00')
@@ -83,7 +78,6 @@ class CottageModelTest(TestCase):
     
     def test_capacity_default(self):
         """Тест значения по умолчанию для capacity"""
-        # pylint: disable=no-member
         cottage2 = Cottage.objects.create(
             name='Домик',
             price_per_night=3000
@@ -92,7 +86,6 @@ class CottageModelTest(TestCase):
     
     def test_cottage_amenities_relation(self):
         """Тест связи с удобствами"""
-        # pylint: disable=no-member
         amenity = Amenity.objects.create(name='Парковка')
         self.cottage.amenities.add(amenity)
         self.assertEqual(self.cottage.amenities.count(), 1)
@@ -104,7 +97,6 @@ class CottageImageModelTest(TestCase):
     
     def setUp(self):
         """Подготовка данных"""
-        # pylint: disable=no-member
         self.cottage = Cottage.objects.create(
             name='Тестовый домик',
             price_per_night=5000
@@ -129,7 +121,6 @@ class CottageImageModelTest(TestCase):
     def test_cottage_image_creation(self):
         """Тест создания изображения"""
         image_file = self.create_test_image()
-        # pylint: disable=no-member
         cottage_image = CottageImage.objects.create(
             cottage=self.cottage,
             image=image_file,
@@ -143,7 +134,6 @@ class CottageImageModelTest(TestCase):
     def test_cottage_image_str_method(self):
         """Тест строкового представления"""
         image_file = self.create_test_image()
-        # pylint: disable=no-member
         cottage_image = CottageImage.objects.create(
             cottage=self.cottage,
             image=image_file
@@ -155,26 +145,22 @@ class CottageImageModelTest(TestCase):
         image1 = self.create_test_image()
         image2 = self.create_test_image()
         
-        # pylint: disable=no-member
-        # Создаем первое главное фото
+      
         img1 = CottageImage.objects.create(
             cottage=self.cottage,
             image=image1,
             is_main=True
         )
         
-        # Создаем второе главное фото
         img2 = CottageImage.objects.create(
             cottage=self.cottage,
             image=image2,
             is_main=True
         )
         
-        # Обновляем из базы
         img1.refresh_from_db()
         img2.refresh_from_db()
         
-        # Первое должно стать не главным, второе - главным
         self.assertFalse(img1.is_main)
         self.assertTrue(img2.is_main)
 
@@ -184,12 +170,10 @@ class CottageAPITest(APITestCase):
     
     def setUp(self):
         """Подготовка данных"""
-        # pylint: disable=no-member
-        # Создаем удобства
+        
         self.amenity1 = Amenity.objects.create(name='Wi-Fi')
         self.amenity2 = Amenity.objects.create(name='Парковка')
         
-        # Создаем домики
         self.cottage1 = Cottage.objects.create(
             name='Эконом домик',
             description='Недорогой вариант',
@@ -207,10 +191,8 @@ class CottageAPITest(APITestCase):
             is_active=False
         )
         
-        # Добавляем удобства
         self.cottage1.amenities.add(self.amenity1)
         
-        # URL для API
         self.list_url = '/api/cottages/cottages/'
     
     def test_get_cottages_list(self):
@@ -288,15 +270,13 @@ class CottageAPITest(APITestCase):
     
     def test_ordering_by_price(self):
         """Тест сортировки по цене"""
-        # pylint: disable=no-member
-        # Создаем еще один активный домик
+        
         cottage3 = Cottage.objects.create(
             name='Средний домик',
             price_per_night=5000,
             capacity=4
         )
         
-        # По возрастанию цены
         response = self.client.get(
             self.list_url,
             {'ordering': 'price_per_night'}

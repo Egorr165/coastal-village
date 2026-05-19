@@ -15,7 +15,6 @@ class MultipleFileField(forms.FileField):
         pass
 
 class CottageAdminForm(forms.ModelForm):
-    # Оставляем классический вариант
     class Meta:
         model = Cottage
         fields = '__all__'
@@ -94,19 +93,15 @@ class CottageImageAdmin(admin.ModelAdmin):
         additional_images = request.FILES.getlist('additional_images')
         main_image = form.cleaned_data.get('image')
 
-        # Если загрузили именно Главное фото
         if main_image:
-            # Снимаем статус у старых главных фото этого типа домика
             if not change:
                 CottageImage.objects.filter(house_type=obj.house_type, is_main=True).update(is_main=False)
             obj.is_main = True
             super().save_model(request, obj, form, change)
         elif additional_images:
-            # Если загрузили ТОЛЬКО массовые фото, берем первое из них как основу для записи
             obj.image = additional_images.pop(0)
             obj.is_main = False
             super().save_model(request, obj, form, change)
 
-        # Распаковываем оставшиеся дополнительные фото
         for img in additional_images:
             CottageImage.objects.create(house_type=obj.house_type, image=img, is_main=False)

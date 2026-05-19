@@ -97,7 +97,6 @@
   }
 }
 
-// Guests selector
 .guests-selector {
   cursor: pointer;
   position: relative;
@@ -172,7 +171,6 @@
   text-align: center;
 }
 
-// Cottage type selector
 .cottage-type-selector {
   display: flex;
   flex-direction: column;
@@ -244,7 +242,6 @@
   color: #6B7280;
 }
 
-// Selected info
 .selected-info {
   display: flex;
   align-items: center;
@@ -286,7 +283,6 @@
   }
 }
 
-// Search button
 .search-button {
   width: 100%;
   background: var(--color-primary);
@@ -321,7 +317,6 @@
   }
 }
 
-// Адаптив
 @media (max-width: 480px) {
   .search-filters {
     padding: 20px 16px;

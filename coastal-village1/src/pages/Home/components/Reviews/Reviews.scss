@@ -1,11 +1,15 @@
 .reviews {
   padding: 2rem 0 0;
-  background-color: var(--color-bg-light); // Off-white to break up pure white sections
+  background-color: var(--color-bg-light); 
   position: relative;
   overflow: hidden;
 
+  @media (max-width: 768px){
+    padding-top: 0;
+    margin-top: 30px;
+  }
 
-  // Subtle decorative background
+
   &::before {
     content: '';
     position: absolute;
@@ -23,7 +27,11 @@
     justify-content: space-between;
     align-items: center;
     text-align: left;
-    margin: 0 0.5rem 1rem 0.5rem; // Меньше отступ под заголовком
+    margin: 0 0.5rem 1rem 0.5rem; 
+
+    @media (max-width: 768px){
+      margin: 0 0 0 0.5rem;
+    }
 
     @media (min-width: 768px) {
       margin: 0 2rem 2rem 2rem;
@@ -121,13 +129,13 @@
     }
 
     @media (max-width: 640px) {
-      display: none; // Скрываем боковые стрелки на мобилках полностью
+      display: none; 
     }
   }
 
   &__mobile-btn-container {
     display: block;
-    margin-top: 0.75rem; // Уменьшен отступ, так как стрелок-кругляшей больше нет
+    margin-top: 0.75rem; 
     padding: 0 0.5rem;
 
     @media (min-width: 768px) {
@@ -138,7 +146,7 @@
   &__slider-wrapper {
     overflow: hidden;
     width: 100%;
-    padding: 0.5rem 0; // Оставляем только верхний/нижний микро-отступ для теней
+    padding: 0.5rem 0; 
     margin: 0;
 
     @media (min-width: 768px) {
@@ -150,13 +158,13 @@
   &__slider-track {
     display: flex;
     transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-    align-items: stretch; // Заставляет все слайды быть одной высоты (по самому высокому)
+    align-items: stretch; 
   }
 
   &__slide {
     flex: 0 0 100%;
-    padding: 0 0.5rem; // tight for mobile
-    display: flex; // Чтобы вытягивать карточку внутри
+    padding: 0 0.5rem; 
+    display: flex; 
     flex-direction: column;
 
     @media (min-width: 768px) {
@@ -167,14 +175,14 @@
 
   &__card {
     background-color: white;
-    padding: 1.5rem; // Меньше отступов внутри карточки на мобилках
+    padding: 1.5rem; 
     border-radius: 1rem;
     box-shadow: 0 10px 30px rgba(23, 72, 102, 0.04);
     position: relative;
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
     border: 1px solid rgba(0, 0, 0, 0.03);
     z-index: 1;
-    height: 100%; // Карточка занимает всю высоту слайда
+    height: 100%; 
     display: flex;
     flex-direction: column;
 
@@ -199,7 +207,7 @@
     top: 1.5rem;
     right: 1.5rem;
     color: var(--color-text-light);
-    opacity: 0.05; // Сделаем кавычки менее броскими на мобилках
+    opacity: 0.05; 
     z-index: -1;
     transform: scale(1.5);
     transition: all 0.4s ease;
@@ -215,8 +223,8 @@
   &__card-header {
     display: flex;
     align-items: center;
-    gap: 1rem; // Было 1.25rem
-    margin-bottom: 1rem; // Было 1.5rem
+    gap: 1rem; 
+    margin-bottom: 1rem; 
   }
 
   &__avatar {
@@ -250,22 +258,21 @@
 
   &__text {
     color: var(--color-text-main);
-    font-size: 0.875rem; // 14px для мобилок
+    font-size: 0.875rem; 
     line-height: 1.5;
     position: relative;
     z-index: 2;
-    margin: 0; // Убрали лишние отступы абзаца
+    margin: 0; 
     
-    // Обрезаем слишком длинный текст
     display: -webkit-box;
-    -webkit-line-clamp: 6; // Ограничение в 6 строк для мобилки
+    -webkit-line-clamp: 6; 
     -webkit-box-orient: vertical;
     overflow: hidden;
 
     @media (min-width: 768px) {
-      font-size: 0.95rem; // ~15px для десктопа
+      font-size: 0.95rem;
       line-height: 1.6;
-      -webkit-line-clamp: 8; // На десктопе можно показать больше
+      -webkit-line-clamp: 8; 
     }
   }
 

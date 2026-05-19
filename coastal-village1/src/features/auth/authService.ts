@@ -9,7 +9,6 @@ const getErrorMessage = (error: unknown, defaultMessage: string): string => {
   if (axios.isAxiosError(error) && error.response?.data) {
     const data = error.response.data;
     
-    // Если сервер вернул HTML (например 500 ошибка Django)
     if (typeof data === 'string' && data.trim().startsWith('<')) {
         return 'Внутренняя ошибка сервера (500). Попробуйте позже.';
     }
@@ -137,4 +136,23 @@ export const updateUser = async (updatedData: Partial<User> | FormData): Promise
   } catch (err) {
     throw new Error(getErrorMessage(err, 'Ошибка при обновлении профиля'));
   }
+};
+
+
+export const isValidReturnUrl = (url: string | null): boolean => {
+  if (!url) return false;
+  
+  if (url.startsWith('//') || 
+      url.startsWith('http://') || 
+      url.startsWith('https://') || 
+      url.startsWith('javascript:') || 
+      url.startsWith('data:')) {
+    return false;
+  }
+  
+  if (/[<>"'\\]/.test(url)) {
+    return false;
+  }
+  
+  return true;
 };

@@ -1,4 +1,3 @@
-// src/components/Footer/Footer.scss
 .footer {
   position: relative;
   background: #ffffff;
@@ -8,6 +7,7 @@
 
   @media (max-width: 768px) {
     padding: 3rem 0 2rem 0;
+    border-top: none;
   }
 
   a {
@@ -108,7 +108,6 @@
     color: var(--color-text-light);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-top: 1px;
   }
 
   &__col-title {
@@ -126,7 +125,7 @@
 
   &__nav-col {
     @media (max-width: 640px) {
-      order: 4; // Навигация в самом низу перед копирайтом
+      order: 4; 
       width: 100%;
       padding-top: 16px;
     }
@@ -142,8 +141,8 @@
 
     @media (max-width: 640px) {
       display: grid;
-      grid-template-columns: repeat(2, 1fr); // Превращаем ссылки в 2 колонки навигации!
-      gap: 14px 10px;
+      grid-template-columns: repeat(3, 1fr); 
+      gap: 10px 15px;
     }
 
     li a {
@@ -158,7 +157,7 @@
 
   &__contacts-col {
     @media (max-width: 640px) {
-      order: 3; // Контакты под соцсетями
+      order: 3; 
       width: 100%;
       padding-bottom: 24px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.05);
@@ -213,17 +212,18 @@
     color: var(--color-text-main);
 
     @media (max-width: 640px) {
-      padding-left: 30px; // Возвращаем отступ, так как у нас 1fr, места хватает
+      padding-left: 30px; 
       font-size: 14px;
     }
   }
 
   &__socials-col {
     @media (max-width: 640px) {
-      order: 2; // Сразу под логотипом
+      order: 2; 
       width: 100%;
+      
 
-      // Прячем заголовок "Социальные сети" для визуальной чистоты
+      
       .footer__col-title {
         display: none;
       }
@@ -236,7 +236,7 @@
     gap: 50px;
 
     @media (max-width: 640px) {
-      flex-direction: row; // Выстраиваем иконки в ряд по горизонтали
+      flex-direction: row; 
       justify-content: center;
       gap: 28px;
     }
@@ -255,7 +255,6 @@
     }
 
     @media (max-width: 640px) {
-      // Скрываем текст, оставляем только большие иконки для тач-интерфейса
       font-size: 0;
       gap: 0;
 
@@ -280,7 +279,7 @@
     @media (max-width: 768px) {
       flex-direction: column;
       gap: 12px;
-      align-items: center; // Центрируем копирайт и ссылки
+      align-items: center; 
       text-align: center;
       padding-top: 24px;
       font-size: 12px;

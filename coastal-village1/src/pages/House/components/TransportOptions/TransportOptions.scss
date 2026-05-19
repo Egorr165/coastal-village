@@ -3,6 +3,14 @@
   font-weight: 700;
   margin-bottom: 20px;
   color: var(--color-dark);
+
+  
+}
+
+.transport-section{
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 .transport-grid {

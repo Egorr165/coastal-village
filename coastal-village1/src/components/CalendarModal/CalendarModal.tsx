@@ -33,7 +33,6 @@ export const CalendarModal: React.FC<CalendarModalProps> = ({
   const [currentMonth, setCurrentMonth] = useState(new Date(checkIn || new Date()));
   const [bookedDates, setBookedDates] = useState<string[]>([]);
 
-  // Обработка Escape
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -46,7 +45,6 @@ export const CalendarModal: React.FC<CalendarModalProps> = ({
     return () => document.removeEventListener('keydown', handleEscape);
   }, [activeDatePicker, setActiveDatePicker]);
 
-  // Загрузка забронированных дат
   useEffect(() => {
     const loadBookedDates = () => {
       if (!activeDatePicker) return;

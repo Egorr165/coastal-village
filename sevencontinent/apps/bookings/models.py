@@ -101,13 +101,11 @@ class Booking(models.Model):
     
     def __str__(self):
         """Безопасное строковое представление"""
-        # Безопасное получение имени пользователя
         if hasattr(self.user, 'username') and self.user.username:
             username = self.user.username
         else:
             username = f"User {self.user_id}"
         
-        # Безопасное получение названия домика
         if hasattr(self.cottage, 'name') and self.cottage.name:
             cottage_name = self.cottage.name
         else:

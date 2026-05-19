@@ -47,10 +47,8 @@ const AdminDashboard: React.FC = () => {
         <h1 className="section-title">Дашборд</h1>
       </div>
 
-      {/* Карточки */}
       <div className="dashboard-cards">
         
-        {/* Выручка */}
         <div className="dashboard-card">
           <div className="card-header">
             <span>Выручка за месяц</span>
@@ -66,7 +64,6 @@ const AdminDashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Бронирования */}
         <div className="dashboard-card">
           <div className="card-header">
             <span>Броней в этом месяце</span>
@@ -82,7 +79,6 @@ const AdminDashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Пользователи */}
         <div className="dashboard-card">
           <div className="card-header">
             <span>Новые клиенты (месяц)</span>
@@ -98,7 +94,6 @@ const AdminDashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Домики */}
         <div className="dashboard-card">
           <div className="card-header">
             <span>Активных домиков</span>
@@ -116,7 +111,6 @@ const AdminDashboard: React.FC = () => {
 
       </div>
 
-      {/* График Выручки */}
       <div className="dashboard-section">
         <h2>Динамика выручки (последние 14 дней)</h2>
         <div className="dashboard-chart-container">
@@ -142,7 +136,6 @@ const AdminDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Таблица последних бронирований */}
       <div className="dashboard-section dashboard-section--last">
         <div className="section-header">
           <h2>Последние бронирования</h2>

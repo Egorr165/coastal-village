@@ -1,11 +1,10 @@
-import { useState, useRef, useEffect } from 'react';
-import { Calendar, Users, ChevronDown, Loader2 } from 'lucide-react';
+import { useState, useEffect } from 'react'; // Убрали useRef
+import { Calendar, Users, ChevronDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { 
-  checkTypeAvailability, 
+  fetchHouses,
   getPriceByType,
-  getHouseCountByType,
-  fetchHouses
+  getHouseCountByType
 } from '../../services/availabilityService';
 import { HouseType, House } from '../../types/house';
 import './SearchFilters.scss';
@@ -21,60 +20,13 @@ const SearchFilters = () => {
   const [houseType, setHouseType] = useState<HouseType | null>(null);
   const [isGuestsOpen, setIsGuestsOpen] = useState(false);
   const [activeDatePicker, setActiveDatePicker] = useState<'checkIn' | 'checkOut' | null>(null);
-  const [isChecking, setIsChecking] = useState(false);
-  const [availability, setAvailability] = useState<{
-    available: boolean;
-    availableCount: number;
-    totalCount: number;
-    message: string;
-  } | null>(null);
   const [houses, setHouses] = useState<House[]>([]);
-  const [isLoadingHouses, setIsLoadingHouses] = useState(true);
 
   useEffect(() => {
     fetchHouses()
-      .then(data => { setHouses(data); setIsLoadingHouses(false); })
-      .catch(err => { console.error(err); setIsLoadingHouses(false); });
+      .then(data => setHouses(data))
+      .catch(err => console.error(err));
   }, []);
-
-  useEffect(() => {
-    const checkAvailability = async () => {
-      if (!checkIn || !checkOut || !houseType) {
-        setAvailability(null);
-        return;
-      }
-
-      if (new Date(checkOut) <= new Date(checkIn)) {
-        setAvailability({
-          available: false,
-          availableCount: 0,
-          totalCount: houseType === 'big' ? 5 : 1,
-          message: 'Дата выезда должна быть позже даты заезда'
-        });
-        return;
-      }
-
-      setIsChecking(true);
-      
-      try {
-        const result = checkTypeAvailability(houses, houseType, checkIn, checkOut);
-        setAvailability(result);
-      } catch (error) {
-        console.error('Ошибка проверки:', error);
-        setAvailability({
-          available: false,
-          availableCount: 0,
-          totalCount: houseType === 'big' ? 5 : 1,
-          message: 'Произошла ошибка при проверке'
-        });
-      } finally {
-        setIsChecking(false);
-      }
-    };
-
-    const timeoutId = setTimeout(checkAvailability, 500);
-    return () => clearTimeout(timeoutId);
-  }, [checkIn, checkOut, houseType]);
 
   const handleSearch = () => {
     if (houseType || checkIn || checkOut) {
@@ -117,7 +69,6 @@ const SearchFilters = () => {
       <h2 className="filters-title">Поиск коттеджей</h2>
       
       <div className="dates-row">
-        {/* Заезд */}
         <div className="filter-item">
           <label className="filter-label">Заезд</label>
           <div 
@@ -135,7 +86,6 @@ const SearchFilters = () => {
           </div>
         </div>
 
-        {/* Выезд */}
         <div className="filter-item">
           <label className="filter-label">Выезд</label>
           <div 
@@ -218,7 +168,7 @@ const SearchFilters = () => {
           >
             <span className="type-btn-title">Малый дом</span>
             <span className="type-btn-value">{smallHousePrice.toLocaleString('ru-RU')} ₽</span>
-            <span className="type-btn-details">до 4 человек • {smallHouseCount} дом</span>
+            <span className="type-btn-details">до 4 человек • {smallHouseCount} дом</span>
           </button>
           
           <button
@@ -231,13 +181,12 @@ const SearchFilters = () => {
           >
             <span className="type-btn-title">Большой дом</span>
             <span className="type-btn-value">{bigHousePrice.toLocaleString('ru-RU')} ₽</span>
-            <span className="type-btn-details">до 6 человек • {bigHouseCount} домов</span>
+            <span className="type-btn-details">до 6 человек • {bigHouseCount} домов</span>
           </button>
         </div>
       </div>
 
-
-      <Button variant="secondary" size="lg" onClick={handleSearch} disabled={isChecking}>
+      <Button variant="secondary" size="lg" onClick={handleSearch}>
         Найти варианты
       </Button>
     </div>

@@ -25,7 +25,6 @@ const AccountBookingHistory: React.FC<AccountBookingHistoryProps> = () => {
           if (!isMounted) return;
           const allBookings = Array.isArray(response) ? response : (response as any).results || [];
           
-          // Фильтруем отмененные и завершенные
           const historyData = allBookings.filter((b: any) => b.status === 'cancelled' || b.status === 'completed');
           
           const statusMap: Record<string, string> = {
@@ -74,8 +73,8 @@ const AccountBookingHistory: React.FC<AccountBookingHistoryProps> = () => {
         });
     };
 
-    fetchHistory(true); // Initial fetch with loading state
-    intervalId = setInterval(() => fetchHistory(false), 10000); // Poll every 10 seconds without loading state
+    fetchHistory(true); 
+    intervalId = setInterval(() => fetchHistory(false), 10000); 
 
     return () => {
       isMounted = false;

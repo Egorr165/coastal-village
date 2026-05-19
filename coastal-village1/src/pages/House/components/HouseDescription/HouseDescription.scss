@@ -30,3 +30,28 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .description-text {
+    h3 {
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+
+    p {
+      font-size: 13px; 
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .description-list {
+      padding-left: 15px;
+
+      li {
+        font-size: 13px;
+        line-height: 1.5;
+        margin-bottom: 6px;
+      }
+    }
+  }
+}

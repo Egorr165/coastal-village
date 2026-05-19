@@ -77,9 +77,6 @@ class AdminCottageImageViewSet(viewsets.ModelViewSet):
         if not ids:
             return Response({'error': 'No ids provided'}, status=status.HTTP_400_BAD_REQUEST)
         
-        # When bulk deleting, the post_delete signal in models.py will trigger for each
-        # IF we iterate and delete. Queryset `.delete()` does NOT trigger `post_delete` signals by default in bulk!
-        # So we MUST loop and delete them 1 by 1 so the filesystem images are removed.
         images = CottageImage.objects.filter(id__in=ids)
         deleted_count = 0
         for img in images:

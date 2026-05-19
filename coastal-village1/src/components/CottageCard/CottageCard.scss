@@ -13,7 +13,6 @@
     box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
   }
 
-  // Левая часть с картинкой
   &__gallery {
     position: relative;
     width: 45%;
@@ -85,13 +84,12 @@
   &--reversed {
     flex-direction: row-reverse;
 
-    // На телефонах мы сбрасываем реверс, чтобы картинка всегда была сверху!
     @media (max-width: 900px) {
       flex-direction: column;
+      
     }
   }
 
-  // Правая часть с инфой
   &__info {
     padding: 30px;
     display: flex;
@@ -150,9 +148,10 @@
     }
   }
 
-  // Адаптив
   @media (max-width: 900px) {
     flex-direction: column;
+    border-radius: 20px;
+    margin-bottom: 15px;
 
     &__gallery {
       position: relative;
@@ -169,7 +168,7 @@
     &__footer {
       flex-direction: column;
       align-items: flex-start;
-      gap: 20px;
+      gap: 10px;
     }
 
     &__btn {
@@ -179,7 +178,7 @@
 
   @media (max-width: 576px) {
     &__gallery {
-      height: 220px;
+      height: 180px;
       padding: 12px;
     }
 
@@ -188,27 +187,27 @@
     }
 
     &__nav-btn {
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
       &.left { left: 24px; }
       &.right { right: 24px; }
     }
 
     &__info {
-      padding: 16px 20px 24px;
+      padding: 5px 20px 20px;
     }
 
     &__title {
       font-size: 20px;
-      margin-bottom: 16px;
+      margin-bottom: 10px;
     }
 
     &__features {
-      gap: 12px;
-      margin-bottom: 20px;
+      gap: 5px;
+      margin-bottom: 10px;
 
       li {
-        font-size: 14px;
+        font-size: 13px;
         gap: 12px;
       }
     }

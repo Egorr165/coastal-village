@@ -3,6 +3,11 @@
   flex-direction: column;
   min-height: 100vh;
   background-color: var(--color-light);
+  margin-top: 80px;
+
+  @media (max-width: 768px) {
+      margin-top: 15px;
+  }
 
   &__container {
     width: 100%;
@@ -15,11 +20,14 @@
     }
   }
 
-  // Main Content
   &__main {
     flex: 1;
     padding-top: 32px;
     padding-bottom: 64px;
+
+    @media (max-width: 768px) {
+      padding-top: 20px;
+    }
   }
 
   &__grid {

@@ -1,18 +1,20 @@
+import React from 'react';
 import SearchFilters from '../../../../components/SearchFilters/SearchFilters';
 import './Hero.scss';
 
 import photo1 from '../../../../images/galery/galery-1.webp';
-import photo2 from '../../../../images/galery/galery-2.webp';
+import photo2 from '../../../../images/galery/galery-10.webp';
 import photo3 from '../../../../images/galery/galery-3.webp';
 
 const Hero = () => {
   return (
-    <section id="main" className="hero">
+    <section className="hero">
       <div className="hero__overlay"></div>
+      
       <div className="hero__container">
         <div className="hero__content">
-          <h1 className="hero__title">Аренда коттеджей на&nbsp;берегу Каспийского моря</h1>
-          <p className="hero__subtitle">Подберите идеальный вариант для&nbsp;вашего отдыха</p>
+          <h1 className="hero__title">Аренда коттеджей на берегу Каспийского моря</h1>
+          <p className="hero__subtitle">Подберите идеальный вариант для вашего отдыха</p>
 
           <div className="hero__photos">
             <div className="hero__photo hero__photo--1">
@@ -26,7 +28,10 @@ const Hero = () => {
             </div>
           </div>
         </div>
-        <SearchFilters />
+        
+        <div className="hero__widget">
+          <SearchFilters />
+        </div>
       </div>
     </section>
   );

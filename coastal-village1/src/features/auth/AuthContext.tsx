@@ -30,7 +30,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const register = async (name: string, email: string, phone: string, password: string) => {
     await authService.register(name, email, phone, password);
-    // Note: register doesn't log the user in anymore. It sends an email.
   };
 
   const verifyEmail = async (email: string, code: string) => {

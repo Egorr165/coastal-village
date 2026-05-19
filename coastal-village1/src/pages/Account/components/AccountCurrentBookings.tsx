@@ -66,8 +66,8 @@ const AccountCurrentBookings: React.FC<AccountCurrentBookingsProps> = () => {
         });
     };
 
-    fetchBookings(true); // Initial fetch with loading state
-    intervalId = setInterval(() => fetchBookings(false), 10000); // Poll every 10 seconds without loading state
+    fetchBookings(true); 
+    intervalId = setInterval(() => fetchBookings(false), 10000); 
 
     return () => {
       isMounted = false;

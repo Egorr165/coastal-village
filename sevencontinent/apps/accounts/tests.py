@@ -79,11 +79,9 @@ class AuthTests(APITestCase):
 
     def test_profile_access_with_token(self):
         """Тест доступа к профилю с токеном"""
-        # Регистрируем и получаем токен
         register_response = self.client.post(self.register_url, self.user_data, format='json')
         token = register_response.data['access']
         
-        # Доступ к профилю с токеном
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
         response = self.client.get(self.profile_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)

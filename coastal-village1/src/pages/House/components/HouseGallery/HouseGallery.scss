@@ -109,6 +109,9 @@
     font-weight: 500;
     color: var(--color-primary);
   }
+
+
+
 }
 
 .gallery-overlay-stats {
@@ -145,7 +148,7 @@
   display: flex;
   gap: 12px;
   overflow-x: auto;
-  padding-bottom: 8px; /* For scrollbar */
+  padding-bottom: 8px; 
   scrollbar-width: thin;
 
   &::-webkit-scrollbar {
@@ -221,5 +224,20 @@
       font-size: 13px;
     }
   }
+
+
+  .top-stat-item{
+    padding: 3px 10px;
+
+    .top-stat-value{
+      font-size: 12px;
+    }
+  }
+
+  .gallery-overlay-top-stats{
+    justify-content: start;
+    gap: 5px;
+  }
+
 }
 

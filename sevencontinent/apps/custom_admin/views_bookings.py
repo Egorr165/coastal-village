@@ -14,7 +14,6 @@ class AdminBookingViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]
 
     def get_queryset(self):
-        # Автоматически завершаем просроченные бронирования перед выдачей списка
         Booking.auto_complete_expired()
         return Booking.objects.all().order_by('-created_at')
 

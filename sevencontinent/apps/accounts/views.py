@@ -43,11 +43,10 @@ class RegisterView(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        user.is_active = False  # Deactivate until verified
+        user.is_active = False 
         user.is_verified = False
         user.save()
         
-        # Create and send code
         code = generate_code()
         EmailVerificationCode.objects.create(user=user, code=code, purpose=EmailVerificationCode.PURPOSE_REGISTER)
         send_verification_email(user, code, 'register')
@@ -70,19 +69,17 @@ class VerifyEmailView(APIView):
                 user=user, 
                 code=code, 
                 purpose=EmailVerificationCode.PURPOSE_REGISTER
-            ).first() # gets the latest code due to Meta ordering=['-created_at']
+            ).first() 
 
             if not verification:
                 return Response({'error': 'Неверный код'}, status=status.HTTP_400_BAD_REQUEST)
             
-            # Here we could also check created_at for expiration (e.g. 15 mins)
             
             user.is_active = True
             user.is_verified = True
             user.save()
             verification.delete()
 
-            # Auto login the user
             refresh = RefreshToken.for_user(user)
             return Response({
                 'user': UserProfileSerializer(user, context={'request': request}).data,
@@ -106,7 +103,6 @@ class PasswordResetRequestView(APIView):
             send_verification_email(user, code, 'reset_password')
             return Response({'message': 'Код для сброса пароля отправлен'})
         except User.DoesNotExist:
-            # For security, we can return success even if user doesn't exist
             return Response({'message': 'Код для сброса пароля отправлен'})
 
 class PasswordResetConfirmView(APIView):
@@ -146,8 +142,7 @@ class LoginView(generics.GenericAPIView):
         
         user = serializer.validated_data['user']
         if not user.is_verified:
-            # If for some reason they exist but not verified
-            pass # They can't reach here because is_active=False blocks authentication in default backend!
+            pass 
             
         refresh = RefreshToken.for_user(user)
         

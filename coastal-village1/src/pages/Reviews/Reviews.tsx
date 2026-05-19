@@ -32,7 +32,6 @@ const Reviews = () => {
   React.useEffect(() => {
     let isMounted = true;
     
-    // Загрузка домиков
     fetchHouses()
       .then(data => {
         if (isMounted) {
@@ -45,7 +44,6 @@ const Reviews = () => {
         if (isMounted) setLoadingHouses(false);
       });
 
-    // Загрузка одобренных отзывов
     import('../../services/api').then(({ default: api }) => {
       api.get('/api/reviews/')
         .then(res => {
@@ -62,7 +60,6 @@ const Reviews = () => {
               text: r.comment
             }));
             
-            // Если с бэкенда пусто, подставим хотя бы один отзыв для красоты или оставим пустой массив
             if (mappedReviews.length === 0) {
                mappedReviews = [];
             }
@@ -89,12 +86,10 @@ const Reviews = () => {
     }
   });
 
-  // Hook to handle incoming hash links like #2
   React.useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
       if (hash && hash.length > 1) {
-        // Убираем # из строки и пробуем распарсить как число
         const idFromHash = parseInt(hash.replace('#', ''), 10);
         if (!isNaN(idFromHash)) {
           const index = reviews.findIndex(r => r.id === idFromHash);
@@ -121,8 +116,6 @@ const Reviews = () => {
   };
 
   const handleAddReview = (rating: number, text: string) => {
-    // В ReviewModal уже вызывается API и показывается Alert. 
-    // Нам не нужно сразу добавлять в стейт, так как нужна модерация.
     setIsModalOpen(false);
   };
 

@@ -35,7 +35,6 @@ class CottageSerializer(serializers.ModelSerializer):
     def get_images(self, obj):
         request = self.context.get('request')
         result = []
-        # Получаем картинки по типу домика
         images = list(CottageImage.objects.filter(house_type=obj.house_type))
         images.sort(key=lambda img: img.is_main, reverse=True)
         

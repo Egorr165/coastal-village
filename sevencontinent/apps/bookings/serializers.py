@@ -48,17 +48,14 @@ class BookingCreateSerializer(serializers.ModelSerializer):
         cottage = data.get('cottage')
         guests = data.get('guests_count', 1)
         
-        # Проверка что выезд после заезда
         if check_in and check_out and check_in >= check_out:
             raise serializers.ValidationError('Дата выезда должна быть позже даты заезда')
         
-        # Проверка вместимости
         if cottage and guests > cottage.capacity:
             raise serializers.ValidationError(
                 f'Максимальная вместимость домика: {cottage.capacity} человек'
             )
         
-        # Проверка доступности домика
         if cottage and check_in and check_out:
             conflicting = Booking.objects.filter(
                 cottage=cottage,
@@ -77,7 +74,6 @@ class BookingCreateSerializer(serializers.ModelSerializer):
         validated_data['user'] = request.user
         validated_data['status'] = Booking.StatusChoices.PENDING
         
-        # Расчет стоимости
         cottage = validated_data['cottage']
         nights = (validated_data['check_out_date'] - validated_data['check_in_date']).days
         extra_beds = validated_data.get('extra_bed_count', 0)

@@ -4,6 +4,7 @@
   padding: 30px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
   width: 100%;
+  
   position: sticky;
   top: 55px;
   height: max-content;
@@ -286,5 +287,101 @@
     color: var(--color-text-light);
   }
 
-  
+  @media (max-width: 768px) {
+    position: static; 
+    padding: 20px;    
+    border-radius: 16px;
+    margin-bottom: 20px; 
+
+    &__title {
+      font-size: 1rem;
+      margin-bottom: 0.6rem;
+    }
+
+    &__type-selector {
+      margin-bottom: 0.8rem;
+    }
+
+    &__sub-value{
+      font-size: 13px;
+    }
+
+    &__type-btn {
+      padding: 0.5rem;
+      font-size: 0.8rem;
+    }
+
+    &__calendar-header {
+      margin-bottom: 10px;
+      
+      button {
+        padding: 5px 10px; 
+      }
+    }
+
+    &__calendar-grid {
+      gap: 2px; 
+      margin-bottom: 10px;
+    }
+
+    &__day-name {
+      font-size: 9px;
+      margin-bottom: 2px;
+    }
+
+    &__day {
+      height: 28px; 
+      font-size: 13px;
+      border-radius: 4px;
+
+      .tooltip {
+        display: none; 
+      }
+    }
+
+    &__details {
+      padding: 10px 0;
+      margin-bottom: 10px;
+    }
+
+    &__label, &__label-flex {
+      font-size: 11px;
+    }
+
+    &__value {
+      font-size: 14px;
+    }
+
+    &__options {
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    &__option {
+      font-size: 13px;
+      
+      input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    &__total {
+      margin-bottom: 10px;
+    }
+
+    &__price-bold {
+      font-size: 16px;
+    }
+
+    &__btn {
+      padding: 8px;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    &__hint {
+      font-size: 9px;
+    }
+  }
 }

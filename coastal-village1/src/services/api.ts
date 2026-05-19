@@ -1,42 +1,151 @@
 import axios from 'axios';
+import { NavigateFunction } from 'react-router-dom';
+
+let navigate: NavigateFunction | null = null;
+
+export const setNavigate = (nav: NavigateFunction) => {
+  navigate = nav;
+};
+
+export const isValidReturnUrl = (url: string | null): boolean => {
+  if (!url) return false;
+  
+  if (url.startsWith('//') || url.startsWith('http') || url.startsWith('javascript:') || url.startsWith('data:')) {
+    return false;
+  }
+  
+  if (/[<>"'\\]/.test(url)) {
+    return false;
+  }
+  
+  return true;
+};
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://7continent-dagestan.ru/', 
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://7continent-dagestan.ru/',
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
+let isRefreshing = false;
+let failedQueue: { resolve: (value: any) => void; reject: (error: any) => void }[] = [];
+
+const processQueue = (error: any, token: string | null = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
+  failedQueue = [];
+};
+
 api.interceptors.request.use(
-  (config) => {
-    const token = sessionStorage.getItem('token') || localStorage.getItem('token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
+  (config) => {
+    const token = sessionStorage.getItem('token') || localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
 );
 
 api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response && error.response.status === 401) {
-      if (error.config && error.config.url && error.config.url.includes('/api/auth/login')) {
-        return Promise.reject(error);
-      }
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
 
-      sessionStorage.removeItem('token');
-      sessionStorage.removeItem('currentUser');
-      localStorage.removeItem('token');
-      localStorage.removeItem('currentUser');
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      const currentPath = window.location.pathname;
+      const authPaths = ['/login', '/register', '/forgot-password'];
+      if (authPaths.includes(currentPath)) {
+        return Promise.reject(error);
+      }
 
-      if (window.location.pathname !== '/login') {
-         window.location.href = '/login';
-      }
-    }
-    return Promise.reject(error);
-  }
+      const returnUrl = currentPath + window.location.search;
+      if (!sessionStorage.getItem('returnUrl') && isValidReturnUrl(returnUrl)) {
+        sessionStorage.setItem('returnUrl', returnUrl);
+      }
+
+      if (originalRequest._retry) {
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('currentUser');
+        localStorage.removeItem('token');
+        localStorage.removeItem('currentUser');
+
+        if (navigate) {
+          navigate('/login');
+        } else {
+          window.location.href = '/login';
+        }
+        return Promise.reject(error);
+      }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
+      try {
+        const refreshToken = sessionStorage.getItem('token') || localStorage.getItem('token');
+        if (!refreshToken) {
+          throw new Error('No refresh token');
+        }
+
+        const { data } = await axios.post(
+          `${api.defaults.baseURL}api/auth/token/refresh/`,
+          { refresh: refreshToken },
+          { headers: { 'Content-Type': 'application/json' } }
+        );
+
+        const newToken = data.access;
+
+        if (sessionStorage.getItem('token')) {
+          sessionStorage.setItem('token', newToken);
+        } else {
+          localStorage.setItem('token', newToken);
+        }
+
+        originalRequest.headers.Authorization = `Bearer ${newToken}`;
+
+        processQueue(null, newToken);
+
+        return api(originalRequest);
+
+      } catch (refreshError) {
+        processQueue(refreshError, null);
+
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('currentUser');
+        localStorage.removeItem('token');
+        localStorage.removeItem('currentUser');
+
+        if (navigate) {
+          navigate('/login');
+        } else {
+          window.location.href = '/login';
+        }
+
+        return Promise.reject(refreshError);
+      } finally {
+        isRefreshing = false;
+      }
+    }
+
+    if (isRefreshing && originalRequest.url !== '/api/auth/token/refresh/') {
+      return new Promise((resolve, reject) => {
+        failedQueue.push({ resolve, reject });
+      })
+        .then((token) => {
+          originalRequest.headers.Authorization = `Bearer ${token}`;
+          return api(originalRequest);
+        })
+        .catch((err) => Promise.reject(err));
+    }
+
+    return Promise.reject(error);
+  }
 );
 
 export default api;
