@@ -26,22 +26,6 @@ export interface Booking {
   };
 }
 
-const booking: Booking = {
-  id: 9466,
-  complexName: "7 континент",
-  cottageName: "6-ти местный коттедж",
-  houseNumStr: "1",
-  checkIn: "2026-03-26",
-  checkOut: "2026-03-29",
-  checkInTime: "14:00",
-  checkOutTime: "12:00",
-  nights: 3,
-  status: "Оплачен",
-  totalPrice: 44000,
-  extras: {
-    extraBedCount: 0
-  }
-};
 
 const formatDateForDisplay = (dateStr: string | null | undefined) => {
   if (!dateStr) return '';
@@ -73,20 +57,27 @@ const getStatusClass = (status: string) => {
 interface AccountBookingCardProps {
   bookingData?: Booking;
   readOnly?: boolean;
+  onSave?: (updatedData: any) => void; 
 }
 
-const AccountBookingCard: React.FC<AccountBookingCardProps> = ({ bookingData, readOnly = false }) => {
+const AccountBookingCard: React.FC<AccountBookingCardProps> = ({ 
+  bookingData, 
+  readOnly = false, 
+  onSave 
+}) => {
   const { user } = useAuth();
   const addToast = useToastStore(state => state.addToast);
   
-  const currentBooking = bookingData || booking;
+  if (!bookingData) return null;
+  
+  const currentBooking = bookingData;
   
   const [isEditing, setIsEditing] = useState(false);
 
   const [guestData, setGuestData] = useState({
-    name: user?.name || 'egor',
-    phone: user?.phone || '+7 (928) 959-07-80',
-    email: user?.email || 'kalmykov20.20@mail.ru'
+    name: user?.name || '',
+    phone: user?.phone || '',
+    email: user?.email || ''
   });
 
   const [editDates, setEditDates] = useState<{checkIn: string, checkOut: string}>({
@@ -127,9 +118,32 @@ const AccountBookingCard: React.FC<AccountBookingCardProps> = ({ bookingData, re
     }
   }, [editDates]);
 
-  const handleSave = () => {
-    setIsEditing(false);
-    setActiveDatePicker(null);
+  const handleSave = async () => {
+    try {
+      const payload = {
+        id: currentBooking.id,
+        check_in_date: editDates.checkIn,
+        check_out_date: editDates.checkOut,
+        extra_bed_count: editExtras.extraBedCount,
+        // guest_name: guestData.name, 
+        // guest_phone: guestData.phone,
+        // guest_email: guestData.email,
+      };
+
+
+
+      await bookingService.updateBooking(currentBooking.id, payload);
+
+      if (onSave) {
+        onSave(payload);
+      }
+
+      setIsEditing(false);
+      setActiveDatePicker(null);
+    } catch (error: any) {
+      console.error("Ошибка при сохранении:", error);
+      addToast(error.response?.data?.error || 'Не удалось сохранить изменения', 'error');
+    }
   };
 
   const handleCancelBookingAction = () => {
@@ -141,7 +155,7 @@ const AccountBookingCard: React.FC<AccountBookingCardProps> = ({ bookingData, re
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     if (diffDays < 14) {
-      addToast('Отмена невозможна, так как до заезда осталось менее 14 дней.', 'error');
+      addToast('Отмена невозможна, так как до заезда осталось менее 14 дней.', 'error');
       return;
     }
 
@@ -164,18 +178,18 @@ const AccountBookingCard: React.FC<AccountBookingCardProps> = ({ bookingData, re
     setIsEditing(false);
     setActiveDatePicker(null);
     setGuestData({
-      name: user?.name || 'egor',
-      phone: user?.phone || '+7 (928) 959-07-80',
-      email: user?.email || 'kalmykov20.20@mail.ru'
+      name: user?.name || '',
+      phone: user?.phone || '',
+      email: user?.email || ''
     });
     setEditDates({
-      checkIn: booking.checkIn,
-      checkOut: booking.checkOut
+      checkIn: currentBooking.checkIn,
+      checkOut: currentBooking.checkOut
     });
     setEditExtras({
-      extraBedCount: booking.extras.extraBedCount,
+      extraBedCount: currentBooking.extras.extraBedCount,
     });
-    setCurrentNights(booking.nights);
+    setCurrentNights(currentBooking.nights);
   };
 
   return (
@@ -228,7 +242,7 @@ const AccountBookingCard: React.FC<AccountBookingCardProps> = ({ bookingData, re
 
       <div className="booking-modal__grid">
         <div className="booking-modal__grid-item">
-          <span className="booking-modal__label">ИНФОРМАЦИЯ О ГОСТЕ</span>
+          <span className="booking-modal__label">ИНФОРМАЦИЯ О ГОСТЕ</span>
           <div className="booking-modal__text-group">
             <div className="booking-modal__guest-inputs">
               <input 
@@ -352,7 +366,7 @@ const AccountBookingCard: React.FC<AccountBookingCardProps> = ({ bookingData, re
           <div className="account-modal">
             <h3 className="account-modal__title">Подтверждение отмены</h3>
             <p className="account-modal__text">
-              Вы уверены, что хотите отменить эту заявку на бронирование? <br/><br/>
+              Вы уверены, что хотите отменить эту заявку на бронирование? <br/><br/>
               <b>Это действие необратимо.</b>
             </p>
             <div className="account-modal__actions">

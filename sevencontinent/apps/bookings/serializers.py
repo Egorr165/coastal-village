@@ -87,8 +87,70 @@ class BookingCreateSerializer(serializers.ModelSerializer):
 
 class BookingUpdateSerializer(serializers.ModelSerializer):
     """
-    Сериализатор для обновления статуса бронирования
+    Сериализатор для обновления бронирования пользователем.
+    Позволяет менять даты заезда/выезда и количество доп. мест.
+    Автоматически пересчитывает итоговую стоимость.
     """
     class Meta:
         model = Booking
-        fields = ['status']
+        fields = [
+            'check_in_date', 
+            'check_out_date', 
+            'extra_bed_count', 
+            'special_requests',
+            'status'
+        ]
+        
+        read_only_fields = ['user', 'cottage', 'total_price', 'created_at', 'updated_at', 'guests_count']
+
+    def validate(self, data):
+        """Валидация изменяемых данных"""
+        check_in = data.get('check_in_date')
+        check_out = data.get('check_out_date')
+        
+        
+        if check_in and check_out:
+            if check_in >= check_out:
+                raise serializers.ValidationError('Дата выезда должна быть позже даты заезда')
+            
+            if check_in < date.today():
+                raise serializers.ValidationError('Дата заезда не может быть в прошлом')
+
+          
+        return data
+
+    def update(self, instance, validated_data):
+        """
+        Переопределяем метод update для пересчета цены при изменении дат или доп. мест.
+        """
+        
+        old_check_in = instance.check_in_date
+        old_check_out = instance.check_out_date
+        old_extra_beds = instance.extra_bed_count
+        
+        
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+            
+        
+        price_changed = (
+            instance.check_in_date != old_check_in or 
+            instance.check_out_date != old_check_out or 
+            instance.extra_bed_count != old_extra_beds
+        )
+        
+        if price_changed:
+            
+            nights = (instance.check_out_date - instance.check_in_date).days
+            
+            
+            cottage_price = instance.cottage.price_per_night
+            
+            
+            base_price = cottage_price * nights
+            extras_price = 1500 * nights * instance.extra_bed_count
+            
+            instance.total_price = base_price + extras_price
+            
+        instance.save()
+        return instance

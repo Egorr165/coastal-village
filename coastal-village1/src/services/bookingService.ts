@@ -27,6 +27,13 @@ export interface CreateBookingData {
   special_requests: string;
 }
 
+export interface UpdateBookingData {
+  check_in_date?: string;
+  check_out_date?: string;
+  extra_bed_count?: number;
+  special_requests?: string;
+}
+
 const bookingService = {
   getUpcomingBookings: async (): Promise<BookingResponse[]> => {
     const response = await api.get<BookingResponse[]>('/api/bookings/upcoming/');
@@ -43,12 +50,22 @@ const bookingService = {
     return response.data;
   },
 
+  updateBooking: async (id: number, data: any): Promise<BookingResponse> => {
+
+    try {
+      const response = await api.patch<BookingResponse>(`/api/bookings/${id}/`, data);
+      return response.data;
+    } catch (error) {
+      throw error; 
+    }
+  },
+
+
 
   cancelBooking: async (id: number): Promise<BookingResponse> => {
     const response = await api.post(`/api/bookings/${id}/cancel/`);
-    return response.data.booking;
+    return response.data.booking || response.data; 
   },
-
 
   getNextBookingId: async (): Promise<number> => {
     const response = await api.get('/api/bookings/next-id/');

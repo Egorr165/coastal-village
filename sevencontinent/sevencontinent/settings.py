@@ -9,6 +9,9 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+"""
+Django settings for sevencontinent project.
+"""
 
 from pathlib import Path
 import os
@@ -18,23 +21,20 @@ import mimetypes
 
 mimetypes.add_type("image/webp", ".webp")
 
-load_dotenv()
+# Загружаем .env файл
+env_path = Path(__file__).resolve().parent.parent / '.env'
+load_dotenv(dotenv_path=env_path)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 if not SECRET_KEY:
     raise ValueError("No SECRET_KEY set. Check your .env file.")
 
-
 DEBUG = os.getenv('DJANGO_DEBUG', 'True').lower() in ('true', '1', 'yes')
 
 _ALLOWED_HOSTS_STR = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1')
 ALLOWED_HOSTS = [host.strip() for host in _ALLOWED_HOSTS_STR.split(',')]
-
-
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -86,9 +86,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'sevencontinent.wsgi.application'
 
-
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -100,8 +97,6 @@ DATABASES = {
         'ATOMIC_REQUESTS': True,
     }
 }
-
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -132,17 +127,25 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
+# --- EMAIL SETTINGS ---
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.yandex.ru')
-EMAIL_PORT = int(os.getenv('EMAIL_PORT', '465'))
+
+email_port_str = os.getenv('EMAIL_PORT', '465')
+if not email_port_str or not email_port_str.strip():
+    email_port_str = '465'
+try:
+    EMAIL_PORT = int(email_port_str)
+except ValueError:
+    EMAIL_PORT = 465
+
 EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', 'True').lower() in ('true', '1')
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 if not EMAIL_HOST_USER or not EMAIL_HOST_PASSWORD:
-    print("WARNING: Email credentials missing in .env. Email functionality will fail.")
-
+    print("WARNING: Email credentials missing in .env.")
 
 CORS_ALLOW_ALL_ORIGINS = False
 
@@ -150,16 +153,10 @@ _CORS_ORIGINS_STR = os.getenv('CORS_ALLOWED_ORIGINS',
     'https://7continent-dagestan.ru,https://www.7continent-dagestan.ru,http://localhost:5173,http://127.0.0.1:5173')
 CORS_ALLOWED_ORIGINS = [origin.strip() for origin in _CORS_ORIGINS_STR.split(',')]
 
-
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
-
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -175,15 +172,11 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
 ]
 
-
-
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

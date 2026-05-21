@@ -268,7 +268,7 @@ select.status-badge {
 .btn-text { background: none; border: none; cursor: pointer; padding: 5px; font-size: 14px; font-weight: 500; transition: opacity 0.2s; &:hover { opacity: 0.7; } &.danger { color: #ef4444; } &.success { color: #10b981; } }
 
 .btn { padding: 8px 16px; border-radius: 4px; font-weight: 500; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; }
-.btn-primary { background-color: var(--color-primary); color: white; &:hover { background-color: var(--color-brand-blue-dark); } }
+.btn-primary { background-color: var(--color-primary); color: white; }
 .btn-outline { background-color: transparent; border-color: #ccc; color: #555; &:hover { background-color: #f8f9fa; } }
 .btn-outline-primary { border-color: var(--color-brand-blue); color: var(--color-brand-blue); background-color: transparent; &:hover { background-color: rgba(59, 130, 246, 0.05); } }
 .btn-danger { background-color: #FF717E; color: white; border-color: #FF717E; &:hover { opacity: 0.9; } }

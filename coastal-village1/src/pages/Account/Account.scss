@@ -368,7 +368,6 @@
     min-width: 8.75rem;
     z-index: 10;
     overflow: hidden;
-    animation: fadeIn 0.2s ease-out;
   }
 
   &__dropdown-item {
@@ -736,7 +735,6 @@
   text-align: center;
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
   position: relative;
-  animation: fadeInModal 0.2s ease-out;
 
   &__title {
     margin-top: 0;
