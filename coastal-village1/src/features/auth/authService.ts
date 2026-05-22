@@ -3,7 +3,8 @@ import api from '../../services/api';
 import axios from 'axios';
 
 const CURRENT_USER_KEY = 'currentUser';
-const TOKEN_KEY = 'token';
+const ACCESS_TOKEN_KEY = 'token';
+const REFRESH_TOKEN_KEY = 'refreshToken';
 
 const getErrorMessage = (error: unknown, defaultMessage: string): string => {
   if (axios.isAxiosError(error) && error.response?.data) {
@@ -24,6 +25,14 @@ const getErrorMessage = (error: unknown, defaultMessage: string): string => {
   return error instanceof Error ? error.message : defaultMessage;
 };
 
+const saveAuthData = (user: User, access: string, refresh: string) => {
+  const storage = user.is_staff ? sessionStorage : localStorage;
+  
+  storage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+  if (access) storage.setItem(ACCESS_TOKEN_KEY, access);
+  if (refresh) storage.setItem(REFRESH_TOKEN_KEY, refresh);
+};
+
 export const register = async (name: string, email: string, phone: string, password: string): Promise<any> => {
   try {
     const response = await api.post('/api/auth/register/', {
@@ -41,15 +50,12 @@ export const register = async (name: string, email: string, phone: string, passw
 export const verifyEmail = async (email: string, code: string): Promise<AuthResponse> => {
   try {
     const response = await api.post<AuthResponse>('/api/auth/verify-email/', { email, code });
-    const { user, token } = response.data;
+    const { user, token: access, refresh } = response.data as any;
     
-    if (user.is_staff) {
-        sessionStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
-        if (token) sessionStorage.setItem(TOKEN_KEY, token);
-    } else {
-        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
-        if (token) localStorage.setItem(TOKEN_KEY, token);
+    if (user && access) {
+        saveAuthData(user, access, refresh || '');
     }
+    
     return response.data;
   } catch (err) {
     throw new Error(getErrorMessage(err, 'Ошибка при проверке кода'));
@@ -82,14 +88,10 @@ export const login = async (identifier: string, password: string): Promise<AuthR
       password,
     });
 
-    const { user, token } = response.data;
+    const { user, token: access, refresh } = response.data as any;
     
-    if (user.is_staff) {
-        sessionStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
-        if (token) sessionStorage.setItem(TOKEN_KEY, token);
-    } else {
-        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
-        if (token) localStorage.setItem(TOKEN_KEY, token);
+    if (user && access) {
+        saveAuthData(user, access, refresh || '');
     }
 
     return response.data;
@@ -99,9 +101,12 @@ export const login = async (identifier: string, password: string): Promise<AuthR
 };
 
 export const logout = (): void => {
-  sessionStorage.removeItem(TOKEN_KEY);
+  sessionStorage.removeItem(ACCESS_TOKEN_KEY);
+  sessionStorage.removeItem(REFRESH_TOKEN_KEY);
   sessionStorage.removeItem(CURRENT_USER_KEY);
-  localStorage.removeItem(TOKEN_KEY);
+  
+  localStorage.removeItem(ACCESS_TOKEN_KEY);
+  localStorage.removeItem(REFRESH_TOKEN_KEY);
   localStorage.removeItem(CURRENT_USER_KEY);
 };
 
@@ -117,7 +122,7 @@ export const getCurrentUser = (): User | null => {
 };
 
 export const isAuthenticated = (): boolean => {
-  return !!(sessionStorage.getItem(TOKEN_KEY) || localStorage.getItem(TOKEN_KEY));
+  return !!(sessionStorage.getItem(ACCESS_TOKEN_KEY) || localStorage.getItem(ACCESS_TOKEN_KEY));
 };
 
 export const updateUser = async (updatedData: Partial<User> | FormData): Promise<User> => {
@@ -127,11 +132,10 @@ export const updateUser = async (updatedData: Partial<User> | FormData): Promise
       headers: isFormData ? { 'Content-Type': 'multipart/form-data' } : undefined
     });
     const updatedUser = response.data;
-    if (updatedUser.is_staff) {
-      sessionStorage.setItem(CURRENT_USER_KEY, JSON.stringify(updatedUser));
-    } else {
-      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(updatedUser));
-    }
+    
+    const storage = updatedUser.is_staff ? sessionStorage : localStorage;
+    storage.setItem(CURRENT_USER_KEY, JSON.stringify(updatedUser));
+    
     return updatedUser;
   } catch (err) {
     throw new Error(getErrorMessage(err, 'Ошибка при обновлении профиля'));

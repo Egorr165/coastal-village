@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Route, Routes, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import { useAuth, AuthProvider } from './features/auth/AuthContext'; 
 import ToastContainer from './components/Toast/ToastContainer'; 
 import { setNavigate } from './services/api'; 
@@ -31,20 +31,12 @@ import AdminUsers from './pages/AdminBoard/pages/AdminUsers';
 import AdminContacts from './pages/AdminBoard/pages/AdminContacts';
 
 const AppRoutes = () => {
-    const { user, logout } = useAuth();
-    const location = useLocation();
     const navigate = useNavigate();
 
     useEffect(() => {
         setNavigate(navigate);
     }, [navigate]);
 
-    useEffect(() => {
-        if (user?.is_staff && !location.pathname.startsWith('/admin-board') && location.pathname !== '/login') {
-            logout();
-            navigate('/', { replace: true });
-        }
-    }, [user, location.pathname, logout, navigate]);
 
     return (
       <Routes>
